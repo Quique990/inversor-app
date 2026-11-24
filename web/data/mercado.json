@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-24",
- "generado": "2026-11-24T23:44:45+00:00",
+ "generado": "2026-11-24T23:50:27+00:00",
  "resumen": "Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); guerra comercial / aranceles / sanciones (intensidad 3/3); shock de oferta de petróleo / energía (intensidad 1/3); desescalada / alto el fuego / acuerdo comercial (intensidad 1/3). Sigue con tu plan de inversión habitual. No hace falta hacer nada. (Resumen automático sin IA.)",
  "riesgos_a_vigilar": [],
  "tono_global": null,
@@ -10,7 +10,7 @@
    "tipo": "conflicto_militar",
    "nombre": "Conflicto militar / invasión / ataque entre estados",
    "intensidad": 3,
-   "titulares": 39,
+   "titulares": 40,
    "ejemplos": [
     {
      "titulo": "Israeli air strike kills Hamas internal security chief in Gaza",
@@ -65,13 +65,8 @@
    "tipo": "aranceles_sanciones",
    "nombre": "Guerra comercial / aranceles / sanciones",
    "intensidad": 3,
-   "titulares": 16,
+   "titulares": 15,
    "ejemplos": [
-    {
-     "titulo": "Trump administration's new tariffs ignore midterm lessons | Opinion",
-     "fuente": "The Detroit News",
-     "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQalBRMG1OQWtycXA3SWhVYlN4Mnc4VGRudm1DTk5zTTJLQnFaZ0k3ZHEwZkEwTlY0ZVFwb293clBkUDU0bGRMVk85ZW51NnVZMTU4LVFlMlpKczBZMExCUFRqNlJQank3WEJFUmhRYlAxUnBpTjhIX1d6azE0MHNpd0h4WndnU0JZeDNIUWFnTVc2b1ZPOWVEdWVjbjJadkFrN1ZTNTNHY0YzaktreHZPWnBYLXZOLXQwTEx6dXoxZ0ktY1hZWG5MaVJR?oc=5"
-    },
     {
      "titulo": "US Said to Plan New Round of Tariffs on China, EU",
      "fuente": "Bloomberg.com",
@@ -86,6 +81,11 @@
      "titulo": "Trump to double down on tariffs after midterms defeat",
      "fuente": "Semafor",
      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPRGVlMVZscVNVS1QwNzFsbUR5dGYzZ2dmU0FXMVEwNnhEaDk3Vnd1QVpvbnVMSG9fUGlYTDhSZ3lrT1ZfSjN2QzdOblJHdmUyS0ZfZExYR1dROXBOMTRKM3VCcVhCcUt6WmJMTnRCNHlUMmJCbGNBVm0xSjdCaHJlekJTR053WW5pbDlaT0RIcEVMQmFGQlgxTE9BUnA?oc=5"
+    },
+    {
+     "titulo": "Managing Aggregate Sanctions Risk and Evasion Networks in Canada",
+     "fuente": "Kharon",
+     "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE0wMjctZXZJN2E1dzlLb2NqTTA2cWMtSGVYQU1VZzVwenFZSTdfS2otdlEzbFRDb1ZJQWhVWnhKaFk5Q1VtTlZlNXhZbjdHOUktQkpBc1BSejYycEVSRTdHRUdhUW12WTN2TTlPRg?oc=5"
     },
     {
      "titulo": "New Oregon grant program offers one-time funding to businesses in wake of Trump tariffs",
@@ -271,39 +271,6 @@
     },
     "Respuesta adecuada = diversificar (no concentrar en EE. UU./tecnología), no salir del mercado."
    ]
-  },
-  {
-   "tipo": "banco_central_endurece",
-   "nombre": "Banco central sube tipos o endurece el tono (por sorpresa)",
-   "intensidad": 1,
-   "titulares": 2,
-   "ejemplos": [
-    {
-     "titulo": "El Peso mexicano se hunde mientras la inflación subyacente más moderada coincide con la amenaza de una subida de tipos de la Fed",
-     "fuente": "FXStreet",
-     "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNSlJVNnF6V0EzX01FazZ2eDlEOVRhdEpyV2puS1doWHMtdGluVExmTjY4TkZsSlkwdkpfQS1FZ3p2aWhkQm94LTlsblhfRjFhdlB6R1g3RDRWc0RXV2FjM2lYS3dDV3U2XzFXNkxSelQzZk9vY1Q4c1lrclBHRnF1OVRHM0s3TkdCdU5zX1BNVkpSVmNBTTlvY0x0UGpTOVc3MG1IdFN2SXlxeVBaeUxCWkhsY1U0ekVWcHVVRjdLRDJfZDRLSEVpOVEtLXY0ZXRQRFJtcXIzTTZuWTY3RFRrQnpGRkdFSU9WQTdsQ0wyRVpVeFdrcXNCMGdOcWRNRU0?oc=5"
-    },
-    {
-     "titulo": "Gold falls 2% on hawkish Fed bets, US inflation data in focus",
-     "fuente": "TradingView",
-     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPWGJDVmtVcTU4ekc1dVNUa0N3UDZHMUpGN1lNVExQbENubTVQMGdJaWRDS1phQWFpVWhHY3FhanA0UExCWTZoM19rckcyeTd1WDRIb09DZ3YxdUdHZzgwc1h6TVd3YlctNjd2aGxKU2s2eWZaQjZ2ZmZ0bjdNZWF0cG5aVXZqVUduS0I5YjVHVlRZVDNnaHZ0bTBaWU41RERfMFNjN0h3RGdtSkFIYmkzNUJGTVVVVFZzbl9KZ1RKSm00R0lJTDhF?oc=5"
-    }
-   ],
-   "explicacion_ia": null,
-   "region": null,
-   "gdelt_ratio": null,
-   "impacto_tipico": {
-    "renta_variable": -1,
-    "renta_fija_calidad": -1,
-    "oro": -1,
-    "dolar": 1,
-    "petroleo": 0
-   },
-   "historia": null,
-   "matices": [
-    "Lo que mueve el mercado es la SORPRESA frente a lo descontado, no la decisión en sí.",
-    "Una subida ya esperada suele tener impacto pequeño."
-   ]
   }
  ],
  "decision": {
@@ -317,7 +284,7 @@
    "vix": 26.36,
    "vstoxx": null,
    "brent_3m": -0.19,
-   "oro_1m": -11.15,
+   "oro_1m": -11.34,
    "sahm": 0.0,
    "curva_10a3m": 0.55,
    "curva_min_24m": -0.4,
@@ -544,7 +511,7 @@
    "nombre": "Euro Stoxx 50",
    "isin": null,
    "yahoo": "^STOXX50E",
-   "moneda": null
+   "moneda": "EUR"
   },
   "IBEX": {
    "fecha": "2026-11-23",
@@ -599,16 +566,16 @@
   },
   "ORO": {
    "fecha": "2026-11-24",
-   "ultimo": 3560.8999,
-   "var_1d": -2.48,
-   "var_1m": -11.15,
-   "var_3m": -24.15,
-   "var_1a": -13.03,
-   "caida_max_52s": -33.05,
-   "mm200": 4430.45,
+   "ultimo": 3553.3,
+   "var_1d": -2.69,
+   "var_1m": -11.34,
+   "var_3m": -24.31,
+   "var_1a": -13.21,
+   "caida_max_52s": -33.19,
+   "mm200": 4430.41,
    "sobre_mm200": false,
    "pendiente_mm200": -2.17,
-   "vol_1m": 33.18,
+   "vol_1m": 33.33,
    "nombre": "Oro (USD/oz)",
    "isin": null,
    "yahoo": "GC=F",
@@ -633,16 +600,16 @@
   },
   "EURUSD": {
    "fecha": "2026-11-24",
-   "ultimo": 1.0965,
-   "var_1d": -0.06,
-   "var_1m": -2.29,
-   "var_3m": -6.08,
-   "var_1a": -4.72,
-   "caida_max_52s": -8.76,
+   "ultimo": 1.0966,
+   "var_1d": -0.05,
+   "var_1m": -2.28,
+   "var_3m": -6.07,
+   "var_1a": -4.71,
+   "caida_max_52s": -8.75,
    "mm200": 1.15,
    "sobre_mm200": false,
    "pendiente_mm200": -0.64,
-   "vol_1m": 5.33,
+   "vol_1m": 5.34,
    "nombre": "EUR/USD",
    "isin": null,
    "yahoo": "EURUSD=X",
@@ -1011,6 +978,18 @@
    "id": "4f2d4ed79332"
   },
   {
+   "titulo": "Watch AI Stocks Retreat as Markets Rotate Beyond Tech",
+   "fuente": "Bloomberg.com",
+   "fuente_id": "gn_markets_en",
+   "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOUmlfRDctUGhIUWRxZGxOX25sOG9ubFRMaEtGLWx0RTVkOGJrNjZ0RlEwd1FBU0pMeWVtNG5VVGtBXzU1aVc3WklCUjNxWXIxcll1SmZ0N1FRMDR6WHNvaXQ1NnNHVE9wWmIzMS1STl9yandJNlVkQm9BYzZJXy1fNA?oc=5",
+   "fecha": "2026-11-24T23:42:05+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "fae24e601262"
+  },
+  {
    "titulo": "Dell’s stock rises as the AI boom helps sales more than double",
    "fuente": "MarketWatch",
    "fuente_id": "marketwatch",
@@ -1033,6 +1012,18 @@
    "peso": 2,
    "resumen": "",
    "id": "8c96e40d256b"
+  },
+  {
+   "titulo": "Las acciones de Anthropic caen por debajo de los US$83 por acción, su precio de salida a bolsa",
+   "fuente": "Forbes Centroamérica",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQMnRpbHJhVHBNSGpJQm9FNWZZMVhuaGFlMm5pMXQ2R3c2U1d1V3M0S3FiTzFVREg3bVVCcEpOR3ZKMllEWDNLY0wyczZ4VnppSTctcWF1NThUYTY5Um5LOVBDbUdDVGU5ZDZTbjRCSTJ5SGZPRWsyYkM2cE1Sd0hxZ3k4Ul9jdmlkRTZneVpZX0xSbGUxVGluc0h5LXBvM2dBUUJaZnJGSHpSVDRKeWx0WnpHVllCSTh0dVpyVGJyRXNIYk1XMUM0V245LXctWUJXTHc?oc=5",
+   "fecha": "2026-11-24T23:32:09+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "68c3b0dd5f5b"
   },
   {
    "titulo": "New York jury convicts Huawei of stealing trade secrets",
@@ -1095,18 +1086,6 @@
    "id": "d45abf113bc3"
   },
   {
-   "titulo": "Trump administration's new tariffs ignore midterm lessons | Opinion",
-   "fuente": "The Detroit News",
-   "fuente_id": "gn_geo_en",
-   "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQalBRMG1OQWtycXA3SWhVYlN4Mnc4VGRudm1DTk5zTTJLQnFaZ0k3ZHEwZkEwTlY0ZVFwb293clBkUDU0bGRMVk85ZW51NnVZMTU4LVFlMlpKczBZMExCUFRqNlJQank3WEJFUmhRYlAxUnBpTjhIX1d6azE0MHNpd0h4WndnU0JZeDNIUWFnTVc2b1ZPOWVEdWVjbjJadkFrN1ZTNTNHY0YzaktreHZPWnBYLXZOLXQwTEx6dXoxZ0ktY1hZWG5MaVJR?oc=5",
-   "fecha": "2026-11-24T23:24:00+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "72fbbaeb4404"
-  },
-  {
    "titulo": "El temor a la 'corrección Kennedy' se cierne sobre la Bolsa",
    "fuente": "Expansión Mercados",
    "fuente_id": "expansion",
@@ -1141,18 +1120,6 @@
    "peso": 2,
    "resumen": "Steeply higher security expenses of $764,748 for Mehrotra were part of a $39.7 million total compensation package in the latest fiscal year.",
    "id": "cfa308357691"
-  },
-  {
-   "titulo": "FactChecking Trump’s Auto Plants Claims",
-   "fuente": "FactCheck.org",
-   "fuente_id": "gn_geo_en",
-   "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE8zQ0JaVkdUbENLNGZnaVZPcmdpMF84UzZHRFRyYm90TjlrblkyMWNyOUp1V1pTQUNTVDBoVTNvcjhlQjVvQTRvcWRNbDRCQVNRUE9uSTVJSk5YeHBnZTlvSzhocVFycXRUMlpNTHVFNWtwS2NGdzA0ejJLdDlFUQ?oc=5",
-   "fecha": "2026-11-24T23:08:32+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "79396897a4d8"
   },
   {
    "titulo": "Juristas y economistas piden rechazar proyecto de ley de mercados digitales en Brasil",
@@ -1359,16 +1326,16 @@
    "id": "6fab99868dd9"
   },
   {
-   "titulo": "La uruguaya dLocal cae en bolsa tras advertir los analistas de riesgos de inversión y divisas",
-   "fuente": "MarketScreener España",
-   "fuente_id": "gn_mercados_es",
-   "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPREl6a2dpYVZLMTF0bmpEekNzNVVoS25OcWxMc1hWd2JaUmpjaG5EUzRwUE1POVNMU2NaWnVBdDRqdzgwOEhIaTZ6aDJtX2YwZWJLdEtHaW9zLXlyRGhNVnE2SUhfTkg0NDFjN0lMX2tkRFdENHhGbVRVMWRCeFdtWlRwel9ZX29OaktZMkZGdi1WdjVrenVzM1diVFBwTHU2VWNGd0oyeWpHVFY5TVJCUUVQbjBxZXpUZUwwV3lYMmFMVlV5NmZaOW9HbEJuN08xcExOaUdVVlRYZ3RqTDRRNTRqZw?oc=5",
-   "fecha": "2026-11-24T22:27:48+00:00",
+   "titulo": "Whitmer halts Straits of Mackinac oil pipeline tunnel permitting process",
+   "fuente": "Detroit Free Press",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNTHRRcF85ak80eXEwanA2bEtzM3o4TVVzOEJaeThPUmRZeTI4bE92WlFfTS1ORGtyX25PdG1Gb0RSUW9DN3FnRVVXSGJOZkRGbjlRWWtSaGliVi1KdmQyVERVV1JFWW92VnlYVExoOGx2MVJGZGt0MGZ4TE5nTjVUXzhuUFNoRUJxMXduSVNhLXZSSkQtNEVzam9kOC1RLWs5ZU1uTWJVWFpuQWpvcGlMSmFEcVpyVnM1eTFWcHRiQUZ3YjZfSWpOZg?oc=5",
+   "fecha": "2026-11-24T22:30:00+00:00",
    "tipo": "agregador",
-   "idioma": "es",
+   "idioma": "en",
    "peso": 2,
    "resumen": "",
-   "id": "2029ada5dd9d"
+   "id": "9e510161eb8c"
   }
  ],
  "num_titulares": 331,
