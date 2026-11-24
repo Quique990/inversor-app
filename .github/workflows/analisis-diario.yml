@@ -26,8 +26,6 @@ jobs:
   analizar:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: github-pages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -54,4 +52,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: web
-      - uses: actions/deploy-pages@v4
+
+  desplegar:
+    needs: analizar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4
