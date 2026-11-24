@@ -22,15 +22,14 @@ Configuración: `config/fuentes.yaml` y `config/universo_etf.yaml`. Estado diari
 | Banco central | BCE (RSS de prensa) ✔ | Tipos, discursos y estabilidad financiera de la zona euro |
 | Banco central | Reserva Federal ✔ | Tipos de EE. UU., que mueven todos los mercados |
 | Banco central | Banco de España | Contexto español |
-| Organismo | FMI | Previsiones y alertas globales |
 | Energía | EIA *Today in Energy* | Oferta y precio del petróleo y el gas |
-| Geopolítica | Al Jazeera ✔, BBC World, DW, France 24, The Guardian, El País Internacional | Cobertura internacional plural |
-| Mercados | BBC Business, CNBC Markets, MarketWatch, Yahoo Finance | Lo que mueve la sesión |
-| Mercados (ES) | Expansión, Cinco Días, elEconomista | Visión española, IBEX y prima de riesgo |
+| Geopolítica | Al Jazeera ✔, BBC World, DW, France 24, El País Internacional | Cobertura internacional plural |
+| Mercados | BBC Business, CNBC Markets, MarketWatch | Lo que mueve la sesión |
+| Mercados (ES) | Expansión, Cinco Días | Visión española, IBEX y prima de riesgo |
 | Agencias | Google News RSS (4 consultas) | Titulares de Reuters, Bloomberg, AP… |
 | Cuantitativo | GDELT DOC 2.0 (4 consultas) | Volumen y tono mundiales |
 | Índice | GPR diario (Caldara-Iacoviello) | Riesgo geopolítico medido por la Fed; contexto, no señal |
-| Precios | Yahoo Finance v8 | ETF del universo, índices, VIX, VSTOXX, Brent, oro, bono a 10 años, EUR/USD |
+| Precios | Yahoo Finance v8 | ETF del universo, índices, VIX, Brent, oro, bono a 10 años, EUR/USD |
 | Macro | FRED: T10Y3M, SAHMREALTIME, UNRATE, BAMLH0A0HYM2, CPIAUCSL | Recesión, crédito e inflación de EE. UU. |
 | Macro | BCE: EUR/USD, tipo de depósito, IPCA | Zona euro |
 

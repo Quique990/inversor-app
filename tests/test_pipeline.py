@@ -157,3 +157,9 @@ def test_backtest_misma_aportacion_y_reserva_se_invierte_en_caidas():
     # Contabilidad: lo invertido + lo que queda en la hucha = lo aportado
     assert math.isclose(r["invertido_tactico"] + r["reserva_sin_invertir"], r["aportado"], abs_tol=0.05)
     assert math.isclose(r["aportado"], 100 * len({f[:7] for f, _ in precios[252:]}), rel_tol=1e-9)
+
+
+def test_series_con_ceros_no_rompen():
+    # Regresión: T10Y3M puede valer 0.0 exacto (ZeroDivisionError en la primera ejecución real)
+    s = serie_desde([0.0] * 50 + [-0.1])
+    assert ind.resumen_activo(s)["var_1m"] is None

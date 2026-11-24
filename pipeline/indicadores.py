@@ -57,7 +57,7 @@ def caida_desde_maximo(s: Serie, dias: int = 365) -> float | None:
     if not tramo:
         return None
     maximo = max(v for _, v in tramo)
-    return (tramo[-1][1] / maximo - 1) * 100 if maximo else None
+    return (tramo[-1][1] / maximo - 1) * 100 if maximo > 0 else None
 
 
 def variacion(s: Serie, dias: int) -> float | None:
@@ -66,7 +66,7 @@ def variacion(s: Serie, dias: int) -> float | None:
         return None
     objetivo = (date.fromisoformat(s[-1][0]) - timedelta(days=dias)).isoformat()
     previos = [v for f, v in s if f <= objetivo]
-    if not previos:
+    if not previos or not previos[-1]:
         return None
     return (s[-1][1] / previos[-1] - 1) * 100
 
@@ -75,7 +75,9 @@ def volatilidad_anual(s: Serie, sesiones: int = 21) -> float | None:
     if len(s) < sesiones + 1:
         return None
     vals = [v for _, v in s[-(sesiones + 1):]]
-    rets = [vals[i] / vals[i - 1] - 1 for i in range(1, len(vals))]
+    rets = [vals[i] / vals[i - 1] - 1 for i in range(1, len(vals)) if vals[i - 1]]
+    if len(rets) < 2:
+        return None
     return pstdev(rets) * (252 ** 0.5) * 100
 
 

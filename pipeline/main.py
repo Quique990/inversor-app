@@ -53,7 +53,14 @@ def ejecutar() -> dict:
     datos = mercados.recoger_mercados(universo, fuentes, salud)
     series = datos["series"]
 
-    resumenes = {k: ind.resumen_activo(s) for k, s in series.items()}
+    resumenes = {}
+    for k, s in series.items():
+        if k not in datos["info"]:
+            continue  # solo activos e indicadores de precio (las series macro van en métricas)
+        try:
+            resumenes[k] = ind.resumen_activo(s)
+        except Exception as e:  # noqa: BLE001 - una serie rara no debe tumbar el informe
+            salud.mal(f"resumen:{k}", repr(e))
     metricas_previas = senales.calcular_metricas(series)
 
     # 2. Eventos (palabras clave + IA)

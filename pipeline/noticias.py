@@ -5,6 +5,7 @@ Sin dependencias externas para el parseo (xml.etree), para que el pipeline sea r
 from __future__ import annotations
 
 import hashlib
+import time
 import html
 import re
 import xml.etree.ElementTree as ET
@@ -172,10 +173,13 @@ def leer_gdelt(consultas: list[dict], salud: Salud) -> dict:
     """
     base = "https://api.gdeltproject.org/api/v2/doc/doc"
     salida: dict = {}
-    for c in consultas:
+    for n, c in enumerate(consultas):
+        if n:
+            time.sleep(12)  # GDELT limita a ~1 petición cada 5 s por IP; cada consulta hace 2
         try:
             vol = http_get(base, params={"query": c["query"], "mode": "TimelineVol", "timespan": "7d",
                                          "format": "json"}, timeout=30, intentos=2).json()
+            time.sleep(6)
             ton = http_get(base, params={"query": c["query"], "mode": "TimelineTone", "timespan": "7d",
                                          "format": "json"}, timeout=30, intentos=2).json()
             sv = [p["value"] for p in vol["timeline"][0]["data"]]

@@ -12,13 +12,11 @@ rss:
   - {id: bce, nombre: Banco Central Europeo, url: "https://www.ecb.europa.eu/rss/press.html", tipo: banco_central, idioma: en, peso: 3, verificada: true}
   - {id: fed, nombre: Reserva Federal, url: "https://www.federalreserve.gov/feeds/press_all.xml", tipo: banco_central, idioma: en, peso: 3, verificada: true}
   - {id: bde, nombre: Banco de España, url: "https://www.bde.es/wbe/es/inicio/rss/rss-noticias/", tipo: banco_central, idioma: es, peso: 2}
-  - {id: fmi, nombre: FMI, url: "https://www.imf.org/en/News/RSS?Language=ENG", tipo: organismo, idioma: en, peso: 2}
   - {id: eia, nombre: EIA (energía EE. UU.), url: "https://www.eia.gov/rss/todayinenergy.xml", tipo: energia, idioma: en, peso: 2}
 
   # --- Geopolítica internacional ---
   - {id: aljazeera, nombre: Al Jazeera, url: "https://www.aljazeera.com/xml/rss/all.xml", tipo: geopolitica, idioma: en, peso: 2, verificada: true}
   - {id: bbc_world, nombre: BBC World, url: "https://feeds.bbci.co.uk/news/world/rss.xml", tipo: geopolitica, idioma: en, peso: 3}
-  - {id: guardian_world, nombre: The Guardian World, url: "https://www.theguardian.com/world/rss", tipo: geopolitica, idioma: en, peso: 2}
   - {id: dw, nombre: Deutsche Welle, url: "https://rss.dw.com/rdf/rss-en-all", tipo: geopolitica, idioma: en, peso: 2}
   - {id: france24, nombre: France 24, url: "https://www.france24.com/en/rss", tipo: geopolitica, idioma: en, peso: 2}
   - {id: elpais_int, nombre: El País Internacional, url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada", tipo: geopolitica, idioma: es, peso: 2}
@@ -27,10 +25,8 @@ rss:
   - {id: bbc_business, nombre: BBC Business, url: "https://feeds.bbci.co.uk/news/business/rss.xml", tipo: mercados, idioma: en, peso: 2}
   - {id: cnbc_markets, nombre: CNBC Markets, url: "https://www.cnbc.com/id/20910258/device/rss/rss.html", tipo: mercados, idioma: en, peso: 2}
   - {id: marketwatch, nombre: MarketWatch, url: "https://feeds.content.dowjones.io/public/rss/mw_topstories", tipo: mercados, idioma: en, peso: 2}
-  - {id: yahoo_fin, nombre: Yahoo Finance, url: "https://finance.yahoo.com/news/rssindex", tipo: mercados, idioma: en, peso: 1}
   - {id: expansion, nombre: Expansión Mercados, url: "https://e00-expansion.uecdn.es/rss/mercados.xml", tipo: mercados, idioma: es, peso: 2}
   - {id: cincodias, nombre: Cinco Días Mercados, url: "https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/section/mercados-financieros/portada", tipo: mercados, idioma: es, peso: 2}
-  - {id: eleconomista, nombre: elEconomista Mercados, url: "https://www.eleconomista.es/rss/rss-mercados.php", tipo: mercados, idioma: es, peso: 1}
 
 # Google News RSS: agrega titulares de agencias (Reuters, Bloomberg, AP...) que no publican RSS propio.
 # Solo se usan los titulares; el análisis no entra en las noticias de pago.

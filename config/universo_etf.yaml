@@ -71,7 +71,6 @@ indicadores:
   - {id: STOXX50, yahoo: "^STOXX50E", nombre: Euro Stoxx 50}
   - {id: IBEX, yahoo: "^IBEX", nombre: IBEX 35}
   - {id: VIX, yahoo: "^VIX", nombre: VIX (volatilidad implícita S&P 500)}
-  - {id: VSTOXX, yahoo: "^V2TX", nombre: VSTOXX (volatilidad Euro Stoxx 50)}
   - {id: BRENT, yahoo: "BZ=F", nombre: Petróleo Brent (USD)}
   - {id: ORO, yahoo: "GC=F", nombre: Oro (USD/oz)}
   - {id: US10Y, yahoo: "^TNX", nombre: Bono EE. UU. 10 años (%)}
