@@ -71,21 +71,24 @@ def _github_models(sistema: str, usuario: str) -> dict:
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_MODELS_TOKEN")
     if not token:
         raise RuntimeError("Sin GITHUB_TOKEN")
-    errores = []
-    # Endpoint actual y, como respaldo, el antiguo de Azure (mismo token, nombres de modelo sin prefijo)
-    for url, modelo in ((GITHUB_MODELS_URL, GITHUB_MODELS_MODELO),
-                        ("https://models.inference.ai.azure.com/chat/completions", GITHUB_MODELS_MODELO.split("/")[-1])):
-        r = requests.post(url, timeout=90, headers={
-            "Authorization": f"Bearer {token}", "Content-Type": "application/json", "Accept": "application/json"}, json={
-            "model": modelo, "temperature": 0.2, "max_tokens": 1500,
-            "messages": [{"role": "system", "content": sistema}, {"role": "user", "content": usuario}]})
+    cabeceras = {"Authorization": f"Bearer {token}", "Content-Type": "application/json",
+                 "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2026-03-10"}
+    r = requests.post(GITHUB_MODELS_URL, timeout=90, headers=cabeceras, json={
+        "model": GITHUB_MODELS_MODELO, "temperature": 0.2, "max_tokens": 1500,
+        "messages": [{"role": "system", "content": sistema}, {"role": "user", "content": usuario}]})
+    try:
+        r.raise_for_status()
+        return _extraer_json(r.json()["choices"][0]["message"]["content"])
+    except Exception as e:  # noqa: BLE001
+        # Diagnóstico: ¿existe el modelo en el catálogo?
         try:
-            r.raise_for_status()
-            return _extraer_json(r.json()["choices"][0]["message"]["content"])
-        except Exception as e:  # noqa: BLE001
-            errores.append(f"{url} -> {r.status_code}: {e!r} | {r.text[:300]!r}")
-            log.warning("GitHub Models (%s) respondió %s: %s", url, r.status_code, r.text[:300])
-    raise RuntimeError(" ; ".join(errores))
+            cat = requests.get("https://models.github.ai/catalog/models", headers=cabeceras, timeout=30).json()
+            ids = [m.get("id") for m in cat] if isinstance(cat, list) else []
+            log.warning("Modelo %s en catálogo: %s. Ejemplos: %s", GITHUB_MODELS_MODELO, GITHUB_MODELS_MODELO in ids, ids[:12])
+        except Exception:  # noqa: BLE001
+            pass
+        raise RuntimeError(f"{r.status_code}: {e!r} | {r.headers.get('content-type')} | {r.text[:300]!r}") from e
+
 
 
 def _gemini(sistema: str, usuario: str) -> dict:
