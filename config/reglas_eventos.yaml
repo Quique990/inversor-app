@@ -1,0 +1,224 @@
+# Base de conocimiento "eventos -> mercados" en formato legible por máquina.
+# La explicación completa, con fuentes, está en docs/05-base-conocimiento-eventos.md.
+#
+# Cómo se usa:
+#   1. El clasificador (palabras clave + IA) asigna cada titular a un tipo de evento.
+#   2. Se calcula la intensidad del tipo (nº de titulares ponderados + tono GDELT + movimiento de precios).
+#   3. El motor de señales combina los eventos activos con el "régimen" macro (recesión sí/no,
+#      inflación alta sí/no, tendencia) para decidir la postura táctica.
+#
+# Convenciones de impacto: -2 muy negativo, -1 negativo, 0 neutro, +1 positivo, +2 muy positivo.
+# Son impactos TÍPICOS a corto plazo (días-semanas), no garantías.
+
+regimenes:
+  expansion:
+    descripcion: Sin señales de recesión. Históricamente los shocks se recuperan en semanas.
+  recesion_probable:
+    descripcion: >-
+      Curva invertida + paro subiendo (regla de Sahm >= 0.5) o diferenciales de crédito disparados.
+      Los shocks se amplifican y las recuperaciones tardan meses o años.
+  inflacion_alta:
+    descripcion: >-
+      Inflación por encima del objetivo y bancos centrales subiendo tipos. Los shocks de oferta
+      (petróleo) son más peligrosos: el banco central no puede "rescatar" al mercado (caso 1973).
+
+eventos:
+  conflicto_militar:
+    nombre: Conflicto militar / invasión / ataque entre estados
+    palabras: [war, invasion, invade, airstrike, air strike, missile, troops, military escalation, bombing,
+               guerra, invasión, invade, bombardeo, ataque aéreo, misil, tropas, escalada militar]
+    impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 1, dolar: 1, petroleo: 1}
+    historia:
+      caida_media_sp500_pct: -4.5
+      caida_mediana_sp500_pct: -2.9
+      dias_hasta_suelo: 18
+      dias_recuperacion: 39
+      fuente: LPL Research (26 eventos geopolíticos desde 1941); Deutsche Bank (mediana -6.1%)
+    matices:
+      - La magnitud del evento rara vez predice la magnitud del impacto en bolsa.
+      - Si el conflicto afecta al suministro de energía, tratar también como shock_petroleo.
+      - Bolsas emergentes del país implicado caen mucho más que las desarrolladas.
+    postura: {expansion: comprar_extra_escalonado, recesion_probable: mantener_plan, inflacion_alta: escalonar}
+
+  shock_petroleo:
+    nombre: Shock de oferta de petróleo / energía
+    palabras: [oil supply, opec cut, strait of hormuz, pipeline attack, refinery attack, oil embargo, brent surges, oil spike,
+               petróleo se dispara, recorte opep, estrecho de ormuz, embargo petrolero, suministro energético]
+    impacto: {renta_variable: -1, renta_fija_calidad: 0, oro: 1, dolar: 1, petroleo: 2}
+    historia:
+      nota: >-
+        La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973
+        (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30%
+        por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.
+      fuente: T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)
+    matices:
+      - Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.
+      - Europa es más vulnerable que EE. UU. (importador neto de energía).
+    postura: {expansion: mantener_plan, recesion_probable: precaucion, inflacion_alta: precaucion}
+
+  terrorismo:
+    nombre: Atentado terrorista de gran escala
+    palabras: [terrorist attack, terror attack, bombing kills, atentado terrorista, atentado]
+    impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 1, dolar: 0, petroleo: 0}
+    historia:
+      nota: El 11-S cerró la bolsa 4 días y cayó ~11.6%; recuperó en ~1 mes. La mayoría tienen impacto de días.
+      fuente: LPL Research
+    postura: {expansion: comprar_extra_escalonado, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  aranceles_sanciones:
+    nombre: Guerra comercial / aranceles / sanciones
+    palabras: [tariff, tariffs, trade war, sanctions, export controls, retaliatory duties,
+               arancel, aranceles, guerra comercial, sanciones, controles a la exportación]
+    impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 1, dolar: 0, petroleo: -1}
+    historia:
+      nota: >-
+        Abril 2025: el S&P 500 cayó ~12% en 4 días tras los aranceles del 2 de abril, subió un 9.5% en un día
+        al anunciarse la pausa y superó máximos en menos de 20 semanas. El rebote se debió sobre todo a la
+        marcha atrás de la política, no a que el shock fuera inocuo.
+      fuente: AP; BIS Quarterly Review (sept. 2025)
+    matices:
+      - Mercado muy sensible a titulares de "pausa" o "acuerdo": movimientos bruscos en ambos sentidos.
+      - No vender en el pánico inicial: el riesgo de perderse el rebote es alto.
+    postura: {expansion: comprar_extra_escalonado, recesion_probable: mantener_plan, inflacion_alta: escalonar}
+
+  banco_central_endurece:
+    nombre: Banco central sube tipos o endurece el tono (por sorpresa)
+    palabras: [rate hike, raises rates, hawkish, tightening, subida de tipos, sube los tipos, tono duro, endurecimiento]
+    impacto: {renta_variable: -1, renta_fija_calidad: -1, oro: -1, dolar: 1, petroleo: 0}
+    matices:
+      - Lo que mueve el mercado es la SORPRESA frente a lo descontado, no la decisión en sí.
+      - Una subida ya esperada suele tener impacto pequeño.
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  banco_central_relaja:
+    nombre: Banco central baja tipos o suaviza el tono
+    palabras: [rate cut, cuts rates, dovish, easing, bajada de tipos, baja los tipos, recorte de tipos]
+    impacto: {renta_variable: 1, renta_fija_calidad: 1, oro: 1, dolar: -1, petroleo: 0}
+    historia:
+      nota: >-
+        S&P 500 +6.6% de media un año después del primer recorte del ciclo (Evercore, desde 1970), pero
+        -12% de media si el recorte llega en recesión (Carson). El contexto económico lo decide todo.
+      fuente: Reuters/Evercore ISI; Carson Group; Ned Davis Research
+    postura: {expansion: mantener_plan, recesion_probable: precaucion, inflacion_alta: mantener_plan}
+
+  inflacion_sorpresa_alza:
+    nombre: Dato de inflación peor de lo esperado
+    palabras: [hotter-than-expected inflation, inflation surges, cpi beats, inflación repunta, ipc sube más de lo esperado, inflación peor de lo esperado]
+    impacto: {renta_variable: -1, renta_fija_calidad: -1, oro: 0, dolar: 1, petroleo: 0}
+    matices:
+      - En regímenes de inflación alta (2021-2023) la reacción del mercado al IPC fue mucho mayor que antes.
+      - Las reacciones de un día son muy impredecibles (a veces se compra la mala noticia).
+    fuente: Kroner (Reserva Federal, 2023-2025)
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  senales_recesion:
+    nombre: Señales de recesión (paro, PMIs, beneficios)
+    palabras: [recession, layoffs surge, unemployment rises, pmi contraction, gdp contracts, recesión, despidos masivos, el paro sube, contracción del pib]
+    impacto: {renta_variable: -2, renta_fija_calidad: 2, oro: 1, dolar: 1, petroleo: -1}
+    historia:
+      nota: >-
+        Desde 1969 toda recesión de EE. UU. vino precedida de inversión de la curva, con un retraso de ~14-22 meses
+        y muy irregular. No toda inversión trajo recesión. La caída media de un mercado bajista con recesión es muy
+        superior a la de un shock geopolítico.
+      fuente: Credit Suisse; Invesco; BMO
+    postura: {expansion: mantener_plan, recesion_probable: escalonar, inflacion_alta: escalonar}
+
+  crisis_bancaria_credito:
+    nombre: Crisis bancaria / de crédito / impagos
+    palabras: [bank run, bank collapse, banking crisis, credit crunch, default, bailout, quiebra bancaria, crisis bancaria, rescate bancario, impago]
+    impacto: {renta_variable: -2, renta_fija_calidad: 1, oro: 1, dolar: 1, petroleo: -1}
+    matices:
+      - Vigilar el diferencial high yield (FRED BAMLH0A0HYM2) como confirmación.
+      - 2008 fue sistémica; 2023 (SVB) fue contenida en semanas por la respuesta de los bancos centrales.
+    postura: {expansion: escalonar, recesion_probable: precaucion, inflacion_alta: precaucion}
+
+  deuda_soberana_euro:
+    nombre: Tensión en deuda soberana europea (prima de riesgo)
+    palabras: [bond spreads widen, sovereign debt crisis, italy spread, prima de riesgo se dispara, crisis de deuda, diferencial con el bono alemán]
+    impacto: {renta_variable: -1, renta_fija_calidad: 0, oro: 1, dolar: 1, petroleo: 0}
+    matices:
+      - Muy relevante para el IBEX y la banca española.
+      - El BCE tiene instrumentos (TPI) para frenarla; su anuncio suele cortar la crisis.
+    postura: {expansion: mantener_plan, recesion_probable: precaucion, inflacion_alta: mantener_plan}
+
+  pandemia:
+    nombre: Pandemia / emergencia sanitaria global
+    palabras: [pandemic, outbreak spreads, lockdown, who declares emergency, pandemia, confinamiento, brote se extiende]
+    impacto: {renta_variable: -2, renta_fija_calidad: 2, oro: 1, dolar: 1, petroleo: -2}
+    historia:
+      nota: Covid-19 (2020) -34% en 23 sesiones; recuperó máximos en ~5 meses gracias a estímulos masivos.
+      fuente: S&P Dow Jones Indices; BIS
+    postura: {expansion: escalonar, recesion_probable: escalonar, inflacion_alta: escalonar}
+
+  elecciones_politica:
+    nombre: Elecciones / incertidumbre política relevante
+    palabras: [election, snap election, government collapse, impeachment, elecciones, moción de censura, caída del gobierno]
+    impacto: {renta_variable: 0, renta_fija_calidad: 0, oro: 0, dolar: 0, petroleo: 0}
+    historia:
+      nota: >-
+        Los años de midterms en EE. UU. son históricamente los más volátiles del ciclo presidencial, pero el
+        mercado suele subir en los 12 meses siguientes a la cita. El partido ganador no predice la rentabilidad.
+      fuente: LPL Research; Fidelity; BlackRock (2026)
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  valoraciones_burbuja:
+    nombre: Dudas sobre valoraciones / burbuja (p. ej. IA)
+    palabras: [bubble, overvalued, ai bubble, valuation concerns, tech selloff, burbuja, sobrevaloración, desplome tecnológicas]
+    impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 0, dolar: 0, petroleo: 0}
+    matices:
+      - El CAPE explica ~40-60% de la rentabilidad a 10 años, pero casi nada a 1 año: no sirve para el market timing.
+      - Respuesta adecuada = diversificar (no concentrar en EE. UU./tecnología), no salir del mercado.
+    fuente: Vanguard; Morningstar (Component CAPE, 2026)
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  desescalada_acuerdo:
+    nombre: Desescalada / alto el fuego / acuerdo comercial
+    palabras: [ceasefire, peace deal, truce, trade deal, tariff pause, de-escalation, alto el fuego, acuerdo de paz, tregua, acuerdo comercial, desescalada]
+    impacto: {renta_variable: 1, renta_fija_calidad: 0, oro: -1, dolar: -1, petroleo: -1}
+    matices:
+      - Suele provocar rebotes rápidos; perseguirlos después de subir mucho no tiene ventaja.
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+  desastre_natural:
+    nombre: Desastre natural de gran escala
+    palabras: [earthquake, tsunami, hurricane, terremoto, huracán]
+    impacto: {renta_variable: 0, renta_fija_calidad: 0, oro: 0, dolar: 0, petroleo: 0}
+    matices:
+      - Impacto global normalmente pequeño salvo que afecte a cadenas de suministro clave (Japón 2011).
+    postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}
+
+# Señales cuantitativas de mercado (independientes de las noticias).
+umbrales:
+  caida_desde_maximo:   # renta variable global (VWCE) frente a su máximo de 52 semanas
+    leve: -5
+    correccion: -10
+    fuerte: -20
+  vix:
+    tension: 25
+    miedo: 30
+    panico: 40          # Wells Fargo: con VIX > 40, S&P 500 +30% de media a 12 meses, >90% positivo (1990-2025)
+  tendencia:
+    media_larga_dias: 200   # Faber: filtro de 10 meses / 200 sesiones
+    sesiones_confirmacion: 40  # nº de sesiones bajo la media para hablar de tendencia (no de shock puntual)
+  petroleo:
+    subida_3m_pct_alerta: 30
+  sahm:
+    recesion: 0.5
+  curva_10a3m:
+    inversion: 0.0
+  high_yield:
+    tension: 5.0
+    crisis: 7.0
+
+# Traducción de la postura a una acción concreta para el usuario.
+posturas:
+  comprar_extra:
+    texto: Buen momento para una aportación extra.
+  comprar_extra_escalonado:
+    texto: Buen momento para aportar extra, mejor en 2-3 partes durante las próximas semanas.
+  escalonar:
+    texto: Si aportas extra, hazlo en varias partes; la caída podría prolongarse.
+  mantener_plan:
+    texto: Sigue con tu plan de inversión habitual. No hace falta hacer nada.
+  precaucion:
+    texto: Entorno de riesgo elevado. Mantén el plan, no hagas aportaciones extra grandes y revisa que tu fondo de emergencia esté cubierto.

@@ -1,0 +1,937 @@
+{
+ "fecha": "2026-11-24",
+ "generado": "2026-11-24T21:54:17+00:00",
+ "resumen": "DATOS DE DEMOSTRACIÓN (simulados). Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); shock de oferta de petróleo / energía (intensidad 2/3); guerra comercial / aranceles / sanciones (intensidad 1/3). Si aportas extra, hazlo en varias partes; la caída podría prolongarse. (Resumen automático sin IA.)",
+ "riesgos_a_vigilar": [],
+ "tono_global": null,
+ "ia": "desactivada",
+ "eventos": [
+  {
+   "tipo": "conflicto_militar",
+   "nombre": "Conflicto militar / invasión / ataque entre estados",
+   "intensidad": 3,
+   "titulares": 8,
+   "ejemplos": [
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Las bolsas europeas caen por la escalada militar en Oriente Próximo",
+     "fuente": "Expansión",
+     "url": "https://x/3"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": 2.3,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 1,
+    "oro": 1,
+    "dolar": 1,
+    "petroleo": 1
+   },
+   "historia": {
+    "caida_media_sp500_pct": -4.5,
+    "caida_mediana_sp500_pct": -2.9,
+    "dias_hasta_suelo": 18,
+    "dias_recuperacion": 39,
+    "fuente": "LPL Research (26 eventos geopolíticos desde 1941); Deutsche Bank (mediana -6.1%)"
+   },
+   "matices": [
+    "La magnitud del evento rara vez predice la magnitud del impacto en bolsa.",
+    "Si el conflicto afecta al suministro de energía, tratar también como shock_petroleo.",
+    "Bolsas emergentes del país implicado caen mucho más que las desarrolladas."
+   ]
+  },
+  {
+   "tipo": "shock_petroleo",
+   "nombre": "Shock de oferta de petróleo / energía",
+   "intensidad": 2,
+   "titulares": 8,
+   "ejemplos": [
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+     "fuente": "BBC World",
+     "url": "https://x/1"
+    },
+    {
+     "titulo": "Iran threatens to close Strait of Hormuz as tensions rise",
+     "fuente": "Al Jazeera",
+     "url": "https://x/2"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": 1.5,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 0,
+    "oro": 1,
+    "dolar": 1,
+    "petroleo": 2
+   },
+   "historia": {
+    "nota": "La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973 (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30% por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.",
+    "fuente": "T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)"
+   },
+   "matices": [
+    "Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.",
+    "Europa es más vulnerable que EE. UU. (importador neto de energía)."
+   ]
+  },
+  {
+   "tipo": "aranceles_sanciones",
+   "nombre": "Guerra comercial / aranceles / sanciones",
+   "intensidad": 1,
+   "titulares": 4,
+   "ejemplos": [
+    {
+     "titulo": "New tariffs on European cars announced by Washington",
+     "fuente": "CNBC",
+     "url": "https://x/5"
+    },
+    {
+     "titulo": "New tariffs on European cars announced by Washington",
+     "fuente": "CNBC",
+     "url": "https://x/5"
+    },
+    {
+     "titulo": "New tariffs on European cars announced by Washington",
+     "fuente": "CNBC",
+     "url": "https://x/5"
+    },
+    {
+     "titulo": "New tariffs on European cars announced by Washington",
+     "fuente": "CNBC",
+     "url": "https://x/5"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 1,
+    "oro": 1,
+    "dolar": 0,
+    "petroleo": -1
+   },
+   "historia": {
+    "nota": "Abril 2025: el S&P 500 cayó ~12% en 4 días tras los aranceles del 2 de abril, subió un 9.5% en un día al anunciarse la pausa y superó máximos en menos de 20 semanas. El rebote se debió sobre todo a la marcha atrás de la política, no a que el shock fuera inocuo.",
+    "fuente": "AP; BIS Quarterly Review (sept. 2025)"
+   },
+   "matices": [
+    {
+     "Mercado muy sensible a titulares de \"pausa\" o \"acuerdo\"": "movimientos bruscos en ambos sentidos."
+    },
+    {
+     "No vender en el pánico inicial": "el riesgo de perderse el rebote es alto."
+    }
+   ]
+  }
+ ],
+ "decision": {
+  "metricas": {
+   "proxy": "VWCE",
+   "caida_52s": -14.79,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.03,
+   "sesiones_bajo_mm200": 93,
+   "var_1m": -10.08,
+   "vix": 27.0,
+   "vstoxx": 27.0,
+   "brent_3m": -6.63,
+   "oro_1m": -1.58,
+   "sahm": 0.2,
+   "curva_10a3m": 0.4,
+   "curva_min_24m": 0.4,
+   "high_yield": 3.4,
+   "ipc_eeuu": 1.0,
+   "ipca_euro": 2.4,
+   "tipo_bce": 2.0,
+   "gpr": 180.0,
+   "gpr_media_1a": 161.8
+  },
+  "regimen": {
+   "principal": "expansion",
+   "recesion_probable": false,
+   "inflacion_alta": false,
+   "motivos": []
+  },
+  "puntuacion": 46.5,
+  "factores": [
+   {
+    "factor": "Caída desde máximos (52 semanas)",
+    "valor": "-14.8%",
+    "puntos": 27.7
+   },
+   {
+    "factor": "Miedo en el mercado (VIX/VSTOXX)",
+    "valor": "27.0",
+    "puntos": 8.8
+   },
+   {
+    "factor": "Caída provocada por un shock geopolítico (suelen recuperarse en semanas)",
+    "valor": "Conflicto militar / invasión / ataque entre estados",
+    "puntos": 10.0
+   }
+  ],
+  "postura": "escalonar",
+  "multiplicador_extra": 3,
+  "tramos": 3,
+  "tendencia_bajista": true,
+  "avisos": [
+   "La renta variable está por debajo de su media de 200 sesiones y la media baja: las caídas pueden alargarse, mejor escalonar."
+  ],
+  "texto_postura": "Si aportas extra, hazlo en varias partes; la caída podría prolongarse.",
+  "confianza": "media"
+ },
+ "gdelt": {
+  "conflicto": {
+   "ratio": 2.3,
+   "tono_hoy": -6.1
+  },
+  "energia": {
+   "ratio": 1.5
+  }
+ },
+ "activos": {
+  "VWCE": {
+   "fecha": "2026-11-24",
+   "ultimo": 190.1943,
+   "var_1d": -0.44,
+   "var_1m": -10.08,
+   "var_3m": -13.13,
+   "var_1a": -0.26,
+   "caida_max_52s": -14.79,
+   "mm200": 217.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.03,
+   "vol_1m": 0.1,
+   "nombre": "Vanguard FTSE All-World UCITS ETF (Acc)",
+   "isin": "IE00BK5BQT80",
+   "yahoo": "VWCE.DE",
+   "moneda": "EUR"
+  },
+  "EUNL": {
+   "fecha": "2026-11-24",
+   "ultimo": 190.1943,
+   "var_1d": -0.44,
+   "var_1m": -10.08,
+   "var_3m": -13.13,
+   "var_1a": -0.26,
+   "caida_max_52s": -14.79,
+   "mm200": 217.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.03,
+   "vol_1m": 0.1,
+   "nombre": "iShares Core MSCI World UCITS ETF (Acc)",
+   "isin": "IE00B4L5Y983",
+   "yahoo": "EUNL.DE",
+   "moneda": "EUR"
+  },
+  "IS3N": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "iShares Core MSCI EM IMI UCITS ETF (Acc)",
+   "isin": "IE00BKM4GZ66",
+   "yahoo": "IS3N.DE",
+   "moneda": "EUR"
+  },
+  "SXR8": {
+   "fecha": "2026-11-24",
+   "ultimo": 190.1943,
+   "var_1d": -0.44,
+   "var_1m": -10.08,
+   "var_3m": -13.13,
+   "var_1a": -0.26,
+   "caida_max_52s": -14.79,
+   "mm200": 217.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.03,
+   "vol_1m": 0.1,
+   "nombre": "iShares Core S&P 500 UCITS ETF (Acc)",
+   "isin": "IE00B5BMR087",
+   "yahoo": "SXR8.DE",
+   "moneda": "EUR"
+  },
+  "EUNH": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "iShares Core Euro Government Bond UCITS ETF (Dist)",
+   "isin": "IE00B4WXJJ64",
+   "yahoo": "EUNH.DE",
+   "moneda": "EUR"
+  },
+  "EUNA": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "iShares Core Global Aggregate Bond UCITS ETF EUR Hedged (Acc)",
+   "isin": "IE00BDBRDM35",
+   "yahoo": "EUNA.DE",
+   "moneda": "EUR"
+  },
+  "XEON": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Xtrackers II EUR Overnight Rate Swap UCITS ETF (Acc)",
+   "isin": "LU0290358497",
+   "yahoo": "XEON.DE",
+   "moneda": "EUR"
+  },
+  "8PSG": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Invesco Physical Gold ETC",
+   "isin": "IE00B579F325",
+   "yahoo": "8PSG.DE",
+   "moneda": "EUR"
+  },
+  "4GLD": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Xetra-Gold",
+   "isin": "DE000A0S9GB0",
+   "yahoo": "4GLD.DE",
+   "moneda": "EUR"
+  },
+  "SP500": {
+   "fecha": "2026-11-24",
+   "ultimo": 190.1943,
+   "var_1d": -0.44,
+   "var_1m": -10.08,
+   "var_3m": -13.13,
+   "var_1a": -0.26,
+   "caida_max_52s": -14.79,
+   "mm200": 217.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.03,
+   "vol_1m": 0.1,
+   "nombre": "S&P 500",
+   "isin": null,
+   "yahoo": "^GSPC",
+   "moneda": "EUR"
+  },
+  "STOXX50": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Euro Stoxx 50",
+   "isin": null,
+   "yahoo": "^STOXX50E",
+   "moneda": "EUR"
+  },
+  "IBEX": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "IBEX 35",
+   "isin": null,
+   "yahoo": "^IBEX",
+   "moneda": "EUR"
+  },
+  "VIX": {
+   "fecha": "2026-11-24",
+   "ultimo": 27.0,
+   "var_1d": 0.0,
+   "var_1m": 0.0,
+   "var_3m": 0.0,
+   "var_1a": 0.0,
+   "caida_max_52s": 0.0,
+   "mm200": 27.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": 0.0,
+   "vol_1m": 0.0,
+   "nombre": "VIX (volatilidad implícita S&P 500)",
+   "isin": null,
+   "yahoo": "^VIX",
+   "moneda": "USD"
+  },
+  "VSTOXX": {
+   "fecha": "2026-11-24",
+   "ultimo": 27.0,
+   "var_1d": 0.0,
+   "var_1m": 0.0,
+   "var_3m": 0.0,
+   "var_1a": 0.0,
+   "caida_max_52s": 0.0,
+   "mm200": 27.0,
+   "sobre_mm200": false,
+   "pendiente_mm200": 0.0,
+   "vol_1m": 0.0,
+   "nombre": "VSTOXX (volatilidad Euro Stoxx 50)",
+   "isin": null,
+   "yahoo": "^V2TX",
+   "moneda": "USD"
+  },
+  "BRENT": {
+   "fecha": "2026-11-24",
+   "ultimo": 99.0342,
+   "var_1d": -0.07,
+   "var_1m": -2.16,
+   "var_3m": -6.63,
+   "var_1a": 1.49,
+   "caida_max_52s": -9.91,
+   "mm200": 105.88,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.93,
+   "vol_1m": 0.04,
+   "nombre": "Petróleo Brent (USD)",
+   "isin": null,
+   "yahoo": "BZ=F",
+   "moneda": "USD"
+  },
+  "ORO": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Oro (USD/oz)",
+   "isin": null,
+   "yahoo": "GC=F",
+   "moneda": "EUR"
+  },
+  "US10Y": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "Bono EE. UU. 10 años (%)",
+   "isin": null,
+   "yahoo": "^TNX",
+   "moneda": "EUR"
+  },
+  "EURUSD": {
+   "fecha": "2026-11-24",
+   "ultimo": 208.1812,
+   "var_1d": -0.05,
+   "var_1m": -1.58,
+   "var_3m": -4.91,
+   "var_1a": 9.18,
+   "caida_max_52s": -6.73,
+   "mm200": 218.13,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.54,
+   "vol_1m": 0.04,
+   "nombre": "EUR/USD",
+   "isin": null,
+   "yahoo": "EURUSD=X",
+   "moneda": "EUR"
+  },
+  "T10Y3M": {
+   "fecha": "2026-11-24",
+   "ultimo": 0.4,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "SAHMREALTIME": {
+   "fecha": "2026-11-24",
+   "ultimo": 0.2,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "UNRATE": {
+   "fecha": "2026-11-24",
+   "ultimo": 4.2,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "BAMLH0A0HYM2": {
+   "fecha": "2026-11-24",
+   "ultimo": 3.4,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "CPIAUCSL": {
+   "fecha": "2026-11-24",
+   "ultimo": 303.0,
+   "var_1d": 0.08,
+   "var_1m": 0.08,
+   "var_3m": 0.25,
+   "var_1a": 1.0,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "EURUSD_BCE": {
+   "fecha": "2026-11-24",
+   "ultimo": 1.08,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "DFR": {
+   "fecha": "2026-11-24",
+   "ultimo": 2.0,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "HICP_EURO": {
+   "fecha": "2026-11-24",
+   "ultimo": 2.4,
+   "var_1d": null,
+   "var_1m": null,
+   "var_3m": null,
+   "var_1a": null,
+   "caida_max_52s": 0.0,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": null,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  },
+  "GPR": {
+   "fecha": "2026-11-24",
+   "ultimo": 180.0,
+   "var_1d": 0.06,
+   "var_1m": 1.69,
+   "var_3m": 5.32,
+   "var_1a": 25.44,
+   "caida_max_52s": 0.0,
+   "mm200": 170.05,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.19,
+   "vol_1m": 0.0,
+   "nombre": null,
+   "isin": null,
+   "yahoo": null,
+   "moneda": null
+  }
+ },
+ "titulares": [
+  {
+   "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://x/1",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "781e7d20ec1f"
+  },
+  {
+   "titulo": "ECB keeps rates unchanged, signals vigilance on inflation",
+   "fuente": "BCE",
+   "fuente_id": "bce",
+   "url": "https://x/4",
+   "fecha": null,
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "112ee18ff104"
+  },
+  {
+   "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://x/1",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "781e7d20ec1f"
+  },
+  {
+   "titulo": "ECB keeps rates unchanged, signals vigilance on inflation",
+   "fuente": "BCE",
+   "fuente_id": "bce",
+   "url": "https://x/4",
+   "fecha": null,
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "112ee18ff104"
+  },
+  {
+   "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://x/1",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "781e7d20ec1f"
+  },
+  {
+   "titulo": "ECB keeps rates unchanged, signals vigilance on inflation",
+   "fuente": "BCE",
+   "fuente_id": "bce",
+   "url": "https://x/4",
+   "fecha": null,
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "112ee18ff104"
+  },
+  {
+   "titulo": "Missile strikes escalate conflict in the Gulf; oil supply fears grow",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://x/1",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "781e7d20ec1f"
+  },
+  {
+   "titulo": "ECB keeps rates unchanged, signals vigilance on inflation",
+   "fuente": "BCE",
+   "fuente_id": "bce",
+   "url": "https://x/4",
+   "fecha": null,
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "112ee18ff104"
+  },
+  {
+   "titulo": "Iran threatens to close Strait of Hormuz as tensions rise",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://x/2",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "2059bc9f8a08"
+  },
+  {
+   "titulo": "Las bolsas europeas caen por la escalada militar en Oriente Próximo",
+   "fuente": "Expansión",
+   "fuente_id": "expansion",
+   "url": "https://x/3",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "924496786ca5"
+  },
+  {
+   "titulo": "New tariffs on European cars announced by Washington",
+   "fuente": "CNBC",
+   "fuente_id": "cnbc_markets",
+   "url": "https://x/5",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "22909ebb7939"
+  },
+  {
+   "titulo": "Iran threatens to close Strait of Hormuz as tensions rise",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://x/2",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "2059bc9f8a08"
+  },
+  {
+   "titulo": "Las bolsas europeas caen por la escalada militar en Oriente Próximo",
+   "fuente": "Expansión",
+   "fuente_id": "expansion",
+   "url": "https://x/3",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "924496786ca5"
+  },
+  {
+   "titulo": "New tariffs on European cars announced by Washington",
+   "fuente": "CNBC",
+   "fuente_id": "cnbc_markets",
+   "url": "https://x/5",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "22909ebb7939"
+  },
+  {
+   "titulo": "Iran threatens to close Strait of Hormuz as tensions rise",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://x/2",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "2059bc9f8a08"
+  },
+  {
+   "titulo": "Las bolsas europeas caen por la escalada militar en Oriente Próximo",
+   "fuente": "Expansión",
+   "fuente_id": "expansion",
+   "url": "https://x/3",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "924496786ca5"
+  },
+  {
+   "titulo": "New tariffs on European cars announced by Washington",
+   "fuente": "CNBC",
+   "fuente_id": "cnbc_markets",
+   "url": "https://x/5",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "22909ebb7939"
+  },
+  {
+   "titulo": "Iran threatens to close Strait of Hormuz as tensions rise",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://x/2",
+   "fecha": null,
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "2059bc9f8a08"
+  },
+  {
+   "titulo": "Las bolsas europeas caen por la escalada militar en Oriente Próximo",
+   "fuente": "Expansión",
+   "fuente_id": "expansion",
+   "url": "https://x/3",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "924496786ca5"
+  },
+  {
+   "titulo": "New tariffs on European cars announced by Washington",
+   "fuente": "CNBC",
+   "fuente_id": "cnbc_markets",
+   "url": "https://x/5",
+   "fecha": null,
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "22909ebb7939"
+  }
+ ],
+ "num_titulares": 20,
+ "aviso_legal": "Herramienta personal de apoyo a la decisión. No es asesoramiento financiero. Las rentabilidades pasadas no garantizan rentabilidades futuras.",
+ "demo": true
+}

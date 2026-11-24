@@ -1,0 +1,56 @@
+name: Análisis diario
+
+on:
+  schedule:
+    # 06:43 UTC = 07:43 en Madrid (invierno) / 08:43 (verano). Minuto no redondo para evitar colas.
+    - cron: "43 6 * * *"
+  workflow_dispatch:
+    inputs:
+      sin_ia:
+        description: "Ejecutar sin IA (1 = sí)"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write   # para guardar web/data
+  models: read      # GitHub Models gratis con el GITHUB_TOKEN
+  pages: write
+  id-token: write
+
+concurrency:
+  group: analisis-diario
+  cancel-in-progress: false
+
+jobs:
+  analizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Ejecutar análisis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}   # opcional (respaldo gratuito)
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL }}
+          SIN_IA: ${{ github.event.inputs.sin_ia }}
+        run: python -m pipeline.main
+      - name: Guardar resultados
+        run: |
+          git config user.name "analisis-diario[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/data
+          git diff --cached --quiet || git commit -m "Análisis diario $(date -u +%F)"
+          git push
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - uses: actions/deploy-pages@v4

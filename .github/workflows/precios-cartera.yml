@@ -1,0 +1,42 @@
+name: Precios de la cartera (reutilizable)
+
+# Workflow REUTILIZABLE. No se ejecuta aquí: lo llama el repositorio PRIVADO de datos
+# (plantilla en plantilla-datos/.github/workflows/precios.yml). Corre en el contexto del
+# repositorio privado, así que tus activos nunca pasan por este repositorio público.
+on:
+  workflow_call:
+    inputs:
+      repo_app:
+        description: "Repositorio público de la app (usuario/inversor-app)"
+        required: true
+        type: string
+
+jobs:
+  precios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Repositorio de datos (privado)
+        uses: actions/checkout@v4
+        with:
+          path: datos
+      - name: Código de la app (público)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo_app }}
+          path: app
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests PyYAML
+      - name: Descargar precios
+        working-directory: app
+        run: python -m pipeline.precios_cartera --datos ../datos
+      - name: Guardar
+        working-directory: datos
+        run: |
+          git config user.name "precios[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/precios.json
+          git diff --cached --quiet || git commit -m "Precios $(date -u +%F)"
+          git push

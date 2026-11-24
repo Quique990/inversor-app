@@ -1,0 +1,17 @@
+name: Precios de mi cartera
+
+# Copia este fichero en tu repositorio PRIVADO de datos (inversor-datos).
+# Cambia TU_USUARIO por tu usuario de GitHub en las dos líneas marcadas.
+on:
+  schedule:
+    - cron: "17 18 * * 1-5"   # 18:17 UTC, tras el cierre europeo, de lunes a viernes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  precios:
+    uses: TU_USUARIO/inversor-app/.github/workflows/precios-cartera.yml@main   # <- TU_USUARIO
+    with:
+      repo_app: TU_USUARIO/inversor-app                                       # <- TU_USUARIO

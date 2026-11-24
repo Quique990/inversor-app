@@ -1,0 +1,92 @@
+# Universo de ETF/ETC candidatos (UCITS, disponibles para inversores de la UE).
+# - isin: identificador oficial. Es lo que buscas en Trade Republic.
+# - yahoo: ticker en Yahoo Finance (cotización en EUR en Xetra salvo indicación).
+# - rol: hueco de la cartera modelo que puede ocupar.
+# - verificar_tr: comprobar en la app de Trade Republic que admite plan de inversión.
+# El pipeline valida a diario que cada ticker devuelve precios y marca los que fallan
+# en web/data/salud_fuentes.json. Si un ticker falla de forma persistente, corrígelo aquí.
+
+etfs:
+  - id: VWCE
+    nombre: Vanguard FTSE All-World UCITS ETF (Acc)
+    isin: IE00BK5BQT80
+    yahoo: VWCE.DE
+    rol: renta_variable_global
+    ter: 0.19
+    notas: Una sola pieza para toda la renta variable mundial (desarrollados + emergentes).
+  - id: EUNL
+    nombre: iShares Core MSCI World UCITS ETF (Acc)
+    isin: IE00B4L5Y983
+    yahoo: EUNL.DE
+    rol: renta_variable_desarrollados
+    ter: 0.20
+  - id: IS3N
+    nombre: iShares Core MSCI EM IMI UCITS ETF (Acc)
+    isin: IE00BKM4GZ66
+    yahoo: IS3N.DE
+    rol: renta_variable_emergentes
+    ter: 0.18
+  - id: SXR8
+    nombre: iShares Core S&P 500 UCITS ETF (Acc)
+    isin: IE00B5BMR087
+    yahoo: SXR8.DE
+    rol: renta_variable_eeuu
+    ter: 0.07
+  - id: EUNH
+    nombre: iShares Core Euro Government Bond UCITS ETF (Dist)
+    isin: IE00B4WXJJ64
+    yahoo: EUNH.DE
+    rol: renta_fija_euro
+    ter: 0.07
+  - id: EUNA
+    nombre: iShares Core Global Aggregate Bond UCITS ETF EUR Hedged (Acc)
+    isin: IE00BDBRDM35
+    yahoo: EUNA.DE
+    rol: renta_fija_global
+    ter: 0.10
+  - id: XEON
+    nombre: Xtrackers II EUR Overnight Rate Swap UCITS ETF (Acc)
+    isin: LU0290358497
+    yahoo: XEON.DE
+    rol: monetario
+    ter: 0.10
+    notas: Equivalente a liquidez remunerada al tipo del BCE (€STR).
+  - id: 8PSG
+    nombre: Invesco Physical Gold ETC
+    isin: IE00B579F325
+    yahoo: 8PSG.DE
+    rol: oro
+    ter: 0.12
+  - id: 4GLD
+    nombre: Xetra-Gold
+    isin: DE000A0S9GB0
+    yahoo: 4GLD.DE
+    rol: oro
+    ter: 0.00
+    notas: Alternativa de oro físico; sin TER, comisión de custodia anual pequeña.
+
+# Indicadores de mercado (no se compran, se usan para el análisis).
+indicadores:
+  - {id: SP500, yahoo: "^GSPC", nombre: S&P 500}
+  - {id: STOXX50, yahoo: "^STOXX50E", nombre: Euro Stoxx 50}
+  - {id: IBEX, yahoo: "^IBEX", nombre: IBEX 35}
+  - {id: VIX, yahoo: "^VIX", nombre: VIX (volatilidad implícita S&P 500)}
+  - {id: VSTOXX, yahoo: "^V2TX", nombre: VSTOXX (volatilidad Euro Stoxx 50)}
+  - {id: BRENT, yahoo: "BZ=F", nombre: Petróleo Brent (USD)}
+  - {id: ORO, yahoo: "GC=F", nombre: Oro (USD/oz)}
+  - {id: US10Y, yahoo: "^TNX", nombre: Bono EE. UU. 10 años (%)}
+  - {id: EURUSD, yahoo: "EURUSD=X", nombre: EUR/USD}
+
+# Series macro gratuitas de FRED (descarga CSV sin clave).
+fred:
+  - {id: T10Y3M, nombre: Pendiente curva EE. UU. 10a-3m (pp)}
+  - {id: SAHMREALTIME, nombre: Regla de Sahm (recesión EE. UU.)}
+  - {id: UNRATE, nombre: Paro EE. UU. (%)}
+  - {id: BAMLH0A0HYM2, nombre: Diferencial high yield EE. UU. (pp)}
+  - {id: CPIAUCSL, nombre: IPC EE. UU. (índice; se calcula la tasa interanual)}
+
+# Series del BCE (API SDMX pública, sin clave).
+bce:
+  - {id: EURUSD_BCE, serie: "EXR/D.USD.EUR.SP00.A", nombre: EUR/USD referencia BCE}
+  - {id: DFR, serie: "FM/D.U2.EUR.4F.KR.DFR.LEV", nombre: Tipo de facilidad de depósito BCE (%)}
+  - {id: HICP_EURO, serie: "ICP/M.U2.N.000000.4.ANR", nombre: Inflación eurozona IPCA (% interanual)}

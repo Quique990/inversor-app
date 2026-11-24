@@ -1,0 +1,54 @@
+# Fuentes que el análisis diario lee cada mañana.
+# Criterios de selección (ver docs/06-fuentes-diarias.md):
+#   1. Gratuitas y con RSS/API pública (nada de scraping de webs con muro de pago).
+#   2. Mezcla de fuentes primarias (bancos centrales, organismos) y medios generalistas fiables.
+#   3. Diversidad geográfica para no ver la geopolítica solo desde un país.
+# 'verificada' = comprobada manualmente el 2026-11-24. El resto las valida el pipeline cada día
+# y, si fallan, aparecen en web/data/salud_fuentes.json (no rompen el análisis).
+# 'peso' = credibilidad/relevancia relativa (1-3) usada para ordenar titulares.
+
+rss:
+  # --- Fuentes primarias: bancos centrales y organismos ---
+  - {id: bce, nombre: Banco Central Europeo, url: "https://www.ecb.europa.eu/rss/press.html", tipo: banco_central, idioma: en, peso: 3, verificada: true}
+  - {id: fed, nombre: Reserva Federal, url: "https://www.federalreserve.gov/feeds/press_all.xml", tipo: banco_central, idioma: en, peso: 3, verificada: true}
+  - {id: bde, nombre: Banco de España, url: "https://www.bde.es/wbe/es/inicio/rss/rss-noticias/", tipo: banco_central, idioma: es, peso: 2}
+  - {id: fmi, nombre: FMI, url: "https://www.imf.org/en/News/RSS?Language=ENG", tipo: organismo, idioma: en, peso: 2}
+  - {id: eia, nombre: EIA (energía EE. UU.), url: "https://www.eia.gov/rss/todayinenergy.xml", tipo: energia, idioma: en, peso: 2}
+
+  # --- Geopolítica internacional ---
+  - {id: aljazeera, nombre: Al Jazeera, url: "https://www.aljazeera.com/xml/rss/all.xml", tipo: geopolitica, idioma: en, peso: 2, verificada: true}
+  - {id: bbc_world, nombre: BBC World, url: "https://feeds.bbci.co.uk/news/world/rss.xml", tipo: geopolitica, idioma: en, peso: 3}
+  - {id: guardian_world, nombre: The Guardian World, url: "https://www.theguardian.com/world/rss", tipo: geopolitica, idioma: en, peso: 2}
+  - {id: dw, nombre: Deutsche Welle, url: "https://rss.dw.com/rdf/rss-en-all", tipo: geopolitica, idioma: en, peso: 2}
+  - {id: france24, nombre: France 24, url: "https://www.france24.com/en/rss", tipo: geopolitica, idioma: en, peso: 2}
+  - {id: elpais_int, nombre: El País Internacional, url: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada", tipo: geopolitica, idioma: es, peso: 2}
+
+  # --- Mercados y economía ---
+  - {id: bbc_business, nombre: BBC Business, url: "https://feeds.bbci.co.uk/news/business/rss.xml", tipo: mercados, idioma: en, peso: 2}
+  - {id: cnbc_markets, nombre: CNBC Markets, url: "https://www.cnbc.com/id/20910258/device/rss/rss.html", tipo: mercados, idioma: en, peso: 2}
+  - {id: marketwatch, nombre: MarketWatch, url: "https://feeds.content.dowjones.io/public/rss/mw_topstories", tipo: mercados, idioma: en, peso: 2}
+  - {id: yahoo_fin, nombre: Yahoo Finance, url: "https://finance.yahoo.com/news/rssindex", tipo: mercados, idioma: en, peso: 1}
+  - {id: expansion, nombre: Expansión Mercados, url: "https://e00-expansion.uecdn.es/rss/mercados.xml", tipo: mercados, idioma: es, peso: 2}
+  - {id: cincodias, nombre: Cinco Días Mercados, url: "https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/section/mercados-financieros/portada", tipo: mercados, idioma: es, peso: 2}
+  - {id: eleconomista, nombre: elEconomista Mercados, url: "https://www.eleconomista.es/rss/rss-mercados.php", tipo: mercados, idioma: es, peso: 1}
+
+# Google News RSS: agrega titulares de agencias (Reuters, Bloomberg, AP...) que no publican RSS propio.
+# Solo se usan los titulares; el análisis no entra en las noticias de pago.
+google_news:
+  - {id: gn_mercados_es, q: "bolsa OR mercados OR BCE OR Fed when:1d", hl: es, gl: ES, peso: 2}
+  - {id: gn_markets_en, q: "stocks OR markets OR \"central bank\" when:1d", hl: en-US, gl: US, peso: 2}
+  - {id: gn_geo_en, q: "war OR sanctions OR tariffs OR missile OR invasion when:1d", hl: en-US, gl: US, peso: 2}
+  - {id: gn_oil_en, q: "oil OR OPEC OR Brent OR \"Strait of Hormuz\" when:1d", hl: en-US, gl: US, peso: 2}
+
+# GDELT DOC 2.0 (gratuito, sin clave): mide volumen y tono de la cobertura mundial
+# (65 idiomas) de temas geopolíticos. Se usa como "termómetro" cuantitativo.
+gdelt:
+  - {id: conflicto, query: "(war OR invasion OR airstrike OR missile) sourcelang:english"}
+  - {id: sanciones_aranceles, query: "(sanctions OR tariffs OR \"trade war\") sourcelang:english"}
+  - {id: energia, query: "(oil supply OR OPEC OR \"Strait of Hormuz\" OR pipeline attack) sourcelang:english"}
+  - {id: banca, query: "(bank run OR banking crisis OR default OR bailout) sourcelang:english"}
+
+# Índice de Riesgo Geopolítico (Caldara & Iacoviello, Reserva Federal). Diario, se actualiza los lunes.
+gpr:
+  diario: "https://www.matteoiacoviello.com/gpr_files/data_gpr_daily_recent.xls"
+  mensual: "https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls"

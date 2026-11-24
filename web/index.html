@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- CSP estricta: solo código propio y la API de GitHub. Protege la clave de GitHub guardada en el móvil. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#102a43">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Inversor">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+  <title>Inversor</title>
+</head>
+<body>
+  <header class="barra-superior">
+    <h1 id="titulo-vista">Hoy</h1>
+    <span id="estado-sync" class="estado" aria-live="polite"></span>
+  </header>
+  <main id="vista" tabindex="-1"></main>
+  <nav class="pestanas" aria-label="Secciones">
+    <a href="#/hoy" data-vista="hoy"><span class="ico">◎</span>Hoy</a>
+    <a href="#/cartera" data-vista="cartera"><span class="ico">▤</span>Cartera</a>
+    <a href="#/diners" data-vista="diners"><span class="ico">€</span>Diners</a>
+    <a href="#/mercado" data-vista="mercado"><span class="ico">↗</span>Mercado</a>
+    <a href="#/ajustes" data-vista="ajustes"><span class="ico">⚙</span>Ajustes</a>
+  </nav>
+  <div id="modal" class="modal" hidden></div>
+  <div id="aviso-toast" class="toast" role="status" hidden></div>
+  <script src="vendor/chart.umd.min.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
