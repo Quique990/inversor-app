@@ -1,7 +1,7 @@
 {
  "fecha": "2026-11-24",
- "generado": "2026-11-24T23:30:55+00:00",
- "resumen": "Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); guerra comercial / aranceles / sanciones (intensidad 3/3); desescalada / alto el fuego / acuerdo comercial (intensidad 1/3); elecciones / incertidumbre política relevante (intensidad 1/3). Sigue con tu plan de inversión habitual. No hace falta hacer nada. (Resumen automático sin IA.)",
+ "generado": "2026-11-24T23:44:45+00:00",
+ "resumen": "Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); guerra comercial / aranceles / sanciones (intensidad 3/3); shock de oferta de petróleo / energía (intensidad 1/3); desescalada / alto el fuego / acuerdo comercial (intensidad 1/3). Sigue con tu plan de inversión habitual. No hace falta hacer nada. (Resumen automático sin IA.)",
  "riesgos_a_vigilar": [],
  "tono_global": null,
  "ia": "ninguna",
@@ -33,9 +33,9 @@
      "url": "https://www.bbc.co.uk/news/articles/cm894p88jzxpo?at_medium=RSS&at_campaign=rss"
     },
     {
-     "titulo": "The Gulf survived a short, hot war. A long, cold one will be harder",
-     "fuente": "The Economist",
-     "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQUlE2QWdoU0hLUnNMZ3p1VkIyUGZrdFJ6bjFRb0hlNFRmNTNOVGN5Z0NialFNTFk3MllsTGtMNWV1anV6Z2x6ZElod1lNdGRyRDA1MEg3Vk04c1lGSkRCQWpuaFkwa2E3bDRZeGw4M1ZrU0UzZnhfZGZYTWFPNXoteGZxM2NQODI3anpkYnlyenM3bks4enpVXzVEWHRaamsyWWhzQXdHVi1sRzNRM183eElLRVNTRElfel9mNlIzVndtQQ?oc=5"
+     "titulo": "NATO Allies conduct drills in biannual Integrated Air and Missile Defence exercise Ramstein Legacy",
+     "fuente": "North Atlantic Treaty Organization | NATO",
+     "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPazlVZE1HS05vNW8tVU5XZmhLLUl5T1RsSFF2RWVGVEpUOXlrRXlBblAxdjdVTjVUN1duMnQtcHB3U0ZSeGVCOG8yNGFOTklLazN0MC1ESFExSFd2ekxrcHg0QTBYWnQ5WHZfNVNnS3hSZ3UtVTRuSl9ZXzJoSkRlQjNtbXJ4RHlid013UHNqRlViSFh3NVVxUEtxUmZScDRiMXhfS1l5OHNMeDBjYTZNeDk3cERQLWZwU1RkN290aW9mZXVWMVRUTG9xWVBQclVDc21iSXM0bzlURkhYUUcxelltNVR5V3dtdFBoUnBkZURFcEUw?oc=5"
     }
    ],
    "explicacion_ia": null,
@@ -68,6 +68,11 @@
    "titulares": 16,
    "ejemplos": [
     {
+     "titulo": "Trump administration's new tariffs ignore midterm lessons | Opinion",
+     "fuente": "The Detroit News",
+     "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQalBRMG1OQWtycXA3SWhVYlN4Mnc4VGRudm1DTk5zTTJLQnFaZ0k3ZHEwZkEwTlY0ZVFwb293clBkUDU0bGRMVk85ZW51NnVZMTU4LVFlMlpKczBZMExCUFRqNlJQank3WEJFUmhRYlAxUnBpTjhIX1d6azE0MHNpd0h4WndnU0JZeDNIUWFnTVc2b1ZPOWVEdWVjbjJadkFrN1ZTNTNHY0YzaktreHZPWnBYLXZOLXQwTEx6dXoxZ0ktY1hZWG5MaVJR?oc=5"
+    },
+    {
      "titulo": "US Said to Plan New Round of Tariffs on China, EU",
      "fuente": "Bloomberg.com",
      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQVGczT294YWtfNjUtQUppUFVNMHhmcWRUaHRhWTBCS00yLVhNQjJWXzVMSWZ0ZXl3aGl1Uk1NdFlYMUdmX1RDRUNqWXU2R1BWSFFGd1ltd1BmMUtiVEFoUXQtZno2MEgyOEl1bHYzTmdpNEtibFdKTDdvaUhQNk5rcTlLemplZ0RvQmJITU5pWmdjU2l4LUtsdVpOVS1kYklseWlPaQ?oc=5"
@@ -81,11 +86,6 @@
      "titulo": "Trump to double down on tariffs after midterms defeat",
      "fuente": "Semafor",
      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPRGVlMVZscVNVS1QwNzFsbUR5dGYzZ2dmU0FXMVEwNnhEaDk3Vnd1QVpvbnVMSG9fUGlYTDhSZ3lrT1ZfSjN2QzdOblJHdmUyS0ZfZExYR1dROXBOMTRKM3VCcVhCcUt6WmJMTnRCNHlUMmJCbGNBVm0xSjdCaHJlekJTR053WW5pbDlaT0RIcEVMQmFGQlgxTE9BUnA?oc=5"
-    },
-    {
-     "titulo": "Managing Aggregate Sanctions Risk and Evasion Networks in Canada",
-     "fuente": "Kharon",
-     "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE0wMjctZXZJN2E1dzlLb2NqTTA2cWMtSGVYQU1VZzVwenFZSTdfS2otdlEzbFRDb1ZJQWhVWnhKaFk5Q1VtTlZlNXhZbjdHOUktQkpBc1BSejYycEVSRTdHRUdhUW12WTN2TTlPRg?oc=5"
     },
     {
      "titulo": "New Oregon grant program offers one-time funding to businesses in wake of Trump tariffs",
@@ -114,6 +114,52 @@
     {
      "No vender en el pánico inicial": "el riesgo de perderse el rebote es alto."
     }
+   ]
+  },
+  {
+   "tipo": "shock_petroleo",
+   "nombre": "Shock de oferta de petróleo / energía",
+   "intensidad": 1,
+   "titulares": 4,
+   "ejemplos": [
+    {
+     "titulo": "IMO chief: It is not safe to go through Strait of Hormuz",
+     "fuente": "CNN",
+     "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQT1UtekZlWEQ1cUVFT0NnQ3U0a0FnVl90c3BrcUR4akh3bWVQNXVPeHBMN1dXNzF1dTNobDF3OHYzbEptUUlzNWNld2JBMXFuY3QyNGFuSGtPQmdIc3QzaUhEc3phQ1FqajZtREZMUy1TWVZ4OW1wWkpVOV90TjU0VmtaajV4cnVQblNJLXF3TDhtUHEzTEdpMlR1RTF2Z1J6eHJwQlFNUFdBbUtzczgzTkYweGFZQQ?oc=5"
+    },
+    {
+     "titulo": "Oil slicks in the Strait of Hormuz are harming the environment",
+     "fuente": "NPR",
+     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPOGNmNFpxaXAyVkNqWGEwX3UzaWwzajZmWVZOSDE4ZnNRQXo0NmhYMHdSZVByVE01dXMtMnNOUzlHX0htaGlOVkRUUHk4SGEweXFFTm5iNDl6OFpkNEItM2ZFZHJ3V0xIWldGTk9wdmtQOHRCNTVQSW5PMXhvcjBVd3AzSVVTdFI0UHFEMVd3Tm1VeUpETkQ2c1NRYzFfSUpIRm5SZjBLb1U1eTR3OGM4?oc=5"
+    },
+    {
+     "titulo": "Trump pauses turkey pardon to salute US troops guarding Strait of Hormuz: 'Watch over and protect'",
+     "fuente": "Fox News",
+     "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNZFdja2FBX3lGMmxuQ242NVhnLXM2MXpUUkFzS1dLYnl1RGhCNFNJZ3VlbFRPbVRuM2IwdU8xVFoxbHAzTGc5MUp6Y0g3YkpnUk40X1Z3VTUtbzgxakdNaVY2MldPZ0l3eDBUaVR3MkhtUmdibnRaaGh5WmhoeFp1S0pWazFWUEV2V1RRY3Boc2EySjJrWkZaRHFPdTF6NlBlQlNTZXNscFp2eEtzbFpjdzY3ZXppZS02aWfSAb8BQVVfeXFMUFMtcEF2Z1lvbWc1UVItSC04YUxzWkZfb0JyZ1pXZ2lXUUtlYUxrNWNpdWpnd3hWbDBkOXRxalhzcW1tOWtqT1Vqb1c3ZWt6a2VBLVdMeVI1TDB4amVIcjVfaE1zQnZYUExjNDFnZXJQaVE5UHVMRGtBWUk5ZmpvMGlFZTFRN0RaRFdHZmJxUExLQmdhTUZhbG1lVFVSZFRsMjZRdWc3ZVMzX0Y5T05NUHBqZEtaWm12clZFakg3RWc?oc=5"
+    },
+    {
+     "titulo": "Three Tankers Hit Within Minutes in Strait of Hormuz",
+     "fuente": "The Maritime Executive",
+     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOSmJUcDVLUnFJUDYtTlNnWDZOLUFTLXVnaXd5VFliRUZveGZVNEx3TVlQb1FtUDd4ZTdoY0NtbzE2dzJCbTVOSDUwSTExaW1WR0JiRFQ3XzBaNkp1S3pINHNQNGJiMVNUc1JZcXB3OEtFM1pFVXc1dVNzd3J4NEdIS2Zlbm15VHZvWFJ5cFlQcmZkYzNMZ0E?oc=5"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 0,
+    "oro": 1,
+    "dolar": 1,
+    "petroleo": 2
+   },
+   "historia": {
+    "nota": "La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973 (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30% por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.",
+    "fuente": "T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)"
+   },
+   "matices": [
+    "Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.",
+    "Europa es más vulnerable que EE. UU. (importador neto de energía)."
    ]
   },
   {
@@ -192,47 +238,6 @@
    "matices": []
   },
   {
-   "tipo": "shock_petroleo",
-   "nombre": "Shock de oferta de petróleo / energía",
-   "intensidad": 1,
-   "titulares": 3,
-   "ejemplos": [
-    {
-     "titulo": "Oil slicks in the Strait of Hormuz are harming the environment",
-     "fuente": "NPR",
-     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPOGNmNFpxaXAyVkNqWGEwX3UzaWwzajZmWVZOSDE4ZnNRQXo0NmhYMHdSZVByVE01dXMtMnNOUzlHX0htaGlOVkRUUHk4SGEweXFFTm5iNDl6OFpkNEItM2ZFZHJ3V0xIWldGTk9wdmtQOHRCNTVQSW5PMXhvcjBVd3AzSVVTdFI0UHFEMVd3Tm1VeUpETkQ2c1NRYzFfSUpIRm5SZjBLb1U1eTR3OGM4?oc=5"
-    },
-    {
-     "titulo": "Trump pauses turkey pardon to salute US troops guarding Strait of Hormuz: 'Watch over and protect'",
-     "fuente": "Fox News",
-     "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNZFdja2FBX3lGMmxuQ242NVhnLXM2MXpUUkFzS1dLYnl1RGhCNFNJZ3VlbFRPbVRuM2IwdU8xVFoxbHAzTGc5MUp6Y0g3YkpnUk40X1Z3VTUtbzgxakdNaVY2MldPZ0l3eDBUaVR3MkhtUmdibnRaaGh5WmhoeFp1S0pWazFWUEV2V1RRY3Boc2EySjJrWkZaRHFPdTF6NlBlQlNTZXNscFp2eEtzbFpjdzY3ZXppZS02aWfSAb8BQVVfeXFMUFMtcEF2Z1lvbWc1UVItSC04YUxzWkZfb0JyZ1pXZ2lXUUtlYUxrNWNpdWpnd3hWbDBkOXRxalhzcW1tOWtqT1Vqb1c3ZWt6a2VBLVdMeVI1TDB4amVIcjVfaE1zQnZYUExjNDFnZXJQaVE5UHVMRGtBWUk5ZmpvMGlFZTFRN0RaRFdHZmJxUExLQmdhTUZhbG1lVFVSZFRsMjZRdWc3ZVMzX0Y5T05NUHBqZEtaWm12clZFakg3RWc?oc=5"
-    },
-    {
-     "titulo": "Three Tankers Hit Within Minutes in Strait of Hormuz",
-     "fuente": "The Maritime Executive",
-     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOSmJUcDVLUnFJUDYtTlNnWDZOLUFTLXVnaXd5VFliRUZveGZVNEx3TVlQb1FtUDd4ZTdoY0NtbzE2dzJCbTVOSDUwSTExaW1WR0JiRFQ3XzBaNkp1S3pINHNQNGJiMVNUc1JZcXB3OEtFM1pFVXc1dVNzd3J4NEdIS2Zlbm15VHZvWFJ5cFlQcmZkYzNMZ0E?oc=5"
-    }
-   ],
-   "explicacion_ia": null,
-   "region": null,
-   "gdelt_ratio": null,
-   "impacto_tipico": {
-    "renta_variable": -1,
-    "renta_fija_calidad": 0,
-    "oro": 1,
-    "dolar": 1,
-    "petroleo": 2
-   },
-   "historia": {
-    "nota": "La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973 (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30% por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.",
-    "fuente": "T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)"
-   },
-   "matices": [
-    "Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.",
-    "Europa es más vulnerable que EE. UU. (importador neto de energía)."
-   ]
-  },
-  {
    "tipo": "valoraciones_burbuja",
    "nombre": "Dudas sobre valoraciones / burbuja (p. ej. IA)",
    "intensidad": 1,
@@ -266,6 +271,39 @@
     },
     "Respuesta adecuada = diversificar (no concentrar en EE. UU./tecnología), no salir del mercado."
    ]
+  },
+  {
+   "tipo": "banco_central_endurece",
+   "nombre": "Banco central sube tipos o endurece el tono (por sorpresa)",
+   "intensidad": 1,
+   "titulares": 2,
+   "ejemplos": [
+    {
+     "titulo": "El Peso mexicano se hunde mientras la inflación subyacente más moderada coincide con la amenaza de una subida de tipos de la Fed",
+     "fuente": "FXStreet",
+     "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxNSlJVNnF6V0EzX01FazZ2eDlEOVRhdEpyV2puS1doWHMtdGluVExmTjY4TkZsSlkwdkpfQS1FZ3p2aWhkQm94LTlsblhfRjFhdlB6R1g3RDRWc0RXV2FjM2lYS3dDV3U2XzFXNkxSelQzZk9vY1Q4c1lrclBHRnF1OVRHM0s3TkdCdU5zX1BNVkpSVmNBTTlvY0x0UGpTOVc3MG1IdFN2SXlxeVBaeUxCWkhsY1U0ekVWcHVVRjdLRDJfZDRLSEVpOVEtLXY0ZXRQRFJtcXIzTTZuWTY3RFRrQnpGRkdFSU9WQTdsQ0wyRVpVeFdrcXNCMGdOcWRNRU0?oc=5"
+    },
+    {
+     "titulo": "Gold falls 2% on hawkish Fed bets, US inflation data in focus",
+     "fuente": "TradingView",
+     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPWGJDVmtVcTU4ekc1dVNUa0N3UDZHMUpGN1lNVExQbENubTVQMGdJaWRDS1phQWFpVWhHY3FhanA0UExCWTZoM19rckcyeTd1WDRIb09DZ3YxdUdHZzgwc1h6TVd3YlctNjd2aGxKU2s2eWZaQjZ2ZmZ0bjdNZWF0cG5aVXZqVUduS0I5YjVHVlRZVDNnaHZ0bTBaWU41RERfMFNjN0h3RGdtSkFIYmkzNUJGTVVVVFZzbl9KZ1RKSm00R0lJTDhF?oc=5"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": -1,
+    "oro": -1,
+    "dolar": 1,
+    "petroleo": 0
+   },
+   "historia": null,
+   "matices": [
+    "Lo que mueve el mercado es la SORPRESA frente a lo descontado, no la decisión en sí.",
+    "Una subida ya esperada suele tener impacto pequeño."
+   ]
   }
  ],
  "decision": {
@@ -278,8 +316,8 @@
    "var_1m": -2.52,
    "vix": 26.36,
    "vstoxx": null,
-   "brent_3m": -0.21,
-   "oro_1m": -11.24,
+   "brent_3m": -0.19,
+   "oro_1m": -11.15,
    "sahm": 0.0,
    "curva_10a3m": 0.55,
    "curva_min_24m": -0.4,
@@ -544,16 +582,16 @@
   },
   "BRENT": {
    "fecha": "2026-11-24",
-   "ultimo": 88.39,
-   "var_1d": -1.1,
-   "var_1m": -24.27,
-   "var_3m": -0.21,
-   "var_1a": 39.48,
-   "caida_max_52s": -25.31,
+   "ultimo": 88.41,
+   "var_1d": -1.07,
+   "var_1m": -24.25,
+   "var_3m": -0.19,
+   "var_1a": 39.51,
+   "caida_max_52s": -25.3,
    "mm200": 94.8,
    "sobre_mm200": false,
    "pendiente_mm200": 3.39,
-   "vol_1m": 56.63,
+   "vol_1m": 56.64,
    "nombre": "Petróleo Brent (USD)",
    "isin": null,
    "yahoo": "BZ=F",
@@ -561,16 +599,16 @@
   },
   "ORO": {
    "fecha": "2026-11-24",
-   "ultimo": 3557.3999,
-   "var_1d": -2.57,
-   "var_1m": -11.24,
-   "var_3m": -24.22,
-   "var_1a": -13.11,
-   "caida_max_52s": -33.11,
-   "mm200": 4430.43,
+   "ultimo": 3560.8999,
+   "var_1d": -2.48,
+   "var_1m": -11.15,
+   "var_3m": -24.15,
+   "var_1a": -13.03,
+   "caida_max_52s": -33.05,
+   "mm200": 4430.45,
    "sobre_mm200": false,
    "pendiente_mm200": -2.17,
-   "vol_1m": 33.25,
+   "vol_1m": 33.18,
    "nombre": "Oro (USD/oz)",
    "isin": null,
    "yahoo": "GC=F",
@@ -973,16 +1011,112 @@
    "id": "4f2d4ed79332"
   },
   {
-   "titulo": "Ukraine shares video of strikes on Russian ships off Libya",
-   "fuente": "BBC World",
-   "fuente_id": "bbc_world",
-   "url": "https://www.bbc.co.uk/news/videos/c6wy93q5wwqvo?at_medium=RSS&at_campaign=rss",
-   "fecha": "2026-11-23T11:34:10+00:00",
+   "titulo": "Dell’s stock rises as the AI boom helps sales more than double",
+   "fuente": "MarketWatch",
+   "fuente_id": "marketwatch",
+   "url": "WP-MKTW-0005368076",
+   "fecha": "2026-11-24T23:34:00+00:00",
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Dell says its backlog is “rigorously vetted for customer quality and access to capital, land and power.”",
+   "id": "67c5b5bc3aca"
+  },
+  {
+   "titulo": "NATO Allies conduct drills in biannual Integrated Air and Missile Defence exercise Ramstein Legacy",
+   "fuente": "North Atlantic Treaty Organization | NATO",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxPazlVZE1HS05vNW8tVU5XZmhLLUl5T1RsSFF2RWVGVEpUOXlrRXlBblAxdjdVTjVUN1duMnQtcHB3U0ZSeGVCOG8yNGFOTklLazN0MC1ESFExSFd2ekxrcHg0QTBYWnQ5WHZfNVNnS3hSZ3UtVTRuSl9ZXzJoSkRlQjNtbXJ4RHlid013UHNqRlViSFh3NVVxUEtxUmZScDRiMXhfS1l5OHNMeDBjYTZNeDk3cERQLWZwU1RkN290aW9mZXVWMVRUTG9xWVBQclVDc21iSXM0bzlURkhYUUcxelltNVR5V3dtdFBoUnBkZURFcEUw?oc=5",
+   "fecha": "2026-11-24T23:32:36+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "8c96e40d256b"
+  },
+  {
+   "titulo": "New York jury convicts Huawei of stealing trade secrets",
+   "fuente": "France 24",
+   "fuente_id": "france24",
+   "url": "https://www.france24.com/en/americas/20261124-new-york-jury-convicts-huawei-of-stealing-trade-secrets",
+   "fecha": "2026-11-24T23:31:22+00:00",
    "tipo": "geopolitica",
    "idioma": "en",
-   "peso": 3,
-   "resumen": "President Zelensky said a Russia warship was sunk, with a Russian cargo ship also hit.",
-   "id": "9d35955eceef"
+   "peso": 2,
+   "resumen": "A New York jury has found Chinese telecom giant Huawei guilty of stealing trade secrets and other criminal offences, but acquitted it of a racketeering conspiracy and obstruction of justice. The verdict followed a three-month trial in New York in a case that adds to longstanding US efforts to curb H",
+   "id": "10eb0432628a"
+  },
+  {
+   "titulo": "Nvidia: las firmas de inversión bajan su precio objetivo un 25%",
+   "fuente": "Expansión Mercados",
+   "fuente_id": "expansion",
+   "url": "https://www.expansion.com/mercados/2026/11/25/nvidia-firmas-inversion-bajan-precio-objetivo-25.html",
+   "fecha": "2026-11-24T23:30:00+00:00",
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "El precio objetivo promedio de Nvidia ha caído un 25%, según se desprende del consenso de analistas que compila Bloomberg, desde que se conoció a principios de mes que su presidente y consejero delegado, Jensen Huang, mantuvo una relación con una presunta espía china. Leer",
+   "id": "037a68de4220"
+  },
+  {
+   "titulo": "Are Stocks Oversold Enough for a Rally?",
+   "fuente": "RealMoney Pro",
+   "fuente_id": "gn_markets_en",
+   "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxONDR2dHRQNTlSUHNNQ1VBb2JmejlkS1RLajRSSkpCbXV5MjhGdFZXcFZNNDRKWHNEQWxSeFB6eF9CWjFnamlqby1XMl9aV21kREhSNXJyMng5WlV3eWRNVGNKaTZKbnpuOXlRVklLRFVUSm45VzUxRzN3akQ3VjIyc0Jn?oc=5",
+   "fecha": "2026-11-24T23:28:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "8d9e72ba4ff1"
+  },
+  {
+   "titulo": "Jacksonville Holiday Markets 2026",
+   "fuente": "904 Happy Hour",
+   "fuente_id": "gn_markets_en",
+   "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE14YzlSbGs0clRvV1NIYnpNbC1BNGwtV3BfTEZkWXEyZmZxWjVFLVNvREJ6bXlXOU1VUmNxcDlkTGFMcFRqN3k1bDJER1dXWFpGZTVOZEJabGZTdVJuTUJWYkluVkt4dw?oc=5",
+   "fecha": "2026-11-24T23:27:56+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "50f9ebc72190"
+  },
+  {
+   "titulo": "IMO chief: It is not safe to go through Strait of Hormuz",
+   "fuente": "CNN",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQT1UtekZlWEQ1cUVFT0NnQ3U0a0FnVl90c3BrcUR4akh3bWVQNXVPeHBMN1dXNzF1dTNobDF3OHYzbEptUUlzNWNld2JBMXFuY3QyNGFuSGtPQmdIc3QzaUhEc3phQ1FqajZtREZMUy1TWVZ4OW1wWkpVOV90TjU0VmtaajV4cnVQblNJLXF3TDhtUHEzTEdpMlR1RTF2Z1J6eHJwQlFNUFdBbUtzczgzTkYweGFZQQ?oc=5",
+   "fecha": "2026-11-24T23:25:44+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "d45abf113bc3"
+  },
+  {
+   "titulo": "Trump administration's new tariffs ignore midterm lessons | Opinion",
+   "fuente": "The Detroit News",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQalBRMG1OQWtycXA3SWhVYlN4Mnc4VGRudm1DTk5zTTJLQnFaZ0k3ZHEwZkEwTlY0ZVFwb293clBkUDU0bGRMVk85ZW51NnVZMTU4LVFlMlpKczBZMExCUFRqNlJQank3WEJFUmhRYlAxUnBpTjhIX1d6azE0MHNpd0h4WndnU0JZeDNIUWFnTVc2b1ZPOWVEdWVjbjJadkFrN1ZTNTNHY0YzaktreHZPWnBYLXZOLXQwTEx6dXoxZ0ktY1hZWG5MaVJR?oc=5",
+   "fecha": "2026-11-24T23:24:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "72fbbaeb4404"
+  },
+  {
+   "titulo": "El temor a la 'corrección Kennedy' se cierne sobre la Bolsa",
+   "fuente": "Expansión Mercados",
+   "fuente_id": "expansion",
+   "url": "https://www.expansion.com/mercados/2026/11/25/temor-correccion-kennedy-cierne-sobre-bolsa.html",
+   "fecha": "2026-11-24T23:21:19+00:00",
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "Un 'crash' bursátil de hace 64 años puede dar pistas sobre la situación actual. Leer",
+   "id": "d7cdc7d2f795"
   },
   {
    "titulo": "Asian Stocks to Slide as AI Trade Doubts Resurface: Markets Wrap",
@@ -1009,6 +1143,18 @@
    "id": "cfa308357691"
   },
   {
+   "titulo": "FactChecking Trump’s Auto Plants Claims",
+   "fuente": "FactCheck.org",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE8zQ0JaVkdUbENLNGZnaVZPcmdpMF84UzZHRFRyYm90TjlrblkyMWNyOUp1V1pTQUNTVDBoVTNvcjhlQjVvQTRvcWRNbDRCQVNRUE9uSTVJSk5YeHBnZTlvSzhocVFycXRUMlpNTHVFNWtwS2NGdzA0ejJLdDlFUQ?oc=5",
+   "fecha": "2026-11-24T23:08:32+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "79396897a4d8"
+  },
+  {
    "titulo": "Juristas y economistas piden rechazar proyecto de ley de mercados digitales en Brasil",
    "fuente": "DPL News",
    "fuente_id": "gn_mercados_es",
@@ -1019,6 +1165,30 @@
    "peso": 2,
    "resumen": "",
    "id": "54a92b457952"
+  },
+  {
+   "titulo": "Oil Edges Lower as Expanding Supply Vies With Hormuz Attacks",
+   "fuente": "Bloomberg.com",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOenJ4V3FnWU1IVG94dUxRcE1YeTd1Y0Y0U1RWdkg4b1QwS2pPbFNhLUtmdGhwcE5XZWhnVXgzNVo2RkE2azdqdU53cW5KdDNVdWR3Z2JKc1RHX0Z2OWl0YjJsN3ZUTk9UbXhLNzR1Q19wOHVzVi00QmVxbUVWbVpJTk5rZldoalJRbW1hNmh2dnhqR216UlRpUTZDV1RZQQ?oc=5",
+   "fecha": "2026-11-24T23:06:29+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "3c190b1eaa5f"
+  },
+  {
+   "titulo": "Persian Gulf oil exports near prewar levels despite Hormuz attacks",
+   "fuente": "Iran International",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBnNlZUcmZ2ZnVwSEtHRzZ3VVpybUUtbTlJUVpZcWRkcTN0eWYxNkpBSFRYUnJJM3ZVcDl4VmdJQ0l5bDFmeUZfQ0RneTU5ZGtZQ2c?oc=5",
+   "fecha": "2026-11-24T23:04:42+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "cf0db4ead25a"
   },
   {
    "titulo": "Tech stocks take a dip as Jensen Huang comes back as Nvidia CEO",
@@ -1105,16 +1275,16 @@
    "id": "cc778279f69e"
   },
   {
-   "titulo": "Offshore Guyana strengthens its position in ExxonMobil’s growth strategy",
-   "fuente": "Oil & Gas 360",
-   "fuente_id": "gn_oil_en",
-   "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxObnctdzVUemRHclJ2eC05d19FZzd1c3c0Y0JZRU1uRkRpbVZsZ282OWFDNW1BRjNzYUdoaWoxaEMtNGFtYmhkUVVLQjgwQVNnajRyZ1RSc3UtSXRtd2pQX0VDYkdXQU9wa0lMaHVKM3VVamVFTnJIVmdYeFVKMlZad2ZYMVlRMXJIRFIwNTFDOTVJbXYxVnR1dkx0Y2VtSkFsekxn?oc=5",
-   "fecha": "2026-11-24T22:39:10+00:00",
+   "titulo": "As Ukraine sinks Russian ships, some NATO nations voice anxiety over war's spread to new regions",
+   "fuente": "CBS News",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNdE9zdHFOVFhJVDRnREpDbTllbWRuNUtiM1pFNVZyLXVJeFY2eVhLMTdsV0xJUVlqcHQ2UlJEQnlSNjBUb1Y4cnlmaTVhWG81bjA5Yi1IblNQMUx4SzRFVHZuNGZoVVoxNEQ5WVF2Sm1CZFVrSGxkejFYamV0QVUtOUpCSFBOZFcwTmRSOVloX2JpNU5RdGVlN05jdw?oc=5",
+   "fecha": "2026-11-24T22:49:36+00:00",
    "tipo": "agregador",
    "idioma": "en",
    "peso": 2,
    "resumen": "",
-   "id": "24816367f207"
+   "id": "54ba0c6727c0"
   },
   {
    "titulo": "Advisers Weigh Trade-Offs of Personalization, Private Markets",
@@ -1153,6 +1323,18 @@
    "id": "07f477cc0a2f"
   },
   {
+   "titulo": "Microsoft's historic cloud outage exposed an engineering “fog of war”",
+   "fuente": "Ars Technica",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQd3N2cjRYc2MyZTh4cGdIbjB4a2dac0h2VG5TN21RdllmQjdhNHg2UWNsRVNpaGUyUmFibjkwT1JEOWx2WE5QTmtXYUk2SXR3Y2VsQ3NBRFYzOUlIOXp3cHZYV0pabktqQlBnaUttQlFZcVlMMU90SGphZjJuREVsSnBLZEJBd0tuY0VFY0lKRU1feUVpMm5pa2FrcnRrMTZrYjlpbjA1aldzRDg?oc=5",
+   "fecha": "2026-11-24T22:36:28+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "4918974cddaa"
+  },
+  {
    "titulo": "Scientists discover quasar formed 630 million years after the Big Bang",
    "fuente": "Deutsche Welle",
    "fuente_id": "dw",
@@ -1187,152 +1369,8 @@
    "peso": 2,
    "resumen": "",
    "id": "2029ada5dd9d"
-  },
-  {
-   "titulo": "1953 SS Jacob Luckenbach shipwreck off San Francisco coast linked to dozens of oil-covered birds, wildlife officials say",
-   "fuente": "ABC7 Bay Area",
-   "fuente_id": "gn_oil_en",
-   "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQa0JLaWdpRVRDenR4UUFOcDkwZTZrTzVlSjdGbHZaZDltejN5dGYxOHkyUnJ6RUctbHI3Rmlyc2dRLTZ3MmhwTDYteGdNSnRGWkpWbEM0THlBemM0Q1dBVndXNWU1YVRxVnRDcktVYkVyOENtZ3NGc3VDcTZQLWFjdzd3ZzBnOTQwcXpmNTB4ZU1zOTlqUlJHb002UjZnYW1PQXhVUm1DNVRHVnZkS2l2QW53UEd4MVJQTmZUMmxFRExHUHNaM08wczJYNF9VNVljcnNGd3V2WVBrc0pfYmhXNXJqTdIB6AFBVV95cUxNblV1SkE2X3BmdXU5TGdvZi03dzhleDIyUmk1SFBzYW8xSHRCbEVpWkVBMXJpRU8yVlMyQ0N4OFZYQmJpTVQ2VjRXbmN1eDVtTmc3eDlEcHNIQ0NOODV2S004RG1sd1NjLVJOaVhlS2poS2lSb1hyWDk4V0xfc3daOUNsOWFGMVVlNmZjbUp2VEp4dVgzOXlrWER1YTFhb3Z3bTk1bmZmYmIyRkNCcnQtOGxUZ1l2RkNScmtuNTN2Y3E1MHhfeUxoMTVKMVZYc3c5MTcybEF4Qk01di1NTWw5LXByQnlmc19M?oc=5",
-   "fecha": "2026-11-24T22:21:05+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "58a2c29a3197"
-  },
-  {
-   "titulo": "3 Banking Stocks With Strong Net Interest Margin Support",
-   "fuente": "Yahoo Finance",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNckNRdHFreDctMlkwSUtrTU5sYW9jNG13ZjhUcF9DTWg5bURtZUZRYlMwd1ZNNEVoX0x1ZVJFQ0dZQ3RZTFpDNHFjcjhLUmZyT3BJNWk4blIySUNXNHUxN0dwUFl5NmhIUEhtTnZwYmo4UV9nQzVwVnRZZTQwU2t3MjVUN1FBRzNYeHdxcjBlaFBVbDhSSU5v?oc=5",
-   "fecha": "2026-11-24T22:19:17+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "7491a9e5ddf4"
-  },
-  {
-   "titulo": "Inflation, not markets, is driving Fed decisions, says JPMorgan's Michael Feroli",
-   "fuente": "CNBC",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNY3hXUTZHU3dCY0FLT0RCQ0FiT2pET0lZdWpQTkFDQ0p0ckNDdnB1RWZvLWZaRG1BUzdNY2h1WkVBRWZXSWp5UUcySzNsVndzemp0WGR3RHhFeUh1a3h5bjl1R25HaGFHNmpxdFFjaEticE5tZmZ3WkZrQlk2QXNoblU0d25DNm1ZN0N6WUpqblFKQ29DS2l6UHRlWGpMQ0hRbF9WdVMwNG9vQWprTUhfREkzRQ?oc=5",
-   "fecha": "2026-11-24T22:15:01+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "29718569278c"
-  },
-  {
-   "titulo": "1953 shipwreck off SF coast linked to dozens of oil-covered birds, wildlife officials say",
-   "fuente": "ABC7 Bay Area",
-   "fuente_id": "gn_oil_en",
-   "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9rWVQ1Tk9tcjNoT2ZZTWpQeDZOSmRScVoxYnNld3NwZjhlcURDcGk5Y1FiZ296NFMxRTJaUnJvdTVQWno5aEdpTXdiSEJWQXhTN3c?oc=5",
-   "fecha": "2026-11-24T22:13:00+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "4ac5f73ad2f7"
-  },
-  {
-   "titulo": "The Gulf survived a short, hot war. A long, cold one will be harder",
-   "fuente": "The Economist",
-   "fuente_id": "gn_geo_en",
-   "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQUlE2QWdoU0hLUnNMZ3p1VkIyUGZrdFJ6bjFRb0hlNFRmNTNOVGN5Z0NialFNTFk3MllsTGtMNWV1anV6Z2x6ZElod1lNdGRyRDA1MEg3Vk04c1lGSkRCQWpuaFkwa2E3bDRZeGw4M1ZrU0UzZnhfZGZYTWFPNXoteGZxM2NQODI3anpkYnlyenM3bks4enpVXzVEWHRaamsyWWhzQXdHVi1sRzNRM183eElLRVNTRElfel9mNlIzVndtQQ?oc=5",
-   "fecha": "2026-11-24T22:09:57+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "10b0e5fd1594"
-  },
-  {
-   "titulo": "Stubborn Inflation Could Pose a Bigger Threat to Markets Than AI Worries",
-   "fuente": "Barron's",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQa3FoY0YzbWhuWFh0ZTgyaC1MTTMxaEtUNUZ4T0lxanE2bWItUzhnSk1vUkxLWHZTX3BYRUJLTVg0cFRMc0ZzeUt2UGZQQ09qV2E3Vi02dG5qX0JxclFSOUtaaGgyY1F3TVBneHlZT1ZvSjJhZHh0Sm1JTF9DLUlHUEM4cE9kc3VoUjVsS25sU1UtR1oyVlVjd0Y3aEMteE5PQWwtOWQ2bS1WazZMc1dUVWhkTU4?oc=5",
-   "fecha": "2026-11-24T22:05:00+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "55c91b121fe6"
-  },
-  {
-   "titulo": "Tech executives' investment in Trump 'clearly paying off' as Huang reinstated at Nvidia",
-   "fuente": "France 24",
-   "fuente_id": "france24",
-   "url": "https://www.france24.com/en/tv-shows/a-propos/20261124-tech-executives-investment-in-trump-clearly-paying-off-as-huang-reinstated-at-nvidia",
-   "fecha": "2026-11-24T22:03:43+00:00",
-   "tipo": "geopolitica",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "Nvidia shares fell on Tuesday as the historic rally sparked by Jensen Huang's return as CEO quickly lost steam, with investors refocusing ​on the political ‌and governance risks surrounding his reinstatement. Speaking with FRANCE 24's Sharon Gaffney, The Hill Senior Technology Reporter Miranda Nazza",
-   "id": "926fcc1e208b"
-  },
-  {
-   "titulo": "U.S. Stocks Mixed as Huang Relief Rally Fades",
-   "fuente": "WSJ",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOczFSSUlCQTZ4cWcwa0VkZnN3eU14VXFmRzhFeGVZd192cFd6NjZQR2FWVVlvU01OTUpiRUQ5Y1poSjFYaTFBNzRtME8zWktrXzgyY3NmSGJfcG83aEVQdDMtcXo1T2VUM2xWSHowajRMeDJLMnZnczVwOUZLR3hEYTk5OUZsZU1feW54T1dsS01GUQ?oc=5",
-   "fecha": "2026-11-24T22:03:00+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "f336b4352d6b"
-  },
-  {
-   "titulo": "Todd Blanche declines to confirm if Nvidia’s Jensen Huang was investigated",
-   "fuente": "Al Jazeera",
-   "fuente_id": "aljazeera",
-   "url": "https://www.aljazeera.com/news/2026/11/24/todd-blanche-declines-to-confirm-if-nvidias-jensen-huang-was-investigated?traffic_source=rss",
-   "fecha": "2026-11-24T22:01:26+00:00",
-   "tipo": "geopolitica",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "The US attorney general refused to discuss claims by Donald Trump that his administration conducted a 'thorough' probe.",
-   "id": "20177d782501"
-  },
-  {
-   "titulo": "CNBC Markets Now: November 24, 2026",
-   "fuente": "CNBC",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPaG1KOG03Z3NBZGgzWjhNZjVkUVdpcm9OdzVYNUJZWHUwQmV4cVdJVzZZVEIzOENsQnR3S25EWUxvLWY4ZzVyclNlNjV5WUNRSm9JMkJlTmlyTUV0MlpCRHV6NTNVZlliWjRvSlRubEtYN2hfMGtEREp1QWtHUVp5OWpn?oc=5",
-   "fecha": "2026-11-24T22:01:09+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "3a75dadf3ed1"
-  },
-  {
-   "titulo": "Pennsylvania's Forgotten Oil Wells Raise Oversight Challenges",
-   "fuente": "Governing",
-   "fuente_id": "gn_oil_en",
-   "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQYllncUZ2UkNjSVZaRHpYZ0dxZTdsVE0yRXE2YmpnNXZ3UGJqSkZvbGNOaW1KTXNXR2JuenBLdV9DR3puQXJiSDFZdDBUMVB6Ry1EcDBiWUFRTHpMOGxaNzN5c0U2NzJtMkRRZWdfR2VJaGhPSnlXM2xkb1N1Qk41eGZTWDdQZXFSWVAtZXpvMmhKQjhHT0o3Q0h5eDkxSTBmb3B1LTY0M0RxclAwYU90OUZtRUpjRjQ?oc=5",
-   "fecha": "2026-11-24T22:01:03+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "12abac193fcf"
-  },
-  {
-   "titulo": "OKXICE Makes the Case for Tokenized Stocks During Crypto Winter",
-   "fuente": "Bloomberg.com",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQZk12a05taFg1WGhNbHhzcC00bmdUR1FSc2dobm8yUmktN1JIakRCU2VPaGFSLTVCejF6Qi05b1B3cFhmbS1oSTYwNHc3QUxRRW9VSW9qSXdoWTRnSFJuVFFzRUpiMlBsRHZtN3ZWbThJakNwdzhBc0lkTkpGRklXV0diMjlkSFJmZC15elgzUVBrUkNUNTNXd0RoM2FDanhWTmpIWGtQVEItYkstVVFOSnJEMURyeGdS?oc=5",
-   "fecha": "2026-11-24T22:00:01+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "226fd9867d2a"
   }
  ],
- "num_titulares": 334,
+ "num_titulares": 331,
  "aviso_legal": "Herramienta personal de apoyo a la decisión. No es asesoramiento financiero. Las rentabilidades pasadas no garantizan rentabilidades futuras."
 }
