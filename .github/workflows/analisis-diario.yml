@@ -15,6 +15,7 @@ permissions:
   contents: write   # para guardar web/data
   models: read      # GitHub Models gratis con el GITHUB_TOKEN
   pages: write
+  actions: read     # deploy-pages lo necesita para encontrar el artefacto
   id-token: write
 
 concurrency:
@@ -50,7 +51,7 @@ jobs:
           git diff --cached --quiet || git commit -m "Análisis diario $(date -u +%F)"
           git push
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: web
       - uses: actions/deploy-pages@v4

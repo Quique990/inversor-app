@@ -11,6 +11,7 @@ on:
 permissions:
   contents: read
   pages: write
+  actions: read     # deploy-pages lo necesita para encontrar el artefacto
   id-token: write
 
 concurrency:
@@ -26,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: web
       - id: despliegue
