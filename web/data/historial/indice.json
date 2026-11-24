@@ -1,1 +1,15 @@
-[]
+[
+ {
+  "fecha": "2026-11-24",
+  "postura": "mantener_plan",
+  "puntuacion": 12.4,
+  "regimen": "inflacion_alta",
+  "eventos": [
+   "conflicto_militar",
+   "aranceles_sanciones",
+   "desescalada_acuerdo",
+   "elecciones_politica",
+   "shock_petroleo"
+  ]
+ }
+]
