@@ -35,6 +35,16 @@ export function pct(x, d = 1, signo = true) {
   return (signo && x > 0 ? "+" : "") + new Intl.NumberFormat("es-ES", { maximumFractionDigits: d, minimumFractionDigits: d }).format(x) + " %";
 }
 export function claseSigno(x) { return x > 0 ? "pos" : x < 0 ? "neg" : ""; }
+/** "25 nov, 07:43 (hace 2 h)" en hora de Madrid, para saber cuándo se generó un dato. */
+export function momento(iso, ahora = new Date()) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  const texto = new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(d);
+  const min = Math.round((ahora - d) / 60000);
+  const hace = min < 1 ? "ahora mismo" : min < 60 ? `hace ${min} min` : min < 48 * 60 ? `hace ${Math.round(min / 60)} h` : `hace ${Math.round(min / 1440)} días`;
+  return `${texto} (${hace})`;
+}
+
 export function fecha(iso) {
   if (!iso) return "—";
   const d = new Date(iso.length === 10 ? iso + "T12:00:00" : iso);

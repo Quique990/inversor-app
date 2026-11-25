@@ -1,4 +1,4 @@
-import { h, tarjeta, eur, fecha, pct } from "../dom.js";
+import { h, tarjeta, eur, fecha, momento, pct } from "../dom.js";
 import { avisoCorto } from "../diners.js";
 import { modalOperacion } from "./cartera.js";
 import { modalTransferencia } from "./diners.js";
@@ -23,7 +23,9 @@ export function render({ S, calc, guardar, refrescar }) {
 
   // Postura del día
   nodos.push(h("section", { class: `tarjeta postura ${d.postura}` },
-    h("div", { class: "fila entre" }, h("span", { class: "suave" }, `Análisis del ${fecha(m.fecha)}`), h("span", { class: "chip" }, `Confianza ${d.confianza}`)),
+    h("div", { class: "fila entre" }, h("span", { class: "suave" }, `Último análisis de noticias y mercado: ${momento(m.generado)}`), h("span", { class: "chip" }, `Confianza ${d.confianza}`)),
+    m.generado && Date.now() - new Date(m.generado).getTime() > 30 * 3600000
+      ? h("div", { class: "aviso" }, "El análisis tiene más de un día: el de hoy aún no se ha ejecutado (se lanza a las 7:43 en invierno, 8:43 en verano; GitHub a veces lo retrasa). Puedes lanzarlo a mano en GitHub → Actions → Análisis diario → Run workflow.") : null,
     h("div", { class: "titular" }, NOMBRE_POSTURA[d.postura] || d.postura),
     h("p", {}, d.texto_postura),
     h("div", { class: "medidor", title: "Puntuación de oportunidad 0-100" }, h("div", { class: "aguja", style: { left: `calc(${Math.min(100, d.puntuacion)}% - 2px)` } })),
@@ -54,7 +56,7 @@ export function render({ S, calc, guardar, refrescar }) {
   nodos.push(tarjeta("Resumen del día",
     h("p", {}, m.resumen),
     m.riesgos_a_vigilar?.length ? h("div", {}, h("h3", {}, "Riesgos a vigilar"), h("ul", {}, m.riesgos_a_vigilar.map((r) => h("li", {}, r)))) : null,
-    h("p", { class: "suave pequeno" }, `Fuente del resumen: ${m.ia === "github_models" ? "IA (GitHub Models)" : m.ia === "gemini" ? "IA (Gemini)" : "plantilla automática"} · ${m.num_titulares} titulares analizados`)));
+    h("p", { class: "suave pequeno" }, `Fuente del resumen: ${m.ia === "github_models" ? "IA (GitHub Models)" : m.ia === "gemini" ? "IA (Gemini)" : "plantilla automática"} · ${m.num_titulares} titulares analizados · ${momento(m.generado)}`)));
 
   // Eventos
   if (m.eventos?.length) {

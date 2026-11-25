@@ -1,8 +1,11 @@
 """Precios de TUS activos. Se ejecuta en el repositorio PRIVADO (inversor-datos), nunca en el público.
 
-Lee  data/cartera.json  (activos con su ticker de Yahoo)
+Lee  data/cartera.json  (activos; el ticker de Yahoo es opcional)
 Escribe data/precios.json con históricos semanales + último cierre diario y el EUR/USD,
 para que la web calcule valor, ganancias por compra y gráficas sin exponer qué tienes.
+
+Si un activo no tiene ticker, se busca por su ISIN en Yahoo (tickers.py) y se recuerda en precios.json
+(`tickers`), así solo se busca una vez. El ticker escrito a mano en la app siempre manda.
 
 Uso: python -m pipeline.precios_cartera --datos ../inversor-datos
 """
@@ -14,28 +17,61 @@ from pathlib import Path
 
 from . import indicadores as ind
 from .mercados import yahoo_serie
+from .tickers import buscar_por_isin
 from .util import ahora_iso, configurar_log, escribir_json, leer_json, log
 
 
-def ejecutar(dir_datos: Path) -> dict:
+def resolver_tickers(activos: dict, anteriores: dict, buscar=buscar_por_isin) -> tuple[dict, dict]:
+    """isin -> lista de tickers a probar (el primero que funcione gana). Devuelve (candidatos, fallos)."""
+    candidatos: dict[str, list[str]] = {}
+    fallos: dict[str, str] = {}
+    for isin, a in activos.items():
+        if a.get("yahoo"):
+            candidatos[isin] = [a["yahoo"]]
+        elif (anteriores.get(isin) or {}).get("ticker"):
+            candidatos[isin] = [anteriores[isin]["ticker"]]
+        else:
+            try:
+                lista = buscar(isin)
+                if lista:
+                    candidatos[isin] = lista[:4]
+                else:
+                    fallos[isin] = "Yahoo no conoce este ISIN"
+            except Exception as e:  # noqa: BLE001
+                fallos[isin] = f"búsqueda: {e!r}"[:200]
+            time.sleep(0.6)
+    return candidatos, fallos
+
+
+def ejecutar(dir_datos: Path, buscar=buscar_por_isin, serie=yahoo_serie) -> dict:
     configurar_log()
     cartera = leer_json(dir_datos / "data" / "cartera.json", {}) or {}
     activos = cartera.get("activos", {})
-    salida = {"generado": ahora_iso(), "series": {}, "fallos": {}}
-    tickers = {isin: a.get("yahoo") for isin, a in activos.items() if a.get("yahoo")}
-    tickers["__EURUSD"] = "EURUSD=X"
-    for clave, ticker in tickers.items():
-        try:
-            serie, info = yahoo_serie(ticker, rango="10y")
-            semanal = ind.muestrear_semanal(serie, max_puntos=700)
-            if semanal and semanal[-1][0] != serie[-1][0]:
-                semanal.append(serie[-1])
-            salida["series"][clave] = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal,
-                                       "ultimo": serie[-1], "var_1d": ind.variacion(serie, 1)}
-        except Exception as e:  # noqa: BLE001
-            salida["fallos"][clave] = f"{ticker}: {e!r}"[:200]
-            log.warning("Sin precio para %s (%s): %s", clave, ticker, e)
-        time.sleep(0.6)
+    previo = leer_json(dir_datos / "data" / "precios.json", {}) or {}
+    salida = {"generado": ahora_iso(), "series": {}, "tickers": {}, "fallos": {}}
+    candidatos, salida["fallos"] = resolver_tickers(activos, previo.get("tickers") or {}, buscar)
+    candidatos["__EURUSD"] = ["EURUSD=X"]
+    for clave, lista in candidatos.items():
+        errores = []
+        for ticker in lista:
+            try:
+                s, info = serie(ticker, rango="10y")
+                semanal = ind.muestrear_semanal(s, max_puntos=700)
+                if semanal and semanal[-1][0] != s[-1][0]:
+                    semanal.append(s[-1])
+                salida["series"][clave] = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal,
+                                           "ultimo": s[-1], "var_1d": ind.variacion(s, 1)}
+                if not clave.startswith("__"):
+                    origen = "manual" if activos.get(clave, {}).get("yahoo") else "automatico"
+                    salida["tickers"][clave] = {"ticker": ticker, "moneda": info.get("moneda"), "origen": origen}
+                break
+            except Exception as e:  # noqa: BLE001
+                errores.append(f"{ticker}: {e!r}"[:120])
+            finally:
+                time.sleep(0.6)
+        if clave not in salida["series"]:
+            salida["fallos"][clave] = " · ".join(errores)[:300]
+            log.warning("Sin precio para %s: %s", clave, errores)
     escribir_json(dir_datos / "data" / "precios.json", salida)
     log.info("Precios: %d series, %d fallos", len(salida["series"]), len(salida["fallos"]))
     return salida

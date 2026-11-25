@@ -1,7 +1,8 @@
 import { abrirModal, campo, cerrarModal, claseSigno, eur, fecha, h, hoyISO, num, parseNumero, pct, tarjeta, toast, uid } from "../dom.js";
-import { eficaciaSenales, esApalancado, historico, tirCartera } from "../finanzas.js";
+import { eficaciaSenales, esApalancado, fuentePrecio, historico, tirCartera } from "../finanzas.js";
+import { clasificarNombre } from "../reco.js";
 import { donut, lineas } from "../graficas.js";
-import { HUECOS } from "../perfil.js";
+import { HUECOS, ROL_A_HUECO } from "../perfil.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../importar_tr.js";
 import { PAGADO_DESDE } from "../diners.js";
 import { tarjetaIntradia } from "./intradia.js";
@@ -30,7 +31,7 @@ export function render(ctx) {
       kpi("Valor actual", eur(res.valor)), kpi("Invertido (vivo)", eur(res.coste)),
       kpi("Ganancia latente", eur(res.latente), claseSigno(res.latente)), kpi("Rentabilidad", pct(res.latentePct), claseSigno(res.latentePct)),
       kpi("TIR anual", tir === null ? "— (<3 meses)" : pct(tir), claseSigno(tir)), kpi("Realizado + dividendos", eur(res.realizado), claseSigno(res.realizado))),
-    res.sinPrecio.length ? h("div", { class: "aviso" }, `Sin precio actualizado: ${res.sinPrecio.map((i) => cartera.activos[i]?.nombre || i).join(", ")}. Pon su ticker de Yahoo (para el workflow privado) o un precio manual tocando el activo.`) : null,
+    res.sinPrecio.length ? h("div", { class: "aviso" }, `Sin precio actualizado: ${res.sinPrecio.map((i) => cartera.activos[i]?.nombre || i).join(", ")}. El workflow privado “Precios de mi cartera” busca su ticker solo por el ISIN; si no lo encuentra, escríbelo o pon un precio manual tocando el activo.`) : null,
     h("div", { style: { marginTop: "10px" } }, acciones)));
 
   nodos.push(tarjetaIntradia(ctx));
@@ -66,7 +67,7 @@ export function render(ctx) {
       h("tr", {}, h("th", {}, "Activo"), h("th", { class: "num" }, "Valor"), h("th", { class: "num" }, "Ganancia")),
       filas.map((p) => h("tr", { onclick: () => modalPosicion(ctx, p), style: { cursor: "pointer" } },
         h("td", {}, cartera.activos[p.isin]?.nombre || p.isin, esApalancado(cartera.activos[p.isin]?.nombre) ? h("span", { class: "chip i2" }, "apalancado") : null,
-          h("div", { class: "suave pequeno" }, `${num(p.participaciones, 4)} part. · ${p.isin}`)),
+          h("div", { class: "suave pequeno" }, `${num(p.participaciones, 4)} part. · ${HUECOS[calc.huecoDe(p.isin)]?.nombre || "Otros"}`)),
         h("td", { class: "num" }, eur(p.valor)),
         h("td", { class: `num ${claseSigno(p.latente)}` }, eur(p.latente), h("div", { class: "pequeno" }, pct(p.latentePct))))))),
     h("p", { class: "suave pequeno" }, "Toca un activo para ver la ganancia de cada compra según su momento.")));
@@ -95,6 +96,21 @@ export function render(ctx) {
   return nodos;
 }
 
+/** Precio medio de compra frente a precio actual y de dónde sale este, para poder compararlo con Trade Republic. */
+function resumenPrecio(ctx, p) {
+  const medio = p.participaciones > 1e-9 ? p.costeVivo / p.participaciones : null;
+  const f = fuentePrecio(ctx.calc.idx, p.isin);
+  const tickerAuto = ctx.S.privado.precios?.tickers?.[p.isin];
+  const origen = !f ? "sin precio" : f.tipo === "real" ? `Xetra, ${f.hora} de hoy` : f.tipo === "estimado" ? `estimado a las ${f.hora} del ${fecha(f.fecha)} (fuera del horario de Xetra)`
+    : f.tipo === "manual" ? `precio manual del ${fecha(f.fecha)}` : `cierre del ${fecha(f.fecha)}`;
+  return h("div", { class: "rejilla" },
+    kpi("Precio medio de compra", medio === null ? "—" : `${num(medio, 2)} €`),
+    kpi("Precio actual", p.precioActual === null ? "—" : `${num(p.precioActual, 2)} €`),
+    kpi("Rentabilidad", pct(p.latentePct), claseSigno(p.latentePct)),
+    h("p", { class: "suave pequeno", style: { gridColumn: "1 / -1" } }, `Precio actual: ${origen}${tickerAuto ? ` · ticker ${tickerAuto.ticker}${tickerAuto.origen === "automatico" ? " (encontrado por ISIN)" : ""}` : ""}. `,
+      "El precio medio incluye comisiones. Trade Republic usa su precio en directo, así que puede haber una pequeña diferencia."));
+}
+
 function kpi(etiqueta, valor, clase = "") { return h("div", { class: "kpi" }, h("div", { class: "eti" }, etiqueta), h("div", { class: `val ${clase}` }, valor)); }
 
 // ------------------------------------------------------------------ detalle de posición
@@ -103,7 +119,8 @@ function modalPosicion(ctx, p) {
   const a = S.privado.cartera.activos[p.isin] || {};
   abrirModal(
     h("h2", {}, a.nombre || p.isin),
-    h("p", { class: "suave" }, `${p.isin} · precio actual ${p.precioActual === null ? "—" : num(p.precioActual, 4) + " €"}`),
+    h("p", { class: "suave" }, p.isin, " · ", HUECOS[ctx.calc.huecoDe(p.isin)]?.nombre || "Otros (acción, temático…)"),
+    resumenPrecio(ctx, p),
     h("div", { class: "tabla-scroll" }, h("table", {},
       h("tr", {}, h("th", {}, "Compra"), h("th", { class: "num" }, "Precio"), h("th", { class: "num" }, "Ganancia"), h("th", { class: "num" }, "Anual")),
       p.lotes.filter((l) => l.participaciones > 0).map((l) => h("tr", {},
@@ -119,8 +136,10 @@ export function modalActivo(ctx, isin) {
   const { S, guardar, refrescar } = ctx;
   const a = (S.privado.cartera.activos[isin] ||= { nombre: isin });
   const nombre = h("input", { value: a.nombre || "" });
-  const yahoo = h("input", { value: a.yahoo || "", placeholder: "p. ej. VWCE.DE" });
-  const hueco = h("select", {}, h("option", { value: "" }, "Automático"), Object.entries(HUECOS).map(([k, v]) => h("option", { value: k, selected: a.hueco === k }, v.nombre)),
+  const detectado = S.privado.precios?.tickers?.[isin];
+  const yahoo = h("input", { value: a.yahoo || "", placeholder: detectado?.origen === "automatico" ? `Encontrado: ${detectado.ticker} (déjalo vacío para usarlo)` : "Vacío = se busca solo por el ISIN" });
+  const auto = HUECOS[ROL_A_HUECO[ctx.calc?.universoPorIsin?.[isin]?.rol] || clasificarNombre(a.nombre)]?.nombre || "Otros";
+  const hueco = h("select", {}, h("option", { value: "" }, `Automático (${auto})`), Object.entries(HUECOS).map(([k, v]) => h("option", { value: k, selected: a.hueco === k }, v.nombre)),
     h("option", { value: "otros", selected: a.hueco === "otros" }, "Otros (acción, temático…)"));
   const bloque = h("select", {}, h("option", { value: "largo", selected: a.bloque !== "medio" }, "Largo plazo"), h("option", { value: "medio", selected: a.bloque === "medio" }, "Medio plazo"));
   const precio = h("input", { inputmode: "decimal", value: a.precioManual?.valor ?? "", placeholder: "Solo si no hay ticker" });

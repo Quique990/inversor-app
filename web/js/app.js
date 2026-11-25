@@ -4,6 +4,7 @@ import * as store from "./store.js";
 import { calcularPosiciones, indicePrecios, resumenCartera } from "./finanzas.js";
 import { resumen as resumenDiners } from "./diners.js";
 import { recomendar, huecoDe } from "./reco.js";
+import { fusionarIntradia } from "./intradia.js";
 import { destruirTodas } from "./graficas.js";
 
 const VISTAS = {
@@ -25,6 +26,14 @@ async function cargarPublico() {
   S.publico = { mercado: mercado.value, universo: universo.value, backtest: backtest.value, salud: salud.value, indice: indice.value || [], intradia };
 }
 
+/** Previsión intradía de tus activos fuera del universo (rama "intradia" del repositorio privado). No es un error si no hay. */
+async function cargarIntradiaPrivada() {
+  S.privado.intradia = await store.leer("intradia", { forzar: true }).catch(() => S.privado.intradia || null);
+}
+
+/** Intradía pública + privada, lista para usar. */
+export const intradiaTotal = () => fusionarIntradia(S.publico.intradia, S.privado.intradia);
+
 async function cargarPrivado() {
   const estado = document.getElementById("estado-sync");
   estado.textContent = store.leerConfig().modo === "github" ? "Sincronizando…" : "Modo local";
@@ -43,7 +52,8 @@ export function calcular() {
   const universo = S.publico.universo;
   const universoPorIsin = {};
   for (const [id, info] of Object.entries(universo?.info || {})) if (info.isin) universoPorIsin[info.isin] = { id, ...info };
-  const idx = indicePrecios(precios, universo, cartera.activos);
+  const intradia = intradiaTotal();
+  const idx = indicePrecios(precios, universo, cartera.activos, intradia);
   const pos = calcularPosiciones(cartera.operaciones, idx);
   const res = resumenCartera(pos);
   // Valor de la cartera de ETF repartido por bloque de Diners (largo/medio) según cada activo
@@ -55,7 +65,7 @@ export function calcular() {
   }
   const bloques = resumenDiners(contabilidad, valorCartera, cartera);
   const reco = recomendar({ mercado: S.publico.mercado, perfil, pos, activos: cartera.activos, universoPorIsin, saldos: bloques });
-  return { idx, pos, res, bloques, reco, universoPorIsin, huecoDe: (isin) => huecoDe(isin, cartera.activos, universoPorIsin) };
+  return { idx, pos, res, bloques, reco, universoPorIsin, intradia, huecoDe: (isin) => huecoDe(isin, cartera.activos, universoPorIsin) };
 }
 
 export async function guardar(nombre, mensaje) {
@@ -80,7 +90,11 @@ export async function mostrar() {
     const modulo = await cargar();
     destruirTodas();
     const vista = document.getElementById("vista");
-    const recargarIntradia = async () => { S.publico.intradia = await store.leerPublico("intradia.json").catch(() => S.publico.intradia); mostrar(); };
+    const recargarIntradia = async () => {
+      S.publico.intradia = await store.leerPublico("intradia.json").catch(() => S.publico.intradia);
+      await cargarIntradiaPrivada();
+      mostrar();
+    };
     const contenido = await modulo.render({ S, calc: calcular(), guardar, refrescar: mostrar, recargarIntradia });
     vista.replaceChildren(...(Array.isArray(contenido) ? contenido : [contenido]));
     window.scrollTo(0, 0);
@@ -112,7 +126,7 @@ async function iniciar() {
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
   const publico = cargarPublico();
   if (store.necesitaDesbloqueo()) await pedirPin();
-  await Promise.all([publico, cargarPrivado()]);
+  await Promise.all([publico, cargarPrivado(), cargarIntradiaPrivada()]);
   window.addEventListener("hashchange", mostrar);
   mostrar();
 }

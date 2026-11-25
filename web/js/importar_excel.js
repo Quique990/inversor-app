@@ -264,6 +264,14 @@ export async function exportarExcel({ contabilidad: c, cartera, posiciones, resu
   for (const t of c.transferencias) tr.addRow([new Date(t.fecha + "T00:00:00Z"), t.concepto, t.cantidad, t.de, t.a]);
   negrita(tr);
 
+  if (c.gastos?.length) {
+    const ga = wb.addWorksheet("Gastos sueltos");
+    ga.columns = [{ header: "Fecha", width: 12, style: { numFmt: "dd/mm/yyyy" } }, { header: "Concepto", width: 26 },
+      { header: "Importe", width: 12, style: { numFmt: eur } }, { header: "Bloque", width: 12 }];
+    for (const g of c.gastos) ga.addRow([new Date(g.fecha + "T00:00:00Z"), g.concepto, g.importe, g.bloque]);
+    negrita(ga);
+  }
+
   const it = wb.addWorksheet("Intereses");
   it.columns = [{ header: "Mes", width: 10 }, { header: "Importe", width: 10, style: { numFmt: eur } },
     { header: "A largo", width: 10, style: { numFmt: eur } }, { header: "A medio", width: 10, style: { numFmt: eur } }, { header: "Cuadrado", width: 10 }];

@@ -51,7 +51,9 @@ Q_FRACCION = 0.01   # ruido de proceso: los coeficientes pueden cambiar despacio
 OLVIDO_HEDGE = 0.95
 ETA_HEDGE = 1.0
 PROXY_POR_ROL = {"renta_variable_global": "ES=F", "renta_variable_desarrollados": "ES=F", "renta_variable_eeuu": "ES=F",
-                 "renta_variable_emergentes": "ES=F", "oro": "GC=F"}
+                 "renta_variable_emergentes": "ES=F", "oro": "GC=F", "accion": "ES=F"}
+# Bolsas europeas que cierran a las 17:30 (como Xetra); el resto (p. ej. EE. UU.) se deja con su horario
+SUFIJOS_1730 = (".DE", ".PA", ".AS", ".MI", ".MC", ".BR", ".VI", ".F", ".SG", ".MU", ".DU", ".BE", ".HM", ".HA")
 CLASE_POR_ROL = {"oro": "oro", "renta_fija_euro": "renta_fija_calidad", "renta_fija_global": "renta_fija_calidad", "monetario": None}
 
 Puntos = list[tuple[datetime, float]]  # (instante UTC, valor), ordenado
@@ -408,16 +410,35 @@ def _leer(ruta: Path, defecto):
         return defecto
 
 
+def cierre_por_defecto(ticker: str) -> str | None:
+    return "17:30" if ticker.upper().endswith(SUFIJOS_1730) else None
+
+
+def a_euros(reales: Puntos, eurusd: Puntos | None) -> Puntos:
+    """Precios en USD -> EUR con el EUR/USD de cada momento (EURUSD=X son USD por EUR)."""
+    if not eurusd:
+        raise ValueError("Sin EUR/USD para convertir un activo en dólares")
+    salida: Puntos = []
+    for t, v in reales:
+        fx = ultimo_hasta(eurusd, t) or (eurusd[0] if eurusd else None)
+        if fx and fx[1] > 0:
+            salida.append((t, v / fx[1]))
+    return salida
+
+
 def ejecutar(ahora: datetime | None = None, horario: Callable = yahoo_horario, diario: Callable | None = None,
-             destino: Path = WEB_DATA) -> dict:
+             destino: Path = WEB_DATA, etfs: list[dict] | None = None, ruta_mercado: Path | None = None) -> dict:
+    """Calcula la previsión de `etfs` (por defecto, el universo público) y la guarda en `destino`.
+    Cada ETF: {id, yahoo, rol, isin?, nombre?, moneda? ("USD" se pasa a euros), cierre_intradia?}."""
     from .mercados import yahoo_serie
     diario = diario or (lambda t: yahoo_serie(t, rango="2y", intervalo="1d")[0])
     ahora = (ahora or datetime.now(timezone.utc)).astimezone(timezone.utc)
     hoy = ahora.astimezone(MADRID).date()
     salud = Salud()
     estado = _leer(destino / "intradia_estado.json", {"activos": {}, "comun": {}})
-    mercado = _leer(destino / "mercado.json", None)
-    etfs = [e for e in cargar_yaml("universo_etf.yaml")["etfs"] if e.get("yahoo")]
+    mercado = _leer(ruta_mercado or (destino / "mercado.json"), None)
+    if etfs is None:
+        etfs = [e for e in cargar_yaml("universo_etf.yaml")["etfs"] if e.get("yahoo")]
 
     cache: dict[str, Puntos] = {}
 
@@ -439,7 +460,9 @@ def ejecutar(ahora: datetime | None = None, horario: Callable = yahoo_horario, d
         ident, rol = etf["id"], etf.get("rol", "")
         ticker = etf.get("yahoo_intradia") or etf["yahoo"]
         try:
-            reales = puntos(ticker, etf.get("cierre_intradia", "17:30"))
+            reales = puntos(ticker, etf.get("cierre_intradia", cierre_por_defecto(ticker)))
+            if etf.get("moneda") == "USD":
+                reales = a_euros(reales, eurusd)
             salud.bien(f"yahoo_60m:{ticker}", f"{len(reales)} puntos")
         except Exception as e:  # noqa: BLE001
             salud.mal(f"yahoo_60m:{ticker}", str(e))

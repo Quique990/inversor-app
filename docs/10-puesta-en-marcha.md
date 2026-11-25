@@ -26,15 +26,19 @@ GitHub → Settings → Developer settings → **Fine-grained tokens** → *Gene
 1. Abre la web en **Safari** → Compartir → **Añadir a pantalla de inicio**.
 2. Abre la app → **Ajustes → Conectar GitHub**: tu usuario, `inversor-datos`, la clave y un PIN.
 3. **Ajustes → Hacer test** (perfil de riesgo) y **Tu plan** (aportación mensual, máximo extra al mes, colchón).
-4. **Diners → Importar Diners.xlsx** (tu Excel) y revisa los saldos iniciales.
+4. **Diners → Poner mi dinero a mano** (lo que tienes hoy en corto, medio y largo plazo, y las inversiones que no
+   están en Trade Republic). Alternativa: **Importar Diners.xlsx** y revisar los saldos iniciales.
 5. **Cartera → Importar CSV de Trade Republic** (en Trade Republic: Perfil → Extractos → Exportar transacciones).
-6. Si tienes activos que no están en el universo de ETF, toca el activo y pon su **ticker de Yahoo** (p. ej.
-   `WCBR.DE`). El workflow `precios.yml` del repositorio privado actualizará su precio cada tarde. Si no lo
-   encuentras, pon un precio manual.
+6. Activos que no están en el universo de ETF: el workflow `precios.yml` del repositorio privado **busca su ticker
+   por el ISIN** en Yahoo y actualiza su precio cada tarde (lánzalo a mano la primera vez: Actions → "Precios de mi
+   cartera" → Run workflow). Si no lo encuentra, toca el activo y escribe el ticker, o pon un precio manual.
+7. Previsión hora a hora de esos activos: copia `plantilla-datos/.github/workflows/intradia.yml` en el repositorio
+   privado (cambia `TU_USUARIO`) y lánzalo una vez a mano. Gasta ~350 de los 2.000 minutos gratis al mes. Escribe en
+   la rama `intradia` del repositorio privado (un solo commit que se reescribe cada hora).
 
 ## 6. Uso diario
 - Abre **Hoy**: la postura del día, qué hacer con tu dinero este mes y por qué.
-- Cuando cobres o gastes: **Diners → + Semana**.
+- Cuando cobres: **Diners → Paga**, marca la semana. Cuando gastes: **Diners → + Gasto**.
 - Cuando compres: **Cartera → + Operación** (marca "Extra (señal)" si la compra viene de una recomendación) o
   vuelve a importar el CSV, que no duplica operaciones.
 

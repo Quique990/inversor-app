@@ -1,0 +1,24 @@
+name: Previsión intradía de mi cartera
+
+# Copia este fichero en tu repositorio PRIVADO de datos (inversor-datos), junto a precios.yml.
+# Cambia TU_USUARIO por tu usuario de GitHub en las dos líneas marcadas.
+# Cada hora en días laborables (en horario de invierno de 7:20 a 22:20, en verano de 8:20 a 23:20, hora de Madrid).
+# Coste: unos 16 minutos al día laborable, ~350 de los 2.000 minutos gratis al mes de un repositorio privado.
+on:
+  schedule:
+    - cron: "20 6-21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: intradia
+  cancel-in-progress: false
+
+jobs:
+  intradia:
+    uses: TU_USUARIO/inversor-app/.github/workflows/intradia-cartera.yml@main   # <- TU_USUARIO
+    with:
+      repo_app: TU_USUARIO/inversor-app                                         # <- TU_USUARIO
+      forzar: ${{ github.event_name == 'workflow_dispatch' }}

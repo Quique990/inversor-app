@@ -1,5 +1,5 @@
 import { abrirModal, campo, cerrarModal, claseSigno, descargar, eur, fecha, h, hoyISO, parseNumero, pct, tarjeta, toast, uid } from "../dom.js";
-import { avisoCorto, BLOQUES, evolucion, incrementoSemana, posiblesDuplicados, recalcularRepartos, rentabilidadManual, repartirInteres, saldos, saldosNegativos } from "../diners.js";
+import { avisoCorto, BLOQUES, evolucion, incrementoSemana, listaGastos, marcarPaga, posiblesDuplicados, recalcularRepartos, rentabilidadManual, repartirInteres, saldos, saldosNegativos, semanasPaga } from "../diners.js";
 import { donut, lineas } from "../graficas.js";
 import { exportarExcel, importarDiners } from "../importar_excel.js";
 
@@ -11,15 +11,27 @@ export function render(ctx) {
   const nodos = [];
 
   const a300 = avisoCorto(c, cartera);
+  const vacia = !c.semanas.length && !c.transferencias.length && !c.intereses.length && !c.inversionesManuales.length && !(c.gastos || []).length
+    && !["corto", "medio", "largo"].some((k) => Number(c.saldosIniciales?.[k]));
+  if (vacia) {
+    nodos.push(tarjeta("Empieza aquí",
+      h("p", {}, "Pon el dinero que tienes hoy en cada bloque (lo que dice tu Excel). A partir de ahí solo tendrás que marcar la paga de cada semana y apuntar los gastos."),
+      h("div", { class: "fila" }, h("button", { onclick: () => modalInicial(ctx) }, "Poner mi dinero a mano"),
+        h("button", { class: "sec", onclick: () => modalImportarExcel(ctx) }, "Importar Diners.xlsx"))));
+  }
   nodos.push(tarjeta(null,
     h("div", { class: "rejilla" }, kpi("Corto plazo", eur(b.corto)), kpi("Medio plazo", eur(b.medio)), kpi("Largo plazo", eur(b.largo)),
       kpi("Inversiones", eur(b.inversiones)), kpi("Total", eur(b.total))),
     a300 ? h("div", { class: "aviso" }, `Corto plazo en ${eur(a300.saldo)}: pasa ${eur(a300.traspaso)} a medio plazo.`, " ",
       h("button", { class: "mini", onclick: () => modalTransferencia(ctx, { cantidad: a300.traspaso, de: "corto", a: "medio", concepto: "Regla de los 300 €" }) }, "Registrar")) : null,
     h("div", { class: "fila", style: { marginTop: "10px" } },
-      h("button", { onclick: () => modalSemana(ctx) }, "+ Semana"),
+      h("button", { onclick: () => modalGasto(ctx) }, "+ Gasto"),
+      h("button", { class: "sec", onclick: () => modalSemana(ctx) }, "+ Semana"),
       h("button", { class: "sec", onclick: () => modalTransferencia(ctx) }, "+ Transferencia"),
       h("button", { class: "sec", onclick: () => modalInteres(ctx) }, "+ Intereses"))));
+
+  nodos.push(tarjetaPaga(ctx));
+  nodos.push(tarjetaGastos(ctx));
 
   const negativos = saldosNegativos(c, cartera);
   const dups = posiblesDuplicados(c, cartera);
@@ -91,6 +103,7 @@ export function render(ctx) {
 
   nodos.push(tarjeta("Excel y ajustes",
     h("div", { class: "fila" },
+      h("button", { class: "sec", onclick: () => modalInicial(ctx) }, "Poner mi dinero a mano"),
       h("button", { class: "sec", onclick: () => modalImportarExcel(ctx) }, "Importar Diners.xlsx"),
       h("button", { class: "sec", onclick: async () => {
         const blob = await exportarExcel({ contabilidad: c, cartera: S.privado.cartera, posiciones: calc.pos, resumenBloques: b });
@@ -106,6 +119,99 @@ const botones = (guardarFn, borrarFn) => h("div", { class: "fila", style: { marg
   h("button", { class: "sec", onclick: cerrarModal }, "Cancelar"));
 
 async function persistir(ctx, msg) { await ctx.guardar("contabilidad", msg); cerrarModal(); ctx.refrescar(); }
+
+// ------------------------------------------------------------------ paga semanal
+function tarjetaPaga(ctx) {
+  const c = ctx.S.privado.contabilidad;
+  const importe = h("input", { inputmode: "decimal", value: c.config.pagaSemanal ?? "", placeholder: "€ por semana", style: { maxWidth: "130px" } });
+  const guardarImporte = async () => {
+    const v = parseNumero(importe.value);
+    if (!(v > 0)) return toast("Escribe cuánto es la paga");
+    c.config = { ...c.config, pagaSemanal: v };
+    await persistir(ctx, `Paga semanal: ${v} €`);
+  };
+  const filas = semanasPaga(c, hoyISO(), 8).map((x) => {
+    const check = h("input", { type: "checkbox", checked: x.cobrada, disabled: !(c.config.pagaSemanal > 0) && !x.cobrada });
+    check.addEventListener("change", async () => {
+      check.disabled = true;
+      marcarPaga(c, x.lunes, check.checked, c.config.pagaSemanal, uid);
+      await persistir(ctx, check.checked ? `Paga de la semana del ${x.lunes}: ${c.config.pagaSemanal} €` : `Quitar la paga de la semana del ${x.lunes}`);
+    });
+    return h("label", { class: "opcion" }, check, `Semana del ${fecha(x.lunes)}`, x.cobrada ? h("span", { class: "suave" }, ` · ${eur(x.importe)}`) : null);
+  });
+  return tarjeta("Paga",
+    h("div", { class: "fila", style: { alignItems: "flex-end" } }, campo("Paga semanal (€)", importe), h("button", { class: "mini sec", onclick: guardarImporte }, "Guardar")),
+    c.config.pagaSemanal > 0 ? h("p", { class: "suave pequeno" }, "Marca las semanas en que te han dado la paga: se suma al corto plazo.")
+      : h("p", { class: "suave pequeno" }, "Primero escribe cuánto es tu paga y pulsa Guardar."),
+    h("div", {}, filas));
+}
+
+// ------------------------------------------------------------------ gastos
+function tarjetaGastos(ctx) {
+  const c = ctx.S.privado.contabilidad;
+  const l = listaGastos(c).slice(0, 12);
+  return tarjeta("Gastos",
+    l.length ? h("table", {}, l.map((g) => h("tr", { style: { cursor: "pointer" }, onclick: () => (g.suelto ? modalGasto(ctx, g.suelto) : modalSemana(ctx, g.semana)) },
+      h("td", {}, fecha(g.fecha), h("div", { class: "suave pequeno" }, `${g.concepto || "Gasto"} · ${BLOQUES[g.bloque].toLowerCase()}`)),
+      h("td", { class: "num neg" }, eur(-g.importe)))))
+      : h("p", { class: "suave" }, "Sin gastos todavía."),
+    h("button", { onclick: () => modalGasto(ctx) }, "+ Gasto"));
+}
+
+function modalGasto(ctx, g = null) {
+  const c = ctx.S.privado.contabilidad;
+  const fechaI = h("input", { type: "date", value: g?.fecha || hoyISO() });
+  const importe = h("input", { inputmode: "decimal", value: g?.importe ?? "", placeholder: "€" });
+  const concepto = h("input", { value: g?.concepto ?? "", placeholder: "Opcional" });
+  const bloque = h("select", {}, ["corto", "medio", "largo"].map((k) => h("option", { value: k, selected: (g?.bloque || "corto") === k }, BLOQUES[k])));
+  abrirModal(h("h2", {}, g ? "Editar gasto" : "Gasto"), h("p", { class: "suave pequeno" }, "El dinero sale del bloque que elijas y desaparece de la cuenta."),
+    h("div", { class: "form2" }, campo("Fecha", fechaI), campo("Importe (€)", importe)), campo("Concepto", concepto), campo("Sale de", bloque),
+    botones(async () => {
+      const n = { id: g?.id || uid(), fecha: fechaI.value || hoyISO(), importe: parseNumero(importe.value) || 0, concepto: concepto.value.trim(), bloque: bloque.value };
+      if (!(n.importe > 0)) return toast("Escribe el importe");
+      c.gastos = (c.gastos || []).filter((x) => x.id !== n.id).concat(n);
+      await persistir(ctx, `Gasto ${n.fecha}: ${n.importe.toFixed(2)} €${n.concepto ? ` (${n.concepto})` : ""}`);
+    }, g ? async () => { c.gastos = c.gastos.filter((x) => x.id !== g.id); await persistir(ctx, "Borrar gasto"); } : null));
+}
+
+// ------------------------------------------------------------------ dinero inicial a mano
+function modalInicial(ctx) {
+  const c = ctx.S.privado.contabilidad;
+  const ini = c.saldosIniciales || {};
+  const f = h("input", { type: "date", value: ini.incluyeAnteriores && ini.fecha ? ini.fecha : hoyISO() });
+  const campos = Object.fromEntries(["corto", "medio", "largo"].map((k) => [k, h("input", { inputmode: "decimal", value: Number(ini[k]) || "", placeholder: "0" })]));
+  const lista = h("div");
+  const filaInv = () => {
+    const nombre = h("input", { placeholder: "Nombre (p. ej. Letras del Tesoro)" });
+    const valor = h("input", { inputmode: "decimal", placeholder: "Valor hoy (€)" });
+    const tipo = h("select", {}, h("option", { value: "variable" }, "Renta variable"), h("option", { value: "fija" }, "Renta fija"));
+    const plazo = h("select", {}, h("option", { value: "largo" }, "Largo plazo"), h("option", { value: "medio" }, "Medio plazo"));
+    const fila = h("div", { class: "form2", style: { marginBottom: "8px" } }, nombre, valor, tipo, plazo);
+    fila._leer = () => ({ nombre: nombre.value.trim(), valor: parseNumero(valor.value), tipo: tipo.value, largo: tipo.value === "fija" || plazo.value === "largo" });
+    lista.append(fila);
+  };
+  const previos = c.semanas.length + c.transferencias.length + c.intereses.length + (c.gastos || []).length;
+  abrirModal(h("h2", {}, "Poner mi dinero a mano"),
+    h("p", { class: "suave pequeno" }, "Escribe cuánto tienes HOY en cada bloque (en tu Excel, la hoja General). No hace falta importar nada."),
+    campo("Fecha de estos saldos", f),
+    h("div", { class: "form2" }, campo("Corto plazo (€)", campos.corto), campo("Medio plazo (€)", campos.medio), campo("Largo plazo (€)", campos.largo)),
+    h("h3", {}, "Inversiones que NO están en Cartera (opcional)"),
+    h("p", { class: "suave pequeno" }, "Los ETF de Trade Republic van en la pestaña Cartera y se suman solos: no los pongas aquí."),
+    lista, h("button", { class: "mini sec", onclick: filaInv }, "+ inversión"),
+    h("p", { class: "suave pequeno" }, "Todo lo anterior a esa fecha (semanas, compras de Cartera…) se da por incluido en estos saldos, así que no se cuenta dos veces.",
+      previos ? ` Ya tienes ${previos} movimientos apuntados: los anteriores a la fecha dejarán de sumarse (no se borran).` : ""),
+    botones(async () => {
+      const fechaSaldos = f.value || hoyISO();
+      c.saldosIniciales = { fecha: fechaSaldos, incluyeAnteriores: true,
+        corto: parseNumero(campos.corto.value) || 0, medio: parseNumero(campos.medio.value) || 0, largo: parseNumero(campos.largo.value) || 0 };
+      const nuevas = [...lista.children].map((x) => x._leer()).filter((x) => x.valor > 0);
+      for (const x of nuevas) {
+        c.inversionesManuales.push({ id: uid(), nombre: x.nombre || "Inversión", tipo: x.tipo, inicial: x.valor, actual: x.valor, comisiones: 0,
+          largoPlazo: x.largo, acabada: false, fecha: fechaSaldos, pagadoDesde: null, fechaFin: null, enCartera: false });
+      }
+      await persistir(ctx, `Dinero inicial a mano (${fechaSaldos})${nuevas.length ? ` y ${nuevas.length} inversiones` : ""}`);
+    }));
+}
 
 // ------------------------------------------------------------------ semana
 function modalSemana(ctx, s = null) {
@@ -232,7 +338,7 @@ function modalAjustesDiners(ctx) {
     h("p", { class: "suave pequeno" }, "Cada operación puede tener su propia opción en Cartera → Editar."),
     h("label", { class: "opcion" }, recalc, "Recalcular el reparto de los intereses ya guardados con estos saldos"),
     botones(async () => {
-      c.saldosIniciales = { fecha: f.value || null, corto: parseNumero(campos.corto.value) || 0, medio: parseNumero(campos.medio.value) || 0, largo: parseNumero(campos.largo.value) || 0 };
+      c.saldosIniciales = { ...c.saldosIniciales, fecha: f.value || null, corto: parseNumero(campos.corto.value) || 0, medio: parseNumero(campos.medio.value) || 0, largo: parseNumero(campos.largo.value) || 0 };
       c.config = { ...c.config, umbralCorto: parseNumero(umbral.value) || 300, traspaso: parseNumero(traspaso.value) || 150, comprasCartera: compras.value };
       const n = recalc.checked ? recalcularRepartos(c, ctx.S.privado.cartera) : 0;
       await persistir(ctx, `Ajustes de Diners${n ? ` (${n} repartos de intereses recalculados)` : ""}`);

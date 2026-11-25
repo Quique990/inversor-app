@@ -49,6 +49,18 @@ Excel"):
    importar y, opcionalmente, al cambiar los saldos iniciales.
 5. Un saldo negativo se avisa en "Revisa esto" (suele indicar una compra pagada con dinero de fuera de Diners).
 
+## Paga, gastos y dinero inicial a mano (25-11-2026)
+- `config.pagaSemanal`: importe de la paga. La tarjeta **Paga** lista las últimas 8 semanas (lunes a domingo) con un
+  check; marcarlo crea o actualiza la semana con `paga = pagaSemanal` (`marcarPaga`). Desmarcarlo pone la paga a 0
+  y borra la semana si se queda vacía.
+- `gastos[] {id, fecha, importe, concepto, bloque}`: gastos sueltos (botón **+ Gasto**) que restan del bloque
+  elegido. Los gastos dentro de una semana siguen existiendo (vienen del Excel) y salen del corto plazo.
+- `saldosIniciales.incluyeAnteriores: true` (lo pone el asistente **Poner mi dinero a mano**): los saldos ya
+  incluyen todo lo anterior a su fecha, así que se ignoran semanas, transferencias, intereses, gastos y compras
+  anteriores. Sin la marca (importación del Excel) se mantiene el comportamiento anterior. Si los saldos se ponen a
+  mitad de semana, la paga de esa semana se apunta en la fecha de los saldos para que cuente.
+- Cambios de esquema aditivos: los JSON antiguos siguen funcionando sin migración.
+
 ## Modelo de datos (`contabilidad.json`)
 ```jsonc
 {

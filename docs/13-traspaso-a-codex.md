@@ -40,7 +40,17 @@
   25-11-2026. **Aún no hay días evaluados**: la calidad (`calidad.dias`) empieza a contar desde el 26-11.
 - **Web** en GitHub Pages: `https://quique990.github.io/inversor-app/`. Despliegue con `publicar-web.yml` y
   también desde los workflows de análisis e intradía.
-- **Tests:** 23 en Python y 13 en JS, todos en verde (`tests.yml` en cada push).
+- **Tests:** 29 en Python y 18 en JS, todos en verde (`tests.yml` en cada push).
+
+### Cambios del 25-11-2026 (petición del usuario)
+- Activos fuera del universo: tipo deducido del nombre (`reco.clasificarNombre` / `pipeline/clasificar.py`, misma
+  regla en los dos lados), ticker buscado por ISIN en el workflow privado (`pipeline/tickers.py`) y previsión
+  intradía privada (`pipeline/intradia_cartera.py` + `intradia-cartera.yml`, rama `intradia` del privado).
+- Precio actual = último dato intradía (antes, cierre diario con hasta un día de retraso: la rentabilidad salía
+  varios puntos distinta de la de Trade Republic). `yahoo_serie` usa el cierre si falta el ajustado.
+- La tarjeta intradía solo enseña los activos del usuario.
+- Diners: asistente "Poner mi dinero a mano", tarjeta **Paga** (check por semana) y **+ Gasto** (con bloque).
+- Hoy y Mercado muestran fecha y hora del último análisis de noticias (`mercado.generado`), con aviso si > 30 h.
 
 ### Funciona pero sin probar con datos reales del usuario
 - Conexión al repositorio privado (token de grano fino + PIN). El usuario **todavía no** ha conectado el token,
@@ -56,7 +66,8 @@
 |---|---|---|
 | **GitHub Models** responde `200 text/plain "OK"` en vez del JSON de chat | El resumen lo hace la plantilla (`resumen_plantilla`) | `pipeline/ia.py` ya registra diagnóstico del catálogo. Revisar el endpoint/modelo vigente en la documentación de GitHub Models. No es crítico. |
 | **GDELT** devuelve 429 desde Actions | 4 consultas fallan a diario (`salud_fuentes.json`) | Ya se espacian 12 s. Opciones: una sola consulta combinada, o quitarlo si sigue fallando 2 semanas. |
-| **ETF del usuario fuera del universo** | Sin previsión intradía (se suman con su último precio) | Backlog n.º 2. |
+| **Activos del usuario fuera del universo** | Previsión solo cuando active el workflow privado `intradia.yml` | Código hecho (25-11); falta que el usuario lo active y comprobar la primera ejecución. |
+| **Importación de Diners.xlsx** | El usuario dice que no va bien | Hay que reproducirlo con su fichero (en su dispositivo, nunca en este repositorio). Mientras, tiene el modo manual. |
 | **Precios fuera de Xetra** | Son **estimados** con futuros (no hay datos de Lang & Schwarz gratis) | Documentado en `docs/12`. No lo presentes nunca como real. |
 | **Retrasos de cron** | GitHub retrasa 10-60 min o se salta ejecuciones | Normal. No "arregles" añadiendo más crons. |
 
@@ -114,11 +125,12 @@ usuario** y llevan `version: 1`.
 | `web/data/historial/AAAA-MM-DD.json` + `indice.json` | `main.py` | Mercado | Un fichero por día. |
 | `web/data/backtest.json` | `main.py` (lunes) | Mercado | Plan puro vs. plan + reserva táctica. |
 | `web/data/salud_fuentes.json` | `main.py` | Mercado → Salud | `ok`, `fallos`, totales. |
-| `web/data/intradia.json` | `pipeline/intradia.py` | Cartera → "Hoy, hora a hora" | `horas`, `z`, `activos.{id}.{isin, ancla, plan[], actual[], prevision[], modelo, calidad, historial}`, `correlaciones`. Formato estable: la web depende de él. |
+| Privado `data/intradia.json` (rama `intradia`) | `intradia_cartera.py` (workflow privado) | Cartera (fusionado con el público) | Mismo formato que el público; ids = ISIN. Se reescribe con `push -f`. |
+| `web/data/intradia.json` | `pipeline/intradia.py` | Cartera → "Hoy, hora a hora" y precio actual | `horas`, `z`, `activos.{id}.{isin, ancla, plan[], actual[], prevision[], modelo, calidad, historial}`, `correlaciones`. Formato estable: la web depende de él. |
 | `web/data/intradia_estado.json` | **solo** `intradia.yml` | `intradia.py` | Lo aprendido (Kalman, Hedge, escala, historial de 60 días, plan del día). **No lo borres**: perderías el aprendizaje. |
 | Privado `data/cartera.json` | Web | Web, `precios_cartera.py` | `activos{isin:{nombre, bloque, ticker…}}`, `operaciones[] {fecha, tipo, isin, participaciones, precio, importe, comision, origen, pagadoDesde?}`. |
 | Privado `data/contabilidad.json` | Web | Web | Esquema en `docs/07`. |
-| Privado `data/precios.json` | `precios_cartera.py` (workflow privado) | Web | Precios diarios de los ETF propios. |
+| Privado `data/precios.json` | `precios_cartera.py` (workflow privado) | Web, `intradia_cartera.py` | Precios diarios de los activos propios y `tickers{isin:{ticker, moneda, origen}}` (encontrados por ISIN o manuales). |
 
 ---
 
@@ -132,6 +144,7 @@ usuario** y llevan `version: 1`.
 | `publicar-web.yml` | Push a `main` | No | Sí |
 | `tests.yml` | Push y PR | No | No |
 | `precios-cartera.yml` | Reutilizable, lo llama el repositorio privado (`17 18 * * 1-5`) | En el privado | No |
+| `intradia-cartera.yml` | Reutilizable, lo llama el privado (`20 6-21 * * 1-5`, ~350 min/mes) | Rama `intradia` del privado (`push -f`) | No |
 
 - Secretos y variables (repositorio público): `GITHUB_TOKEN` (automático; permiso `models: read`),
   `GEMINI_API_KEY` (opcional, **no configurada**), `vars.GEMINI_MODEL` y `vars.GITHUB_MODELS_MODEL` (opcionales).
@@ -164,11 +177,9 @@ Cada tarea lleva su criterio de aceptación. Hazlas en orden salvo que el usuari
    *Aceptación:* `calidad.dias` crece cada día laborable; `cobertura_pct` tiende a 70-90 %; ninguna excepción en los
    logs. Si la cobertura se queda < 60 % o > 97 % tras 10 días, revisa la estacionalidad o la calibración
    **sin** tocar los parámetros para "maquillar" (regla 6). Documenta lo que veas en `docs/12`.
-2. **Intradía para ETF propios fuera del universo.** Paso opcional en el workflow privado que ejecute el mismo módulo
-   con los tickers de `cartera.json` que no están en el universo, escribiendo `data/intradia.json` privado; la web lo
-   fusiona con el público.
-   *Aceptación:* sin datos personales en el repositorio público; < 400 min/mes en el privado; tests con datos
-   sintéticos; la tarjeta muestra esos ETF.
+2. **Intradía para activos propios fuera del universo: HECHO el 25-11-2026** (ver docs/12). Pendiente: que el
+   usuario copie `plantilla-datos/.github/workflows/intradia.yml` y comprobar la primera ejecución real (tickers
+   encontrados por ISIN, conversión USD → EUR) y los minutos gastados.
 3. **IA gratuita para el resumen.** Arreglar GitHub Models (endpoint o modelo actual) o añadir un proveedor con nivel
    gratuito **sin tarjeta** (p. ej. Groq, OpenRouter o Mistral) a la cadena de `pipeline/ia.py`.
    *Aceptación:* `mercado.json` indica un proveedor ≠ plantilla; la intensidad sigue limitada a +1
