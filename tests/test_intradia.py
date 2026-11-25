@@ -123,3 +123,22 @@ def test_ejecucion_completa_varios_dias(tmp_path, monkeypatch):
     estado = json.loads((tmp_path / "intradia_estado.json").read_text())
     assert estado["activos"]["VWCE"]["kalman"]["n"] == 3
     assert len(ult["plan"]) == len(I.REJILLA)
+
+
+def test_plan_de_madrugada_es_provisional(tmp_path, monkeypatch):
+    datos = _simulador()
+    monkeypatch.setattr(I, "cargar_yaml", lambda _n: {"etfs": [{"id": "VWCE", "isin": "IE00BK5BQT80", "yahoo": "VWCE.DE", "rol": "renta_variable_global"}]})
+    reloj = {}
+    horario = lambda t: [b for b in datos[t] if b[0] <= reloj["ahora"]]
+    diario = lambda _t: [((date(2024, 1, 1) + timedelta(days=i)).isoformat(), 100 + i % 7) for i in range(300)]
+    d = date(2026, 10, 13)
+    reloj["ahora"] = I.instante(d, "01:20")
+    I.ejecutar(ahora=reloj["ahora"], horario=horario, diario=diario, destino=tmp_path)
+    creado1 = json.loads((tmp_path / "intradia_estado.json").read_text())["activos"]["VWCE"]["plan"]["creado"]
+    reloj["ahora"] = I.instante(d, "07:13")
+    I.ejecutar(ahora=reloj["ahora"], horario=horario, diario=diario, destino=tmp_path)
+    creado2 = json.loads((tmp_path / "intradia_estado.json").read_text())["activos"]["VWCE"]["plan"]["creado"]
+    assert creado2 > creado1
+    reloj["ahora"] = I.instante(d, "12:13")
+    I.ejecutar(ahora=reloj["ahora"], horario=horario, diario=diario, destino=tmp_path)
+    assert json.loads((tmp_path / "intradia_estado.json").read_text())["activos"]["VWCE"]["plan"]["creado"] == creado2

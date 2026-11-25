@@ -465,6 +465,9 @@ def ejecutar(ahora: datetime | None = None, horario: Callable = yahoo_horario, d
 
         # 2) Plan de hoy (una vez al día, con datos anteriores a las 07:30)
         ancla_t = instante(hoy, REJILLA[0])
+        # Un plan creado de madrugada (p. ej. ejecución manual) es provisional: se rehace a partir de las 07:00
+        if plan and plan.get("creado", "") < (ancla_t - timedelta(minutes=30)).isoformat() and ahora >= ancla_t - timedelta(minutes=30):
+            plan = None
         if es_dia_habil(hoy) and plan is None:
             ancla = valor_en(min(ancla_t, ahora), reales, x, beta)
             if ancla:
@@ -490,6 +493,7 @@ def ejecutar(ahora: datetime | None = None, horario: Callable = yahoo_horario, d
                 phi = [1.0, variable_geopolitica(mercado, rol, hoy), variable_vix(mercado), nocturno, rend[-1] if rend else 0.0]
                 plan = est["plan"] = crear_plan(hoy, ancla[0], g["varianza_prevista"], cuotas, phi, est)
                 plan["garch"] = {"alfa": g.get("alfa"), "beta": g.get("beta")}
+                plan["creado"] = ahora.isoformat()
                 plan["cuotas"] = [round(c, 4) for c in cuotas]
 
         if plan is None or plan["fecha"] != hoy.isoformat():
