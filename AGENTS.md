@@ -1,6 +1,10 @@
 # AGENTS.md — Instrucciones para Codex y otros agentes
 
 Lee esto antes de tocar el código. Proyecto: app personal de inversión en ETF + contabilidad "Diners".
+
+> **Codex se encarga del mantenimiento y las mejoras desde el 25-11-2026.** Después de este fichero, lee
+> **`docs/13-traspaso-a-codex.md`**: decisiones del usuario, estado real, checklist de cada cambio, runbook y
+> backlog priorizado. Mantenlo al día cuando cambie algo de lo que describe.
 Idioma: **castellano de España** en la interfaz, los comentarios, los commits y la documentación.
 
 ## Mapa rápido
@@ -56,4 +60,5 @@ python -m http.server 8000 -d web        # probar la web en http://localhost:800
   porque son el historial del usuario.
 
 ## Tareas pendientes
-Ver `docs/11-hoja-de-ruta.md`.
+Backlog priorizado con criterios de aceptación: `docs/13-traspaso-a-codex.md` (sección 6). Visión a largo plazo:
+`docs/11-hoja-de-ruta.md`.

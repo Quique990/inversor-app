@@ -11,6 +11,8 @@
 - [x] Pantalla "Cómo funciona" dentro de la app.
 
 ## Próximo (por prioridad)
+El backlog detallado y con criterios de aceptación está en `docs/13-traspaso-a-codex.md`.
+
 1. **Intradía para ETF propios fuera del universo** (workflow privado) y verificación de las barras de 60 min.
 2. **IA gratuita** para el resumen (GitHub Models responde mal; Gemini aparcado porque AI Studio pide facturación).
 3. **Avisos por Telegram** (aparcado a petición del usuario). Bot gratuito; el workflow del repositorio privado
