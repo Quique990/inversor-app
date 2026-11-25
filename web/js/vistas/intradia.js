@@ -40,17 +40,23 @@ export function tarjetaIntradia(ctx) {
     propios.length ? h("optgroup", { label: "Mis activos" }, propios.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, etiqueta(a)))) : null,
     otros.length ? h("optgroup", { label: "ETF del universo (aún no tienes activos)" }, otros.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, `${a.id} · ${a.nombre}`))) : null);
 
+  // Hora del cálculo de lo que se ve: tus activos privados y los públicos se actualizan por separado
+  const momentoDe = (a) => (a.privado ? intra.privadoGenerado : intra.generado);
+  const avisoTarjeta = h("div");
   const pintar = () => {
     const datos = seleccion === "cartera" ? { ...pred, nombre: "Tu cartera", esCartera: true } : intra.activos[seleccion];
+    const momentos = (seleccion === "cartera" ? propios : [intra.activos[seleccion]]).map(momentoDe).filter(Boolean).sort();
+    const aviso = avisoRetraso(intra, momentos[0]);
+    avisoTarjeta.replaceChildren(...(aviso ? [h("div", { class: "aviso" }, aviso)] : []));
     contenedor.replaceChildren(...contenidoGrafica(intra, datos).filter(Boolean)); // sin nulos (si no, sale "null")
   };
   pintar();
 
   return tarjeta("Hoy, hora a hora (previsión)",
     intra.fecha !== hoyMadrid() ? h("div", { class: "aviso" }, `La previsión es del ${fecha(intra.fecha)}. Hoy no hay mercado o todavía no se ha calculado.`) : null,
-    avisoRetraso(intra) ? h("div", { class: "aviso" }, avisoRetraso(intra)) : null,
+    avisoTarjeta,
     h("div", { class: "fila", style: { alignItems: "center", marginBottom: "8px" } }, selector,
-      h("button", { class: "mini sec", onclick: () => ctx.recargarIntradia() }, "Actualizar")),
+      h("button", { class: "mini sec", onclick: (e) => { e.target.disabled = true; e.target.textContent = "Actualizando…"; ctx.recargarIntradia(); } }, "Actualizar")),
     contenedor,
     sinPrevision.length ? h("div", {}, h("p", { class: "suave pequeno" }, `Sin previsión todavía (se cuentan con su último precio): ${sinPrevision.join(", ")}.`), ayudaPrivada(S)) : null,
     h("p", { class: "suave pequeno" }, `Actualizada: ${horaMadrid(intra.generado)}${intra.privadoGenerado ? ` · tus otros activos: ${horaMadrid(intra.privadoGenerado)}` : ""}. `, intra.nota, " ", h("a", { href: "#/como" }, "Cómo funciona")));
@@ -131,9 +137,9 @@ function atajosZoom(horas, ultimaHora) {
 }
 
 /** Si el último dato es de hace más de una hora y media (en horario), explica por qué faltan horas. */
-export function avisoRetraso(intra, ahora = new Date()) {
+export function avisoRetraso(intra, momento, ahora = new Date()) {
   const loc = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", hour12: false }).format(ahora);
-  const generado = intra.generado ? new Date(intra.generado) : null;
+  const generado = momento ? new Date(momento) : null;
   if (!generado || loc < "08:30" || loc > "23:30" || intra.fecha !== hoyMadrid()) return null;
   const min = Math.round((ahora - generado) / 60000);
   if (min < 90) return null;

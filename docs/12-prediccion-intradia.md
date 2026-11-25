@@ -62,8 +62,9 @@ La gráfica "Evolución" de Cartera usa `actual` de la cartera para su vista **D
 precios diarios (`precios.json → series[isin].diario`, ~6 meses) y Año, los semanales.
 
 ## Activos propios fuera del universo (repositorio privado)
-- `pipeline/intradia_cartera.py` elige los activos de `data/cartera.json` con participaciones vivas que **no** están
-  en el universo y llama a `intradia.ejecutar(etfs=…)` con el mismo modelo. Ticker: el escrito en la app o el que
+- `pipeline/intradia_cartera.py` elige **todos** los activos de `data/cartera.json` con participaciones vivas
+  (también los del universo: el cron del privado está siendo más puntual que el del público) y llama a
+  `intradia.ejecutar(etfs=…)` con el mismo modelo. En la web, un ISIN privado sustituye a su versión pública. Ticker: el escrito en la app o el que
   `precios_cartera.py` encontró por ISIN (`precios.json → tickers`). Rol: hueco elegido a mano o
   `clasificar.hueco_por_nombre` (oro → `GC=F`; renta variable y acciones → `ES=F`; renta fija → sin indicador).
 - Tickers en USD (p. ej. acciones de EE. UU.) se pasan a euros con `EURUSD=X` hora a hora (`a_euros`). Las bolsas
@@ -73,7 +74,9 @@ precios diarios (`precios.json → series[isin].diario`, ~6 meses) y Año, los s
   en la rama `intradia` del repositorio privado con `push -f` (un solo commit: no ensucia el historial de datos).
 - La web lo lee con la API de contenidos (`ref=intradia`) y lo fusiona con el público (`fusionarIntradia`): solo si
   es del mismo día; las correlaciones público-privado quedan a `null` (se usa 0,6).
-- La tarjeta enseña solo los activos del usuario (los del universo solo si la cartera está vacía).
+- La tarjeta enseña solo los activos del usuario (los del universo solo si la cartera está vacía). El aviso de
+  retraso usa la hora de cálculo de la fuente que se está viendo (privada o pública), y "Actualizar" avisa de si
+  hay datos nuevos.
 - El último valor intradía es también el **precio actual** de la cartera (`indicePrecios(…, intradia)`): el cierre
   diario se descarga una vez al día y, con el mercado moviéndose, dejaba la rentabilidad desfasada varios puntos.
 

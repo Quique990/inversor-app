@@ -121,7 +121,7 @@ function modalConexion(ctx) {
           const vacio = n === "cartera" ? !remoto.operaciones?.length : n === "contabilidad" ? !remoto.semanas?.length : !remoto.perfil;
           if (local && vacio) { ctx.S.privado[n] = JSON.parse(local); await store.guardar(n, ctx.S.privado[n], `Migrar ${n} desde el navegador`); }
         }
-        cerrarModal(); location.reload();
+        cerrarModal(); store.prepararRecarga(); location.reload();
       } catch (e) { estado.textContent = e.message; }
     } }, "Conectar"), h("button", { class: "sec", onclick: cerrarModal }, "Cancelar")));
 }

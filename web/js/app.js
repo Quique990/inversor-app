@@ -92,8 +92,13 @@ export async function mostrar() {
     destruirTodas();
     const vista = document.getElementById("vista");
     const recargarIntradia = async () => {
+      const ultimo = () => [S.publico.intradia?.generado, S.privado.intradia?.generado].filter(Boolean).sort().at(-1);
+      const antes = ultimo();
       S.publico.intradia = await store.leerPublico("intradia.json").catch(() => S.publico.intradia);
       await cargarIntradiaPrivada();
+      const ahora = ultimo();
+      const hora = ahora ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit" }).format(new Date(ahora)) : "—";
+      toast(ahora && ahora !== antes ? `Previsión actualizada (cálculo de las ${hora})` : `No hay datos nuevos todavía: el último cálculo es de las ${hora}. Se recalcula cada hora.`, 4500);
       mostrar();
     };
     const contenido = await modulo.render({ S, calc: calcular(), guardar, refrescar: mostrar, recargarIntradia });
@@ -114,7 +119,7 @@ async function iniciar() {
     const habia = !!navigator.serviceWorker.controller;
     let recargada = false;
     navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (habia && !recargada) { recargada = true; location.reload(); }
+      if (habia && !recargada) { recargada = true; store.prepararRecarga(); location.reload(); }
     });
     navigator.serviceWorker.register("sw.js").then((r) => r.update()).catch(() => {});
   }

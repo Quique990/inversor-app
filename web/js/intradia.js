@@ -27,7 +27,9 @@ export function fusionarIntradia(publico, privado) {
   if (!privado?.activos || !Object.keys(privado.activos).length) return publico || null;
   if (!publico?.activos) return privado;
   if (privado.fecha !== publico.fecha) return publico;
-  const activos = { ...publico.activos };
+  // Un ISIN calculado en tu repositorio privado sustituye a su versión pública (se actualiza con más puntualidad)
+  const isinsPrivados = new Set(Object.values(privado.activos).map((a) => a.isin));
+  const activos = Object.fromEntries(Object.entries(publico.activos).filter(([, a]) => !isinsPrivados.has(a.isin)));
   for (const [id, a] of Object.entries(privado.activos)) if (!activos[id]) activos[id] = { ...a, privado: true };
   const cp = publico.correlaciones || { ids: [], matriz: [] }, cq = privado.correlaciones || { ids: [], matriz: [] };
   const ids = [...cp.ids, ...cq.ids.filter((x) => !cp.ids.includes(x))];

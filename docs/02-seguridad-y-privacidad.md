@@ -18,8 +18,9 @@ cualquiera puede leer un periódico.
 
 ## Entrada con PIN (desde el 25-11-2026)
 - Con el repositorio privado conectado, la app no enseña nada hasta poner el **PIN de 4 cifras**
-  (`web/js/sesion.js`). No hay botón para entrar sin él. La sesión dura mientras la app está abierta; "Cerrar
-  sesión" y "Cambiar PIN" están en Ajustes. Con el PIN creado, la app entra sola al escribir la 4.ª cifra.
+  (`web/js/sesion.js`). No hay botón para entrar sin él. La clave descifrada solo vive en memoria: cada carga de la
+  página (también recargar) pide el PIN; solo las recargas que hace la propia app (actualización, conectar) lo
+  conservan 15 s. "Cerrar sesión" y "Cambiar PIN" están en Ajustes. Con el PIN creado, la app entra sola al escribir la 4.ª cifra.
 - El PIN es el mismo en todos los dispositivos. En el repositorio privado se guarda solo un **verificador** en
   `data/acceso.json` (`tipo: "pin"`, sal aleatoria + PBKDF2-SHA256, 310.000 iteraciones; `web/js/acceso.js`). El
   PIN no se guarda en ningún sitio.

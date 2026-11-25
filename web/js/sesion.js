@@ -72,7 +72,7 @@ export function iniciarSesion() {
       try { verificador = await store.leer("acceso", { forzar: true }); }
       catch {
         // Sin conexión: si el PIN ha descifrado la clave de este dispositivo, es el bueno
-        if (store.leerConfig().tokenCifrado) { sessionStorage.setItem("inversor.sesion", "1"); terminar(); }
+        if (store.leerConfig().tokenCifrado) { store.marcarSesion(); terminar(); }
         else error.textContent = "Sin conexión con GitHub: no se puede comprobar el PIN.";
         return;
       }

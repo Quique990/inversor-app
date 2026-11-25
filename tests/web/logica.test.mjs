@@ -241,6 +241,9 @@ test("Intradía: fusiona la previsión pública con la privada del mismo día", 
   assert.equal(f.correlaciones.matriz[1][2], 0.3);
   assert.equal(f.correlaciones.matriz[0][1], null);                    // pública-privada: desconocida
   assert.equal(fusionarIntradia(pub, { ...priv, fecha: "2026-11-24" }), pub);  // la privada es de otro día
+  // Si el privado también calcula un ETF público, gana el privado
+  const conDuplicado = fusionarIntradia(pub, { ...priv, activos: { ...priv.activos, IE00BK5BQT80: { id: "IE00BK5BQT80", isin: "IE00BK5BQT80" } } });
+  assert.ok(!conDuplicado.activos.A && conDuplicado.activos.IE00BK5BQT80.privado);
   assert.equal(fusionarIntradia(null, priv), priv);
   assert.equal(fusionarIntradia(pub, null), pub);
   // La previsión de la cartera usa 0,6 cuando no conoce la correlación (sin romper)

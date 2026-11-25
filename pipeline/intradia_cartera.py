@@ -1,7 +1,9 @@
-"""Predicción intradía de TUS activos que no están en el universo público. Solo en el repositorio PRIVADO.
+"""Predicción intradía de TODOS tus activos. Solo en el repositorio PRIVADO.
 
 Usa el mismo modelo que pipeline/intradia.py (GARCH + estacionalidad + Kalman + Hedge + calibración) con los
-activos de data/cartera.json que tienes ahora mismo y que no tienen ya previsión pública. El ticker sale de lo
+activos de data/cartera.json que tienes ahora mismo, también los que están en el universo público: el workflow
+privado se ejecuta con más puntualidad que el público (GitHub retrasa o se salta crons del público), y así toda tu
+cartera se actualiza a la vez. La web usa la previsión privada de un ISIN en lugar de la pública del mismo día. El ticker sale de lo
 que escribiste en la app o del que encontró precios_cartera.py por ISIN (data/precios.json → tickers).
 
 Escribe en la carpeta de salida (en el workflow, la rama `intradia` del repositorio privado):
@@ -51,8 +53,12 @@ def activos_a_prever(cartera: dict, precios: dict, isins_publicos: set[str]) -> 
 def ejecutar(dir_datos: Path, salida: Path, **kw) -> dict | None:
     cartera = leer_json(dir_datos / "data" / "cartera.json", {}) or {}
     precios = leer_json(dir_datos / "data" / "precios.json", {}) or {}
-    publicos = {e["isin"] for e in cargar_yaml("universo_etf.yaml")["etfs"] if e.get("isin")}
-    etfs, sin_ticker = activos_a_prever(cartera, precios, publicos)
+    # Rol del universo para los ETF públicos (para el resto se deduce del nombre)
+    roles = {e["isin"]: e.get("rol") for e in cargar_yaml("universo_etf.yaml")["etfs"] if e.get("isin")}
+    etfs, sin_ticker = activos_a_prever(cartera, precios, set())
+    for e in etfs:
+        if roles.get(e["isin"]) and not (cartera.get("activos", {}).get(e["isin"]) or {}).get("hueco"):
+            e["rol"] = roles[e["isin"]]
     if sin_ticker:
         log.warning("Sin ticker (no se pueden prever): %s", ", ".join(sin_ticker))
     if not etfs:

@@ -50,14 +50,29 @@ export function leerConfig() {
 }
 function escribirConfig(c) { localStorage.setItem(CLAVE_CONFIG, JSON.stringify(c)); }
 
-let tokenSesion = sessionStorage.getItem("inversor.token") || null;
+// La clave descifrada y la sesión viven SOLO en memoria: cada vez que se carga la página hay que poner el PIN.
+// Excepción: una recarga que hace la propia app (actualización, conectar) deja la clave 15 s en sessionStorage.
+let tokenSesion = null, sesion = false;
+try {
+  const r = JSON.parse(sessionStorage.getItem("inversor.recarga") || "null");
+  if (r && r.hasta > Date.now() && r.token) { tokenSesion = r.token; sesion = true; }
+} catch { /* nada */ }
+sessionStorage.removeItem("inversor.recarga");
+sessionStorage.removeItem("inversor.token"); sessionStorage.removeItem("inversor.sesion"); // versiones anteriores
+
+/** Antes de una recarga hecha por la app: que no vuelva a pedir el PIN. */
+export function prepararRecarga() {
+  if (sesion && tokenSesion) sessionStorage.setItem("inversor.recarga", JSON.stringify({ token: tokenSesion, hasta: Date.now() + 15000 }));
+}
 const memoria = {};   // nombre -> datos
 const shas = {};      // nombre -> sha del fichero en GitHub
 
 // ------------------------------------------------------------------ sesión
 // Con GitHub conectado hay que iniciar sesión cada vez que se abre la app (la sesión dura mientras la app está
 // abierta: sessionStorage). La clave de GitHub se guarda en el dispositivo cifrada con la contraseña.
-export const sesionAbierta = () => leerConfig().modo !== "github" || sessionStorage.getItem("inversor.sesion") === "1";
+export const sesionAbierta = () => leerConfig().modo !== "github" || sesion;
+/** Abre la sesión sin volver a cifrar (sin conexión, cuando el PIN ya ha descifrado la clave del dispositivo). */
+export function marcarSesion() { if (tokenSesion) sesion = true; }
 
 /** Descifra la clave del dispositivo con la contraseña (o el PIN antiguo). Lanza si no es correcta. */
 export async function desbloquear(contrasena) {
@@ -65,7 +80,6 @@ export async function desbloquear(contrasena) {
   if (c.tokenCifrado) tokenSesion = await descifrar(c.tokenCifrado, contrasena);
   else if (c.tokenPlano) tokenSesion = c.tokenPlano;
   else throw new Error("Este dispositivo no tiene clave de GitHub");
-  sessionStorage.setItem("inversor.token", tokenSesion);
 }
 
 /** Tras comprobar la contraseña: deja la clave cifrada con ella (y quita la copia sin cifrar) y abre la sesión. */
@@ -76,13 +90,12 @@ export async function abrirSesion(contrasena) {
   c.pinActivo = true; // este dispositivo ya entra con el PIN de 4 cifras
   delete c.tokenPlano;
   escribirConfig(c);
-  sessionStorage.setItem("inversor.sesion", "1");
+  sesion = true;
 }
 
 export function cerrarSesion() {
   tokenSesion = null;
-  sessionStorage.removeItem("inversor.token");
-  sessionStorage.removeItem("inversor.sesion");
+  sesion = false;
   for (const k of Object.keys(memoria)) delete memoria[k];
 }
 
@@ -91,12 +104,11 @@ export async function configurarGithub({ owner, repo, rama = "main", token }) {
   const c = { modo: "github", owner: owner.trim(), repo: repo.trim(), rama: rama.trim() || "main" };
   escribirConfig(c);
   tokenSesion = token.trim();
-  sessionStorage.setItem("inversor.token", tokenSesion);
-  sessionStorage.removeItem("inversor.sesion");
+  sesion = false;
   for (const k of Object.keys(memoria)) delete memoria[k];
 }
 
-export function usarModoLocal() { escribirConfig({ modo: "local" }); tokenSesion = null; sessionStorage.removeItem("inversor.token"); }
+export function usarModoLocal() { escribirConfig({ modo: "local" }); tokenSesion = null; sesion = false; }
 
 export function olvidarTodo() {
   Object.keys(localStorage).filter((k) => k.startsWith("inversor.")).forEach((k) => localStorage.removeItem(k));
