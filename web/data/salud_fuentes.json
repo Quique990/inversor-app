@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-25T11:01:56+00:00",
+ "fecha": "2026-11-25T11:06:12+00:00",
  "ok": {
   "rss:bce": "2 titulares",
   "rss:fed": "1 titulares",
@@ -19,7 +19,6 @@
   "gnews:gn_markets_en": "40 titulares",
   "gnews:gn_geo_en": "40 titulares",
   "gnews:gn_oil_en": "40 titulares",
-  "gdelt:conflicto": "ok",
   "yahoo:VWCE.DE": "1864 puntos, último 2026-11-25",
   "yahoo:EUNL.DE": "2540 puntos, último 2026-11-25",
   "yahoo:IS3N.DE": "1273 puntos, último 2026-11-25",
@@ -29,7 +28,7 @@
   "yahoo:XEON.DE": "1275 puntos, último 2026-11-25",
   "yahoo:8PSG.DE": "1274 puntos, último 2026-11-25",
   "yahoo:4GLD.DE": "1273 puntos, último 2026-11-25",
-  "yahoo:BRNG.L": "1260 puntos, último 2026-11-25",
+  "yahoo:BRNT.L": "1262 puntos, último 2026-11-25",
   "yahoo:DFEN.DE": "927 puntos, último 2026-11-25",
   "yahoo:XDW0.DE": "1273 puntos, último 2026-11-25",
   "yahoo:^GSPC": "169 puntos, último 2026-11-24",
@@ -51,11 +50,11 @@
   "gpr:diario": "último 1970-01-01"
  },
  "fallos": {
+  "gdelt:conflicto": "HTTPError('429 Too Many Requests en https://api.gdeltproject.org/api/v2/doc/doc')",
   "gdelt:sanciones_aranceles": "HTTPError('429 Too Many Requests en https://api.gdeltproject.org/api/v2/doc/doc')",
   "gdelt:energia": "HTTPError('429 Too Many Requests en https://api.gdeltproject.org/api/v2/doc/doc')",
-  "gdelt:banca": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Max retries exceeded with url: /api/v2/doc/doc?query=%28bank+run+OR+banking+crisis+OR+default+OR+bailout%29+sourcelang%3Aenglish&mode=TimelineVol&timespan=7d&format=json (Caused by ConnectTimeoutError(<HTTPSCon",
-  "yahoo:OOEA.DE": "no existe; usado BRNG.L (corrígelo en universo_etf.yaml)"
+  "gdelt:banca": "HTTPError('429 Too Many Requests en https://api.gdeltproject.org/api/v2/doc/doc')"
  },
- "total_ok": 48,
+ "total_ok": 47,
  "total_fallos": 4
 }

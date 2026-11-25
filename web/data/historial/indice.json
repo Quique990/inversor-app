@@ -14,14 +14,14 @@
  },
  {
   "fecha": "2026-11-25",
-  "postura": "precaucion",
+  "postura": "escalonar",
   "puntuacion": 31.4,
   "regimen": "inflacion_alta",
   "eventos": [
    "conflicto_militar",
    "aranceles_sanciones",
-   "shock_petroleo",
-   "elecciones_politica"
+   "elecciones_politica",
+   "shock_petroleo"
   ]
  }
 ]

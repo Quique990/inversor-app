@@ -1,7 +1,7 @@
 {
  "fecha": "2026-11-25",
- "generado": "2026-11-25T11:01:55+00:00",
- "resumen": "Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); guerra comercial / aranceles / sanciones (intensidad 3/3); shock de oferta de petróleo / energía (intensidad 2/3); elecciones / incertidumbre política relevante (intensidad 2/3). Entorno de riesgo elevado. Mantén el plan, no hagas aportaciones extra grandes y revisa que tu fondo de emergencia esté cubierto. (Resumen automático sin IA.)",
+ "generado": "2026-11-25T11:06:12+00:00",
+ "resumen": "Temas que dominan hoy: conflicto militar / invasión / ataque entre estados (intensidad 3/3); guerra comercial / aranceles / sanciones (intensidad 3/3); elecciones / incertidumbre política relevante (intensidad 2/3); shock de oferta de petróleo / energía (intensidad 1/3). Si aportas extra, hazlo en varias partes; la caída podría prolongarse. (Resumen automático sin IA.)",
  "riesgos_a_vigilar": [],
  "tono_global": null,
  "ia": "ninguna",
@@ -40,7 +40,7 @@
    ],
    "explicacion_ia": null,
    "region": null,
-   "gdelt_ratio": 0.86,
+   "gdelt_ratio": null,
    "impacto_tipico": {
     "renta_variable": -1,
     "renta_fija_calidad": 1,
@@ -73,14 +73,14 @@
      "url": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o?at_medium=RSS&at_campaign=rss"
     },
     {
-     "titulo": "How A Seller Of Auto Parts Views The Clash Over Auto Tariffs",
-     "fuente": "Forbes",
-     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOamdybXFWd0d0eDRiTThEWXpWUmZGX0dFbVcxU3NrOWFKcU1Wc3hQWWVtVjN1UmRRUDRyd0lyMk01d2IzckZiTFk3ZnZGZjRyR2VFSmM3ZDJ6ODZXVmlhbGIwQUQ4U3MyaXJBSmIyME54RGtITTlTWTJkRENiYTczNGt3LWdxT0FSVmM2YTFJU21CZ3RWSDNyVU5zOUt6bGlVVjAyWjVCd3BCUkgwdi1kMQ?oc=5"
-    },
-    {
      "titulo": "Bolsa e Ibex 35 hoy, en directo | Wall Street viene con otro fuerte revés para el Nasdaq (-2,5%), en medio del temor a más aranceles",
      "fuente": "El Confidencial",
      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNMVU1OXI3RVlnY0xSNW1HbktMX3l6U0xDWGRRQzBwd3N4UHpJYXRKT3R1TDJsZHpkcE1kM0lhNll5aWs0cEtEeUszcWJrVVdDSVVoVHRhOXR5clN6SmdReklyVkp2TDRPRnJaT19TRmJ3Y3Vhenk0RUpsVWtPOVhucjQzdkY2aldGellkMm1TOXkzeWFt?oc=5"
+    },
+    {
+     "titulo": "How A Seller Of Auto Parts Views The Clash Over Auto Tariffs",
+     "fuente": "Forbes",
+     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOamdybXFWd0d0eDRiTThEWXpWUmZGX0dFbVcxU3NrOWFKcU1Wc3hQWWVtVjN1UmRRUDRyd0lyMk01d2IzckZiTFk3ZnZGZjRyR2VFSmM3ZDJ6ODZXVmlhbGIwQUQ4U3MyaXJBSmIyME54RGtITTlTWTJkRENiYTczNGt3LWdxT0FSVmM2YTFJU21CZ3RWSDNyVU5zOUt6bGlVVjAyWjVCd3BCUkgwdi1kMQ?oc=5"
     },
     {
      "titulo": "Amenazas de la IA, qué esperamos la Fed y aranceles",
@@ -114,57 +114,6 @@
     {
      "No vender en el pánico inicial": "el riesgo de perderse el rebote es alto."
     }
-   ]
-  },
-  {
-   "tipo": "shock_petroleo",
-   "nombre": "Shock de oferta de petróleo / energía",
-   "intensidad": 2,
-   "titulares": 5,
-   "ejemplos": [
-    {
-     "titulo": "WTI Oil returns above $81.00 as attacks in the Strait of Hormuz increase",
-     "fuente": "FXStreet",
-     "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNTXpqWGhGYW13bTRTZEhZVXZXNndCY19RRk5vb2lfNEs2c1BFZ3FsU2tsU05wUkdGZXE5ZGNlVnF5LU5mQnpaQ0owb2JWaVllbVhWMHB2LW41ZEMwQXhhN01rNmd0NGlGaU9tMzhHZ1oxaVl2bEtKejZ6YUoxaV9CRjdYbHNUSjdaOHMxTnVEdHM5amFLbjd1SVo3M2pTa1ZDVlpDRmdPUTBpalBhbGp6Y3VZNA?oc=5"
-    },
-    {
-     "titulo": "Trump faces escalating oil crisis over Iran blocking Strait of Hormuz",
-     "fuente": "ABC News - Breaking News, Latest News and Videos",
-     "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOMnJLZndPT0NMT3dGaTNkelpiNXJyWlduNkNsYWZHRWE5bXJSeVhqQUJHVjIyZ0cwMGxlR3Rhci1YaTVXRzZSZmZ2REFJS0hUd1cwV0JVcWV0Tm55MnhTckF6ZmxtODlOVG0tRnlCWTREWUVwNHpudXp5ZGE1bWxHclROMTU0aGVSUjI1SmxXRHZaTjNaNHZZZzZWNUhhQ1VZcUJOR9IBqgFBVV95cUxPd25rbzI5djBuLWc2Y2RibGw2T2FvSjVGbDRhelptY1o4V1dCVi1XeXBNWU5qVEM3a0xrOUJmV0hkOUhKdVFTZndWSFpWdTZyd053RjB1eGtKcWxEeTFVcUdDdnJfUUdEQjdrTnVhMDkzMTlBVXI3dC1MTVRDd0RHS2o2bWxnX29nREE0ZkhiNDdYaF85cFJWVGxmaGNJWjhONElNYmVPSUlZUQ?oc=5"
-    },
-    {
-     "titulo": "Oil and European gas prices fall amid renewed attacks in Strait of Hormuz",
-     "fuente": "Anadolu Ajansı",
-     "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOX0tyUl90dDlhUlFuMlJmN2V2TWljQkpfSjBHc1E5cGZfSG5ral83S1N0V2tWY2dDVnFKU3JzN1RTY0xfLUZJeU5wYjNLUVM1ZWpsSVVxdVAzdTlHTW1iR0JsTi01VTRKRC1JLXE5X1VZcjdGZnpDb3dXTy1mNEtYTVdUcGhETzZ3TVhodmdyQmdMQWc1dDlycDJqaDJBT09HQzRyQ19ESFFxVTdMVW9PSzYzV2w?oc=5"
-    },
-    {
-     "titulo": "Oil Prices Slide Despite Mounting Threats in the Strait of Hormuz",
-     "fuente": "Crude Oil Prices Today | OilPrice.com",
-     "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNTzVja24xOVQyZ3ZCb0dkN2xfUWpJMGQzQWEyeGJxUmVyZDNSU0FoTmhUbnVXajE1LVB2c0VDT2F0M3ktQkpNczJ5RW03ZlF1RE5LQzEzTGUzdEJSZ0RQVE9KTWViSGNPMHUzbWJGSGs5cmlJVGNwMi1rNnUyVWd1a1dRdUZUMi1NUWl5UUVfcTdLazJ4UVBRMzF1bWUtZnh5M01uMXVEbVVaWWZVaXFYUG02MNIBuAFBVV95cUxQLVVobEFZYkg3aDlyY1Fmc3RZYmk5NnpGN00wb3hkUkRQbldmRVZCVG1ORXFRM3FLeGZEQzZDQmFhWUhoRTFXNEZpa21zZ0F5RnVuUXgyMjhYS0gzRl9xNlU1b25jTW5zemg4X0hPRXI5TEI0NnI2MVp6dV9lbTAyUG1GZzZ5a2ZhaWQxWHBrbC1vRy1RcmVsN0dHTW1sZk81dUl1UkI4anctVXh3OXlYbkttcGRPWGcw?oc=5"
-    },
-    {
-     "titulo": "Washington Post. . Lewis Pugh, the patron of the oceans for the United Nations, swam through the Strait of Hormuz, witnessing attacks on ships. Pugh said the swim’s purpose was to highlight the immense environmental cost",
-     "fuente": "Facebook",
-     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQYUl3TURfLVZLSkw1blpLWGNSZlB4WUJZWFE2V0pLTk01TlVfak9WYlJ4SnJLa0dEdXBiN0N4dGc5V2xNRG53c3JlanFhU1R2NFpMVU9TS01McndKU2s0R1ZqV3NsanBtRUlIYVA1dF8wU3JON2JPYjFfbld2VGNMNWE0dzk2U0h5Q08yWnhkOVo1Y2ppRjhxMTdBYVFRX0lvZXN4MVRxOWlNVWduZGxhTGg0Nm9MTENwR0pzTkRuV19hT3JYNko0?oc=5"
-    }
-   ],
-   "explicacion_ia": null,
-   "region": null,
-   "gdelt_ratio": null,
-   "impacto_tipico": {
-    "renta_variable": -1,
-    "renta_fija_calidad": 0,
-    "oro": 1,
-    "dolar": 1,
-    "petroleo": 2
-   },
-   "historia": {
-    "nota": "La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973 (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30% por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.",
-    "fuente": "T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)"
-   },
-   "matices": [
-    "Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.",
-    "Europa es más vulnerable que EE. UU. (importador neto de energía)."
    ]
   },
   {
@@ -214,20 +163,66 @@
     "fuente": "LPL Research; Fidelity; BlackRock (2026)"
    },
    "matices": []
+  },
+  {
+   "tipo": "shock_petroleo",
+   "nombre": "Shock de oferta de petróleo / energía",
+   "intensidad": 1,
+   "titulares": 4,
+   "ejemplos": [
+    {
+     "titulo": "WTI Oil returns above $81.00 as attacks in the Strait of Hormuz increase",
+     "fuente": "FXStreet",
+     "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNTXpqWGhGYW13bTRTZEhZVXZXNndCY19RRk5vb2lfNEs2c1BFZ3FsU2tsU05wUkdGZXE5ZGNlVnF5LU5mQnpaQ0owb2JWaVllbVhWMHB2LW41ZEMwQXhhN01rNmd0NGlGaU9tMzhHZ1oxaVl2bEtKejZ6YUoxaV9CRjdYbHNUSjdaOHMxTnVEdHM5amFLbjd1SVo3M2pTa1ZDVlpDRmdPUTBpalBhbGp6Y3VZNA?oc=5"
+    },
+    {
+     "titulo": "Oil and European gas prices fall amid renewed attacks in Strait of Hormuz",
+     "fuente": "Anadolu Ajansı",
+     "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOX0tyUl90dDlhUlFuMlJmN2V2TWljQkpfSjBHc1E5cGZfSG5ral83S1N0V2tWY2dDVnFKU3JzN1RTY0xfLUZJeU5wYjNLUVM1ZWpsSVVxdVAzdTlHTW1iR0JsTi01VTRKRC1JLXE5X1VZcjdGZnpDb3dXTy1mNEtYTVdUcGhETzZ3TVhodmdyQmdMQWc1dDlycDJqaDJBT09HQzRyQ19ESFFxVTdMVW9PSzYzV2w?oc=5"
+    },
+    {
+     "titulo": "Oil Prices Slide Despite Mounting Threats in the Strait of Hormuz",
+     "fuente": "Crude Oil Prices Today | OilPrice.com",
+     "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNTzVja24xOVQyZ3ZCb0dkN2xfUWpJMGQzQWEyeGJxUmVyZDNSU0FoTmhUbnVXajE1LVB2c0VDT2F0M3ktQkpNczJ5RW03ZlF1RE5LQzEzTGUzdEJSZ0RQVE9KTWViSGNPMHUzbWJGSGs5cmlJVGNwMi1rNnUyVWd1a1dRdUZUMi1NUWl5UUVfcTdLazJ4UVBRMzF1bWUtZnh5M01uMXVEbVVaWWZVaXFYUG02MNIBuAFBVV95cUxQLVVobEFZYkg3aDlyY1Fmc3RZYmk5NnpGN00wb3hkUkRQbldmRVZCVG1ORXFRM3FLeGZEQzZDQmFhWUhoRTFXNEZpa21zZ0F5RnVuUXgyMjhYS0gzRl9xNlU1b25jTW5zemg4X0hPRXI5TEI0NnI2MVp6dV9lbTAyUG1GZzZ5a2ZhaWQxWHBrbC1vRy1RcmVsN0dHTW1sZk81dUl1UkI4anctVXh3OXlYbkttcGRPWGcw?oc=5"
+    },
+    {
+     "titulo": "Washington Post. . Lewis Pugh, the patron of the oceans for the United Nations, swam through the Strait of Hormuz, witnessing attacks on ships. Pugh said the swim’s purpose was to highlight the immense environmental cost",
+     "fuente": "Facebook",
+     "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQYUl3TURfLVZLSkw1blpLWGNSZlB4WUJZWFE2V0pLTk01TlVfak9WYlJ4SnJLa0dEdXBiN0N4dGc5V2xNRG53c3JlanFhU1R2NFpMVU9TS01McndKU2s0R1ZqV3NsanBtRUlIYVA1dF8wU3JON2JPYjFfbld2VGNMNWE0dzk2U0h5Q08yWnhkOVo1Y2ppRjhxMTdBYVFRX0lvZXN4MVRxOWlNVWduZGxhTGg0Nm9MTENwR0pzTkRuV19hT3JYNko0?oc=5"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 0,
+    "oro": 1,
+    "dolar": 1,
+    "petroleo": 2
+   },
+   "historia": {
+    "nota": "La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973 (embargo + inflación ya alta + Fed subiendo tipos en plena recesión): la bolsa quedó un 30% por debajo de los bonos en 12 meses. 1990 (Kuwait): +75% en el crudo en 2 meses y recesión.",
+    "fuente": "T. Rowe Price (7 shocks desde 1972); Advisor Perspectives (2026)"
+   },
+   "matices": [
+    "Peligroso si el Brent sube >30% en 3 meses Y la inflación ya es alta.",
+    "Europa es más vulnerable que EE. UU. (importador neto de energía)."
+   ]
   }
  ],
  "decision": {
   "metricas": {
    "proxy": "VWCE",
-   "caida_52s": -7.2,
+   "caida_52s": -7.18,
    "sobre_mm200": false,
    "pendiente_mm200": 1.2,
    "sesiones_bajo_mm200": 1,
-   "var_1m": -5.26,
-   "vix": 29.25,
+   "var_1m": -5.24,
+   "vix": 29.28,
    "vstoxx": null,
-   "brent_3m": 0.0,
-   "oro_1m": -11.9,
+   "brent_3m": 0.23,
+   "oro_1m": -11.85,
    "sahm": 0.0,
    "curva_10a3m": 0.55,
    "curva_min_24m": -0.4,
@@ -251,11 +246,11 @@
    {
     "factor": "Caída desde máximos (52 semanas)",
     "valor": "-7.2%",
-    "puntos": 9.9
+    "puntos": 9.8
    },
    {
     "factor": "Miedo en el mercado (VIX/VSTOXX)",
-    "valor": "29.2",
+    "valor": "29.3",
     "puntos": 11.6
    },
    {
@@ -264,14 +259,12 @@
     "puntos": 10.0
    }
   ],
-  "postura": "precaucion",
-  "multiplicador_extra": 0,
+  "postura": "escalonar",
+  "multiplicador_extra": 3,
   "tramos": 3,
   "tendencia_bajista": false,
-  "avisos": [
-   "Shock de petróleo con inflación alta: es la combinación de 1973, la más dañina para la bolsa."
-  ],
-  "texto_postura": "Entorno de riesgo elevado. Mantén el plan, no hagas aportaciones extra grandes y revisa que tu fondo de emergencia esté cubierto.",
+  "avisos": [],
+  "texto_postura": "Si aportas extra, hazlo en varias partes; la caída podría prolongarse.",
   "confianza": "media"
  },
  "ideas": {
@@ -292,6 +285,7 @@
     "nombre": "iShares Core Euro Government Bond UCITS ETF (Dist)",
     "isin": "IE00B4WXJJ64",
     "yahoo": "EUNH.DE",
+    "moneda": "EUR",
     "ter": 0.07,
     "riesgo": "Riesgo bajo, pero pierden valor si los tipos suben (como en 2022).",
     "senal": 6,
@@ -330,9 +324,10 @@
     "nombre": "Invesco Physical Gold ETC",
     "isin": "IE00B579F325",
     "yahoo": "8PSG.DE",
+    "moneda": "EUR",
     "ter": 0.12,
     "riesgo": "Puede pasar años sin subir; reacciona a tipos de interés reales y al dólar, no solo a las guerras.",
-    "senal": 8,
+    "senal": 7,
     "motivos": [
      {
       "evento": "Conflicto militar / invasión / ataque entre estados",
@@ -351,19 +346,51 @@
      {
       "evento": "Shock de oferta de petróleo / energía",
       "tipo": "shock_petroleo",
-      "intensidad": 2,
+      "intensidad": 1,
       "impacto": 1,
-      "aporte": 2
+      "aporte": 1
      }
     ],
     "precio": {
      "fecha": "2026-11-25",
-     "ultimo": 310.36,
-     "var_1m": -10.186367767022187,
-     "var_3m": -18.24887436089454,
-     "mm50": 347.6996,
+     "ultimo": 310.26,
+     "var_1m": -10.215299236707287,
+     "var_3m": -18.27520867289537,
+     "mm50": 347.6976,
      "sobre_mm50": false,
-     "caida_max_52s": -28.757695593683298
+     "caida_max_52s": -28.780644721994708
+    },
+    "estado": "vigilar",
+    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
+   },
+   {
+    "id": "DFEN",
+    "tema": "Defensa",
+    "clase": "defensa",
+    "nombre": "VanEck Defense UCITS ETF (Acc)",
+    "isin": "IE000YYE6WK5",
+    "yahoo": "DFEN.DE",
+    "moneda": "EUR",
+    "ter": 0.55,
+    "riesgo": "Sector muy concentrado (pocas empresas) que ya subió mucho desde 2022: un acuerdo de paz o recortes de gasto pueden tumbarlo un 20-30 %.",
+    "senal": 6,
+    "motivos": [
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 2,
+      "aporte": 6
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-25",
+     "ultimo": 47.32,
+     "var_1m": -8.82466608169744,
+     "var_3m": -12.337902748963591,
+     "mm50": 50.7573,
+     "sobre_mm50": false,
+     "caida_max_52s": -26.16632485770922
     },
     "estado": "vigilar",
     "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
@@ -375,23 +402,24 @@
     "nombre": "Xtrackers MSCI World Energy UCITS ETF (Acc)",
     "isin": "IE00BM67HM91",
     "yahoo": "XDW0.DE",
+    "moneda": "EUR",
     "ter": 0.25,
     "riesgo": "Depende del precio del petróleo y del gas; cae con fuerza en desescaladas y recesiones.",
-    "senal": 7,
+    "senal": 5,
     "motivos": [
-     {
-      "evento": "Shock de oferta de petróleo / energía",
-      "tipo": "shock_petroleo",
-      "intensidad": 2,
-      "impacto": 2,
-      "aporte": 4
-     },
      {
       "evento": "Conflicto militar / invasión / ataque entre estados",
       "tipo": "conflicto_militar",
       "intensidad": 3,
       "impacto": 1,
       "aporte": 3
+     },
+     {
+      "evento": "Shock de oferta de petróleo / energía",
+      "tipo": "shock_petroleo",
+      "intensidad": 1,
+      "impacto": 2,
+      "aporte": 2
      }
     ],
     "precio": {
@@ -407,54 +435,17 @@
     "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
    },
    {
-    "id": "DFEN",
-    "tema": "Defensa",
-    "clase": "defensa",
-    "nombre": "VanEck Defense UCITS ETF (Acc)",
-    "isin": "IE000YYE6WK5",
-    "yahoo": "DFEN.DE",
-    "ter": 0.55,
-    "riesgo": "Sector muy concentrado (pocas empresas) que ya subió mucho desde 2022: un acuerdo de paz o recortes de gasto pueden tumbarlo un 20-30 %.",
-    "senal": 6,
-    "motivos": [
-     {
-      "evento": "Conflicto militar / invasión / ataque entre estados",
-      "tipo": "conflicto_militar",
-      "intensidad": 3,
-      "impacto": 2,
-      "aporte": 6
-     }
-    ],
-    "precio": {
-     "fecha": "2026-11-25",
-     "ultimo": 47.31,
-     "var_1m": -8.843930669827005,
-     "var_3m": -12.356425019467466,
-     "mm50": 50.7571,
-     "sobre_mm50": false,
-     "caida_max_52s": -26.18192529787853
-    },
-    "estado": "vigilar",
-    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
-   },
-   {
     "id": "OOEA",
     "tema": "Petróleo (Brent)",
     "clase": "petroleo",
     "nombre": "WisdomTree Brent Crude Oil (ETC)",
     "isin": "JE00B78CGV99",
-    "yahoo": "BRNG.L",
+    "yahoo": "BRNT.L",
+    "moneda": "USD",
     "ter": 0.49,
     "riesgo": "Muy volátil: puede moverse ±30 % en pocas semanas, y tras los picos por guerras suele devolver la subida (1990-91, 2022, 2025). Es un ETC sintético sobre futuros: si la curva está en contango pierde algo cada mes aunque el Brent no baje. No es UCITS.",
-    "senal": 4,
+    "senal": 2,
     "motivos": [
-     {
-      "evento": "Shock de oferta de petróleo / energía",
-      "tipo": "shock_petroleo",
-      "intensidad": 2,
-      "impacto": 2,
-      "aporte": 4
-     },
      {
       "evento": "Conflicto militar / invasión / ataque entre estados",
       "tipo": "conflicto_militar",
@@ -468,40 +459,39 @@
       "intensidad": 3,
       "impacto": -1,
       "aporte": -3
+     },
+     {
+      "evento": "Shock de oferta de petróleo / energía",
+      "tipo": "shock_petroleo",
+      "intensidad": 1,
+      "impacto": 2,
+      "aporte": 2
      }
     ],
     "precio": {
      "fecha": "2026-11-25",
-     "ultimo": 7029.0,
-     "var_1m": -18.38606676342526,
-     "var_3m": 16.586498590147624,
-     "mm50": 7634.81,
+     "ultimo": 91.9,
+     "var_1m": -19.996518387292017,
+     "var_3m": 12.141555763474798,
+     "mm50": 101.3883,
      "sobre_mm50": false,
-     "caida_max_52s": -19.0859905606078
+     "caida_max_52s": -20.980224321249587
     },
-    "estado": "vigilar",
-    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
+    "estado": "sin_senal",
+    "explicacion": "Las noticias de hoy no apuntan con fuerza a este tema."
    }
   ]
  },
- "gdelt": {
-  "conflicto": {
-   "volumen_hoy": 2.2077,
-   "volumen_media_7d": 2.5722,
-   "ratio": 0.86,
-   "tono_hoy": -2.59,
-   "tono_media_7d": -2.31
-  }
- },
+ "gdelt": {},
  "activos": {
   "VWCE": {
    "fecha": "2026-11-25",
-   "ultimo": 161.06,
-   "var_1d": -0.51,
-   "var_1m": -5.26,
-   "var_3m": -3.29,
-   "var_1a": 12.79,
-   "caida_max_52s": -7.2,
+   "ultimo": 161.1,
+   "var_1d": -0.48,
+   "var_1m": -5.24,
+   "var_3m": -3.27,
+   "var_1a": 12.82,
+   "caida_max_52s": -7.18,
    "mm200": 161.33,
    "sobre_mm200": false,
    "pendiente_mm200": 1.2,
@@ -513,12 +503,12 @@
   },
   "EUNL": {
    "fecha": "2026-11-25",
-   "ultimo": 124.08,
-   "var_1d": -0.39,
-   "var_1m": -4.9,
-   "var_3m": -2.05,
-   "var_1a": 13.01,
-   "caida_max_52s": -6.18,
+   "ultimo": 124.065,
+   "var_1d": -0.4,
+   "var_1m": -4.91,
+   "var_3m": -2.06,
+   "var_1a": 13.0,
+   "caida_max_52s": -6.19,
    "mm200": 122.8,
    "sobre_mm200": true,
    "pendiente_mm200": 1.28,
@@ -530,16 +520,16 @@
   },
   "IS3N": {
    "fecha": "2026-11-25",
-   "ultimo": 41.48,
-   "var_1d": -1.47,
-   "var_1m": -8.49,
-   "var_3m": -12.5,
-   "var_1a": 10.44,
-   "caida_max_52s": -18.16,
+   "ultimo": 41.495,
+   "var_1d": -1.44,
+   "var_1m": -8.46,
+   "var_3m": -12.47,
+   "var_1a": 10.48,
+   "caida_max_52s": -18.13,
    "mm200": 45.63,
    "sobre_mm200": false,
    "pendiente_mm200": 0.62,
-   "vol_1m": 40.06,
+   "vol_1m": 40.05,
    "nombre": "iShares Core MSCI EM IMI UCITS ETF (Acc)",
    "isin": "IE00BKM4GZ66",
    "yahoo": "IS3N.DE",
@@ -547,16 +537,16 @@
   },
   "SXR8": {
    "fecha": "2026-11-25",
-   "ultimo": 700.64,
-   "var_1d": -0.64,
-   "var_1m": -5.44,
-   "var_3m": -1.27,
-   "var_1a": 12.61,
-   "caida_max_52s": -7.16,
-   "mm200": 690.8,
+   "ultimo": 700.46,
+   "var_1d": -0.67,
+   "var_1m": -5.46,
+   "var_3m": -1.3,
+   "var_1a": 12.58,
+   "caida_max_52s": -7.18,
+   "mm200": 690.79,
    "sobre_mm200": true,
    "pendiente_mm200": 1.43,
-   "vol_1m": 24.35,
+   "vol_1m": 24.36,
    "nombre": "iShares Core S&P 500 UCITS ETF (Acc)",
    "isin": "IE00B5BMR087",
    "yahoo": "SXR8.DE",
@@ -598,11 +588,11 @@
   },
   "XEON": {
    "fecha": "2026-11-25",
-   "ultimo": 150.902,
-   "var_1d": 0.02,
-   "var_1m": 0.2,
-   "var_3m": 0.61,
-   "var_1a": 2.14,
+   "ultimo": 150.886,
+   "var_1d": 0.0,
+   "var_1m": 0.19,
+   "var_3m": 0.6,
+   "var_1a": 2.13,
    "caida_max_52s": 0.0,
    "mm200": 149.61,
    "sobre_mm200": true,
@@ -615,12 +605,12 @@
   },
   "8PSG": {
    "fecha": "2026-11-25",
-   "ultimo": 310.36,
-   "var_1d": -0.79,
-   "var_1m": -10.19,
-   "var_3m": -18.25,
-   "var_1a": -9.93,
-   "caida_max_52s": -28.76,
+   "ultimo": 310.26,
+   "var_1d": -0.82,
+   "var_1m": -10.22,
+   "var_3m": -18.28,
+   "var_1a": -9.96,
+   "caida_max_52s": -28.78,
    "mm200": 367.43,
    "sobre_mm200": false,
    "pendiente_mm200": -1.78,
@@ -632,12 +622,12 @@
   },
   "4GLD": {
    "fecha": "2026-11-25",
-   "ultimo": 103.7,
-   "var_1d": -0.87,
-   "var_1m": -10.26,
-   "var_3m": -18.28,
-   "var_1a": -9.91,
-   "caida_max_52s": -28.72,
+   "ultimo": 103.75,
+   "var_1d": -0.82,
+   "var_1m": -10.21,
+   "var_3m": -18.24,
+   "var_1a": -9.87,
+   "caida_max_52s": -28.69,
    "mm200": 122.8,
    "sobre_mm200": false,
    "pendiente_mm200": -1.77,
@@ -649,29 +639,29 @@
   },
   "OOEA": {
    "fecha": "2026-11-25",
-   "ultimo": 7029.0,
-   "var_1d": 1.15,
-   "var_1m": -18.39,
-   "var_3m": 16.59,
-   "var_1a": 98.48,
-   "caida_max_52s": -19.09,
-   "mm200": 6305.88,
+   "ultimo": 91.9,
+   "var_1d": 0.72,
+   "var_1m": -20.0,
+   "var_3m": 12.14,
+   "var_1a": 96.75,
+   "caida_max_52s": -20.98,
+   "mm200": 84.52,
    "sobre_mm200": true,
-   "pendiente_mm200": 6.14,
-   "vol_1m": 43.82,
+   "pendiente_mm200": 5.89,
+   "vol_1m": 42.62,
    "nombre": "WisdomTree Brent Crude Oil (ETC)",
    "isin": "JE00B78CGV99",
-   "yahoo": "BRNG.L",
-   "moneda": "GBp"
+   "yahoo": "BRNT.L",
+   "moneda": "USD"
   },
   "DFEN": {
    "fecha": "2026-11-25",
-   "ultimo": 47.31,
-   "var_1d": -0.6,
-   "var_1m": -8.84,
-   "var_3m": -12.36,
-   "var_1a": -5.04,
-   "caida_max_52s": -26.18,
+   "ultimo": 47.32,
+   "var_1d": -0.58,
+   "var_1m": -8.82,
+   "var_3m": -12.34,
+   "var_1a": -5.02,
+   "caida_max_52s": -26.17,
    "mm200": 54.33,
    "sobre_mm200": false,
    "pendiente_mm200": -1.9,
@@ -717,12 +707,12 @@
   },
   "STOXX50": {
    "fecha": "2026-11-25",
-   "ultimo": 6005.04,
+   "ultimo": 6005.2402,
    "var_1d": 0.02,
-   "var_1m": -1.82,
-   "var_3m": -7.2,
-   "var_1a": 7.73,
-   "caida_max_52s": -8.34,
+   "var_1m": -1.81,
+   "var_3m": -7.19,
+   "var_1a": 7.74,
+   "caida_max_52s": -8.33,
    "mm200": 6129.28,
    "sobre_mm200": false,
    "pendiente_mm200": 0.37,
@@ -734,13 +724,13 @@
   },
   "IBEX": {
    "fecha": "2026-11-25",
-   "ultimo": 19007.3008,
-   "var_1d": -0.04,
-   "var_1m": -0.14,
-   "var_3m": -5.28,
-   "var_1a": 17.76,
-   "caida_max_52s": -5.97,
-   "mm200": 18823.35,
+   "ultimo": 19010.0996,
+   "var_1d": -0.03,
+   "var_1m": -0.12,
+   "var_3m": -5.27,
+   "var_1a": 17.78,
+   "caida_max_52s": -5.95,
+   "mm200": 18823.36,
    "sobre_mm200": true,
    "pendiente_mm200": 0.83,
    "vol_1m": 19.81,
@@ -751,16 +741,16 @@
   },
   "VIX": {
    "fecha": "2026-11-25",
-   "ultimo": 29.25,
-   "var_1d": 10.96,
-   "var_1m": 50.62,
-   "var_3m": 96.05,
-   "var_1a": 78.9,
+   "ultimo": 29.28,
+   "var_1d": 11.08,
+   "var_1m": 50.77,
+   "var_3m": 96.25,
+   "var_1a": 79.08,
    "caida_max_52s": 0.0,
    "mm200": 18.59,
    "sobre_mm200": true,
    "pendiente_mm200": -7.33,
-   "vol_1m": 252.08,
+   "vol_1m": 252.12,
    "nombre": "VIX (volatilidad implícita S&P 500)",
    "isin": null,
    "yahoo": "^VIX",
@@ -768,16 +758,16 @@
   },
   "BRENT": {
    "fecha": "2026-11-25",
-   "ultimo": 87.84,
-   "var_1d": -3.89,
-   "var_1m": -24.15,
-   "var_3m": 0.0,
-   "var_1a": 40.59,
-   "caida_max_52s": -25.78,
+   "ultimo": 88.04,
+   "var_1d": -3.68,
+   "var_1m": -23.98,
+   "var_3m": 0.23,
+   "var_1a": 40.91,
+   "caida_max_52s": -25.61,
    "mm200": 94.91,
    "sobre_mm200": false,
    "pendiente_mm200": 3.22,
-   "vol_1m": 58.62,
+   "vol_1m": 58.5,
    "nombre": "Petróleo Brent (USD)",
    "isin": null,
    "yahoo": "BZ=F",
@@ -785,16 +775,16 @@
   },
   "ORO": {
    "fecha": "2026-11-25",
-   "ultimo": 3557.8,
-   "var_1d": -0.12,
-   "var_1m": -11.9,
-   "var_3m": -23.54,
-   "var_1a": -14.06,
-   "caida_max_52s": -33.1,
-   "mm200": 4423.08,
+   "ultimo": 3560.0,
+   "var_1d": -0.05,
+   "var_1m": -11.85,
+   "var_3m": -23.5,
+   "var_1a": -14.01,
+   "caida_max_52s": -33.06,
+   "mm200": 4423.1,
    "sobre_mm200": false,
    "pendiente_mm200": -2.27,
-   "vol_1m": 32.8,
+   "vol_1m": 32.81,
    "nombre": "Oro (USD/oz)",
    "isin": null,
    "yahoo": "GC=F",
@@ -819,16 +809,16 @@
   },
   "EURUSD": {
    "fecha": "2026-11-25",
-   "ultimo": 1.0941,
-   "var_1d": 0.3,
-   "var_1m": -2.47,
-   "var_3m": -6.13,
-   "var_1a": -5.03,
-   "caida_max_52s": -8.96,
+   "ultimo": 1.0942,
+   "var_1d": 0.31,
+   "var_1m": -2.46,
+   "var_3m": -6.12,
+   "var_1a": -5.02,
+   "caida_max_52s": -8.95,
    "mm200": 1.15,
    "sobre_mm200": false,
    "pendiente_mm200": -0.66,
-   "vol_1m": 5.67,
+   "vol_1m": 5.68,
    "nombre": "EUR/USD",
    "isin": null,
    "yahoo": "EURUSD=X",
@@ -1209,6 +1199,30 @@
    "id": "4f0e3f6161f4"
   },
   {
+   "titulo": "Bolsa e Ibex 35 hoy, en directo | Wall Street viene con otro fuerte revés para el Nasdaq (-2,5%), en medio del temor a más aranceles",
+   "fuente": "El Confidencial",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNMVU1OXI3RVlnY0xSNW1HbktMX3l6U0xDWGRRQzBwd3N4UHpJYXRKT3R1TDJsZHpkcE1kM0lhNll5aWs0cEtEeUszcWJrVVdDSVVoVHRhOXR5clN6SmdReklyVkp2TDRPRnJaT19TRmJ3Y3Vhenk0RUpsVWtPOVhucjQzdkY2aldGellkMm1TOXkzeWFt?oc=5",
+   "fecha": "2026-11-25T11:00:29+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "5af0444f4aa1"
+  },
+  {
+   "titulo": "Peppermint oil significantly lowers blood pressure in just 20 days",
+   "fuente": "Science Daily",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5MSTFCQWhqMGlHVGJWQnpSUFU5NEQ3Snp6c3hJX0VKUVo3NWhEb21hSWxoTWRlS0pnR3d3bmMtdnQxOHpQakNBR1UxMVpJLThxWHhXQWxsOXkzS3ZCZi1QY0p4VmhDdmFRX21LQXFR?oc=5",
+   "fecha": "2026-11-25T10:57:40+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "115960e696f3"
+  },
+  {
    "titulo": "How A Seller Of Auto Parts Views The Clash Over Auto Tariffs",
    "fuente": "Forbes",
    "fuente_id": "gn_geo_en",
@@ -1257,6 +1271,30 @@
    "id": "1d07d3baab1d"
   },
   {
+   "titulo": "U.S. chip stocks extend losses premarket as AI spending concerns resurface",
+   "fuente": "Yahoo Finance",
+   "fuente_id": "gn_markets_en",
+   "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPZGlCZDQ0SU13Q3p1dzlHVmY2bGVocU5Cb2dfRHVhUVZlU2c4QTVVdi1IanV6ZHJpcWltMk9wS0M4ZTJZS3JoMUpCN2M5djFMbXVmdXFPYjQyQ3k2RDlPZE1NRUpfdWhQWnNsVG9GbzdneHVVMVJSa0syejc3NWxkN2ZxTEE1dEd2STNNcGg1YmJQNHU1dGc?oc=5",
+   "fecha": "2026-11-25T10:49:03+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "4e06405740d9"
+  },
+  {
+   "titulo": "Guía de mercados navideños de Madrid 2026: dónde, fechas, pistas de hielo, horarios y novedades",
+   "fuente": "LOS40",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQUF9hYVdPZVlPTnNnOFpDR0tVdVY3WHcySmJwdERpMkFkZmpJN3EtUTBWWjlia0Npb2lCcVZjS2RWY1pUYTFHN1hFWHdTamd4Ym9iTWVfc1dWem1famYxSVBmTjJsOG9HaHFhZlpQUFVjTVdfelRrSlVnUjRkWHd4dkhjeGt5Mjc4OVhqNUxEc2pWbk9wbUtMMWtJUWZJeElOaDVva1oxVG9tSU5fdG10eVM3SW5Md0F2Vnc0UUpB0gHSAUFVX3lxTE9ZaUhXb3NqeE5DR21xYmhvMkpGbEVlRTM5RGRUOFh0QnpSekJQakhpZnBVMXNxd2pZajZrWF9tRlFyc1UwYVJObUowRDN1aVFJclZ4SWxjQll5RTZFd1FvVEEzTk1WT1VCVGx4VFktRWRUN29UVElDNml1RWJnamlzaDJfX2F4T2lEODFmRGFWckdYZmM2RHN0SE9JRmpUODhmcFV2VWZkcG5EdG5jenhXYW9oQUwtSm1CUE43bGE1MU5OSURQWF9qd05oYmthZU5jUQ?oc=5",
+   "fecha": "2026-11-25T10:48:24+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "d99f79eb9334"
+  },
+  {
    "titulo": "Cyberattack exposes unclassified information from CIA system, US media reports",
    "fuente": "France 24",
    "fuente_id": "france24",
@@ -1267,6 +1305,18 @@
    "peso": 2,
    "resumen": "A recently discovered hack on a CIA analysis system exposed some unclassified information, US media reported on Tuesday. The breach is the latest in a series of cyber attacks that have targeted US government departments and major companies in recent weeks.",
    "id": "6133a034c12b"
+  },
+  {
+   "titulo": "Amnesty calls for independent war crimes probe into Ethiopian shelling in Tigray",
+   "fuente": "The Washington Post",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxQa1F4eHU1TTNHYm9ZMzdsMlpLckFjM0NkNlo5TTBRNHBvT3J6NWY5cTNPZTFnX3Y1b2ZVU01McTlobmZPb0hoLUhOWU16dFFjaUV1SzZHNGNDbmdlb1JxcWVvTDUwTUpzeHZSWkc5YUZwLWRjdFZsNkVabHZKekVMbkJFVk8zbHA3ZWhJS1MzRFJ1TS12WGx0STdUR19BeVNCRTBlemltOVBrNG1hWUxoUTUwRUdWUF9LY2dobnc4MnBnVUQ0Z2FNV1ZUR3N2WWJiSlYzT3lva1B0QXpVWlhTWE9XbHBWUE1vUEJlVF8yblloUWVNZHc?oc=5",
+   "fecha": "2026-11-25T10:47:18+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "b51853861544"
   },
   {
    "titulo": "Energy bills will soar - here's how you can ease the pain",
@@ -1305,18 +1355,6 @@
    "id": "0dfb8377cd8f"
   },
   {
-   "titulo": "Fredrik Lundberg considera que la valoración de la bolsa está bien respaldada por la economía real - Affärsvärlden",
-   "fuente": "MarketScreener España",
-   "fuente_id": "gn_mercados_es",
-   "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxNVWtvV1lfUDNsWTZhX3lIbWtmSXkzTTFVanlneVEtTmkwY0NzcVBFM0dqYm56OE8yQnNaNXdWVUcwNkZheDZiUER3YkR0RlN0R2h5UEFxdzQxeHR4Vnp6cllUa3I1S2VoelgtSzNZZFBTY3NGY2diQ0hBd2ptVDZSVmh5WE9sR0lveW5zSDhnUFhSVmhFNndMS3lOVUxYaFluM3p4RmVjR2FNZENQUWFyZ0xzUUpwYzdTRXFwUkRJVC1HeWF0ZDhWaV9KdWVYektuT2xJWjNFUkZ4ZUQtRFZjZ2FmU1NVck1YX1E?oc=5",
-   "fecha": "2026-11-25T10:35:21+00:00",
-   "tipo": "agregador",
-   "idioma": "es",
-   "peso": 2,
-   "resumen": "",
-   "id": "9854aa35e598"
-  },
-  {
    "titulo": "Brent Faiyaz sets three-city U.S. arena tour",
    "fuente": "Big Country News |",
    "fuente_id": "gn_oil_en",
@@ -1353,6 +1391,18 @@
    "id": "bb6db7674618"
   },
   {
+   "titulo": "«Hemos triplicado y cuadruplicado las ventas en algunos mercados europeos»",
+   "fuente": "ecommerce-news.es",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQb0RwbTd3VEwtSk9BaHpEby1DSmJhLXJSX3o0QVNOMG9yOWd6SkwxNmVvLVpsUjl6VnM3WEw4cU9IbE52Q0JBTXhneG5PaHJwdUxXbVBySWZwZzdaZ0I0RHRoaEstQm1KZmI5RHZLSUpjcEhJUGp1Q0U0SFk0U3dTc2dLaDhMZi1nVkJGTlJDc0xfTUtSQTFFNldxUXhRZm53?oc=5",
+   "fecha": "2026-11-25T10:31:51+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "1e76d2009776"
+  },
+  {
    "titulo": "Could Netanyahu take Israel into another war with Iran to cling to power?",
    "fuente": "Al Jazeera",
    "fuente_id": "aljazeera",
@@ -1375,18 +1425,6 @@
    "peso": 2,
    "resumen": "El salvadoreño fue trasladado el año pasado a la megacárcel de Bukele y ha sufrido la persecución de las autoridades estadounidense. Tras pasar por España, su plan es asentarse en México",
    "id": "2b77f712a1ad"
-  },
-  {
-   "titulo": "Bolsa e Ibex 35 hoy, en directo | Wall Street viene con otro fuerte revés para el Nasdaq (-2,5%), en medio del temor a más aranceles",
-   "fuente": "El Confidencial",
-   "fuente_id": "gn_mercados_es",
-   "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNMVU1OXI3RVlnY0xSNW1HbktMX3l6U0xDWGRRQzBwd3N4UHpJYXRKT3R1TDJsZHpkcE1kM0lhNll5aWs0cEtEeUszcWJrVVdDSVVoVHRhOXR5clN6SmdReklyVkp2TDRPRnJaT19TRmJ3Y3Vhenk0RUpsVWtPOVhucjQzdkY2aldGellkMm1TOXkzeWFt?oc=5",
-   "fecha": "2026-11-25T10:26:39+00:00",
-   "tipo": "agregador",
-   "idioma": "es",
-   "peso": 2,
-   "resumen": "",
-   "id": "5af0444f4aa1"
   },
   {
    "titulo": "Las tarjetas adelantan al efectivo y se convierten en el medio de pago más frecuente en la zona euro, según el BCE",
@@ -1507,56 +1545,8 @@
    "peso": 2,
    "resumen": "Inflation and nominal growth have been way too high for too long, argues Michael Darda. Rather than criticizing the Fed for being hawkish, markets should applaud it and recommend it goes as far as necessary to slow demand.",
    "id": "2ced92a030bf"
-  },
-  {
-   "titulo": "Bolsa india, rupia, swaps y mercado interbancario a las 15: 30 horas (hora local de la India)",
-   "fuente": "MarketScreener España",
-   "fuente_id": "gn_mercados_es",
-   "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQeVZiNV9xeEFMYWFmcndjLXUtTTd2emlZbnlDZm1qcWlmYzk1QnBQSndWbUZ6elJVUkhBTk8weDhETTBtM1BSQjdxa0lmTE84c2ZJelFSbXhCV1VDTjcxNGxSN21fVlN2V3B1UU1rMUFVUXZtQ0VTSUVBLVJXZDdvbWNveHhPLS1jcW9TVFBIaUhMWElDWFVYR3pKeU5zMnAxWVBKUTZCTEZtTlZtSmZ5WjBNNDZCZ25qUzlXb3hyQXg3R2FxdWsxR1JOc1Bza2xZQ1kybm4zY1N3aXR6?oc=5",
-   "fecha": "2026-11-25T10:11:23+00:00",
-   "tipo": "agregador",
-   "idioma": "es",
-   "peso": 2,
-   "resumen": "",
-   "id": "94905e68d688"
-  },
-  {
-   "titulo": "See motorcycle passenger’s viral cricket catch",
-   "fuente": "Al Jazeera",
-   "fuente_id": "aljazeera",
-   "url": "https://www.aljazeera.com/video/newsfeed/2026/11/25/see-motorcycle-passengers-viral-cricket-catch?traffic_source=rss",
-   "fecha": "2026-11-25T10:10:47+00:00",
-   "tipo": "geopolitica",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "A cricket catch by a passenger on a moving motorbike in Pakistan has gone viral on social media.",
-   "id": "e81ab1922b70"
-  },
-  {
-   "titulo": "Michael Burry Sells Remaining Nasdaq-100 Puts, Eyes Fresh Nvidia Short Near $200: ‘I Am Long Undervalued Common Stocks’",
-   "fuente": "Yahoo Finance",
-   "fuente_id": "gn_markets_en",
-   "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNa24yNldmdm9ka0ZMV3lCenF3S0RjMmduUVZmdGRoTFN5S0xHNUdOQzhUY2JTV2JiQnYzN1p3S3FRdDlnb2p3TmlMVnpzQlRxVXpybVdWdk92bFNxZlFJT3IyOHlVT1VLOEM3SEwzLXJtbVBDRjlzOE9zODJ2eUlmVHhTdzN5OGJiSVBmOXk0bW9PUTU4RjFDUGxfcXYwYnhNRVdGRg?oc=5",
-   "fecha": "2026-11-25T10:09:40+00:00",
-   "tipo": "agregador",
-   "idioma": "en",
-   "peso": 2,
-   "resumen": "",
-   "id": "847ee5934a32"
-  },
-  {
-   "titulo": "Amenazas de la IA, qué esperamos la Fed y aranceles",
-   "fuente": "FXStreet",
-   "fuente_id": "gn_mercados_es",
-   "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPQzRZQVBLejNhbnJoSlkxZ1hWcEVvUVJRUlJkY05saE9kc0ZsQ0R6TENRbDhXTklTdklDTG82d0JDLWwzSGxaVUlVWEp4YlRTdGVPNm5YdHdzLVRqVFNmc1phVUF1aVREaWVzbDJBU0J5ZG1ZbVNWX3lVOVpoTzZKYy1QWEl0LV9uRGpyaW81V3EyUEFYR0tv?oc=5",
-   "fecha": "2026-11-25T10:08:43+00:00",
-   "tipo": "agregador",
-   "idioma": "es",
-   "peso": 2,
-   "resumen": "",
-   "id": "2a26bb5dc2a7"
   }
  ],
- "num_titulares": 328,
+ "num_titulares": 329,
  "aviso_legal": "Herramienta personal de apoyo a la decisión. No es asesoramiento financiero. Las rentabilidades pasadas no garantizan rentabilidades futuras."
 }
