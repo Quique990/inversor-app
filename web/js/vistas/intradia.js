@@ -106,8 +106,13 @@ function contenidoGrafica(intra, d) {
   if (fin) lineasTexto.push(`Previsión para las ${fin.hora}: ${fmt(fin.esperado)}, con un 80 % de probabilidad entre ${fmt(fin.inf)} y ${fmt(fin.sup)}.`);
   if (d.esCartera && ancla && fin) lineasTexto.push(`Es decir, tu cartera podría moverse hoy entre ${conSigno(fin.inf - ancla)} y ${conSigno(fin.sup - ancla)} respecto a las 7:30.`);
 
+  const prev = (d.prevision || []).map((x) => x.esperado);
+  const plana = prev.length > 1 && Math.max(...prev) - Math.min(...prev) <= Math.abs(prev[0]) * 1e-5;
   const nodos = [grafica,
     h("div", { class: "leyenda-intradia" }, "Línea oscura: precio real (Xetra) · naranja: estimado fuera de Xetra · gris: previsto a las 7:30 · azul: previsión actual · zona sombreada: banda del 80 %"),
+    plana ? h("div", { class: "aviso azul pequeno" }, d.calidad?.dias
+      ? "La línea azul sale plana porque, con lo aprendido hasta ahora, el modelo no ve ninguna dirección mejor que “el precio no cambia”. Lo útil hoy es la banda: cuánto se puede mover."
+      : "La línea azul sale plana porque el modelo todavía no ha aprendido nada: empieza diciendo “no sé si subirá o bajará” y cada noche se corrige con lo que pasó de verdad. Si con los días encuentra algo que funcione, la línea se inclinará un poco; si no, seguirá plana, que es lo honesto. Lo que sí predice desde el primer día es la banda: cuánto se puede mover y a qué horas.") : null,
     ...lineasTexto.map((t) => h("p", { class: "pequeno" }, t)),
     h("p", { class: "pequeno" }, h("strong", {}, "¿Acierta? "), textoCalidad(d.calidad))];
   if (!d.esCartera && d.modelo) nodos.push(detalleModelo(d));
