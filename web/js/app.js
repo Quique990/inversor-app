@@ -123,7 +123,16 @@ function pedirPin() {
 }
 
 async function iniciar() {
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+  if ("serviceWorker" in navigator) {
+    // Cuando se instala una versión nueva de la app, recargar una vez para usarla ya (si no, hacía falta cerrar y
+    // abrir dos veces). Solo si ya había una versión anterior controlando la página.
+    const habia = !!navigator.serviceWorker.controller;
+    let recargada = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (habia && !recargada) { recargada = true; location.reload(); }
+    });
+    navigator.serviceWorker.register("sw.js").then((r) => r.update()).catch(() => {});
+  }
   const publico = cargarPublico();
   if (store.necesitaDesbloqueo()) await pedirPin();
   await Promise.all([publico, cargarPrivado(), cargarIntradiaPrivada()]);
