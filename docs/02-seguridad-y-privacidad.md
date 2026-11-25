@@ -13,8 +13,7 @@ cualquiera puede leer un periódico.
 ## La clave de GitHub
 - Es un **fine-grained personal access token** limitado a **un solo repositorio** (`inversor-datos`) con el permiso
   **Contents: Read and write**. Si alguien la robara, solo podría tocar ese repositorio.
-- Se guarda en el móvil (`localStorage`) **cifrada** con AES-GCM-256 y una clave derivada de la **contraseña de
-  la app** con PBKDF2-SHA256 (310.000 iteraciones). Mientras la app está abierta, se guarda descifrada en
+- Se guarda en el móvil (`localStorage`) **cifrada** con AES-GCM-256 y una clave derivada del **PIN de la app** con PBKDF2-SHA256 (310.000 iteraciones). Mientras la app está abierta, se guarda descifrada en
   `sessionStorage`, que se borra al cerrar la app.
 
 ## Entrada con PIN (desde el 25-11-2026)
@@ -48,7 +47,7 @@ cualquiera puede leer un periódico.
 
 ## Riesgos residuales (asumidos)
 - Si alguien tiene tu móvil desbloqueado con la app abierta (sesión iniciada), ve tus datos. Lo mismo pasa con la
-  app del banco. Cierra la sesión o la app para que vuelva a pedir la contraseña.
+  app del banco. Cierra la sesión o la app para que vuelva a pedir el PIN.
 - Yahoo Finance no es una API oficial y puede fallar o cambiar. En ese caso puedes introducir el precio a mano.
 - La IA puede equivocarse al resumir. Por diseño, no decide las recomendaciones.
 
