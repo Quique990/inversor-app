@@ -106,9 +106,26 @@ def recoger_mercados(universo: dict, cfg_fuentes: dict, salud: Salud) -> dict:
     series: dict[str, Serie] = {}
     info: dict[str, dict] = {}
 
-    for item in universo.get("etfs", []) + universo.get("indicadores", []):
+    for item in universo.get("etfs", []) + universo.get("satelites", []) + universo.get("indicadores", []):
         try:
-            s, i = yahoo_serie(item["yahoo"], rango="max" if item["id"] in ("SP500", "VIX") else ("10y" if item["id"] in ("VWCE", "EUNL") else "5y"))
+            rango = "max" if item["id"] in ("SP500", "VIX") else ("10y" if item["id"] in ("VWCE", "EUNL") else "5y")
+            try:
+                s, i = yahoo_serie(item["yahoo"], rango=rango)
+            except Exception:
+                if item.get("rol") != "satelite" or not item.get("isin"):
+                    raise
+                # Satélites: si el ticker no existe en Yahoo, se busca por ISIN (son productos públicos, nada personal)
+                from .tickers import buscar_por_isin
+                for alternativo in buscar_por_isin(item["isin"])[:3]:
+                    try:
+                        s, i = yahoo_serie(alternativo, rango=rango)
+                        salud.mal(f"yahoo:{item['yahoo']}", f"no existe; usado {alternativo} (corrígelo en universo_etf.yaml)")
+                        item = {**item, "yahoo": alternativo}
+                        break
+                    except Exception:  # noqa: BLE001
+                        continue
+                else:
+                    raise
             series[item["id"]] = s
             info[item["id"]] = {**i, "nombre": item.get("nombre"), "yahoo": item["yahoo"], "isin": item.get("isin"),
                                 "rol": item.get("rol"), "ter": item.get("ter")}

@@ -51,6 +51,7 @@ export const ROL_A_HUECO = {
   renta_variable_global: "renta_variable_global", renta_variable_desarrollados: "renta_variable_global",
   renta_variable_emergentes: "renta_variable_global", renta_variable_eeuu: "renta_variable_global",
   renta_fija_euro: "renta_fija_euro", renta_fija_global: "renta_fija_euro", monetario: "monetario", oro: "oro",
+  satelite: "otros", // ETF/ETC de las ideas tácticas (petróleo, defensa, energía): fuera del reparto objetivo
 };
 
 export function calcularPerfil(respuestas) {

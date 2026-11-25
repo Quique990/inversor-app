@@ -1,0 +1,49 @@
+# Ideas tácticas ("satélites"): apuestas PEQUEÑAS y TEMPORALES según el momento geopolítico, aparte del plan.
+# Regla determinista (pipeline/ideas.py, docs/04). La IA no decide: solo influye a través de los eventos detectados,
+# cuya intensidad ya está limitada en eventos.fusionar.
+#
+# señal(tema) = Σ intensidad del evento (1-3) × impacto típico del evento en ese tema (-2..+2)
+#               (impacto + impacto_tematico de config/reglas_eventos.yaml)
+# Estado de cada idea:
+#   activa     señal >= umbral_senal, el precio no ha subido ya demasiado en 1 mes y está sobre su media de 50 sesiones
+#   tarde      señal a favor, pero ya ha subido >= tarde_1m_pct en un mes (la noticia ya está en el precio)
+#   vigilar    señal a favor, pero el precio va en contra (por debajo de su media de 50 sesiones)
+#   en_contra  señal <= -umbral_senal
+#   sin_senal  el resto
+
+limites:
+  umbral_senal: 3          # p. ej. un conflicto de intensidad 3 con impacto +1, o intensidad 2 con impacto +2
+  max_idea_pct: 5          # % máximo de tu cartera en una sola idea
+  max_total_pct: 10        # % máximo de tu cartera en todas las ideas juntas
+  stop_pct: -10            # salir si cae un 10 % desde la compra
+  revisar_semanas: 6       # revisar (y normalmente salir) pasadas 6 semanas o si la señal desaparece
+  tarde_1m_pct: 15
+  comparar_con: VWCE       # cada idea se compara con la bolsa mundial en el mismo periodo
+
+ideas:
+  - id: OOEA
+    tema: Petróleo (Brent)
+    clase: petroleo
+    riesgo: >-
+      Muy volátil: puede moverse ±30 % en pocas semanas, y tras los picos por guerras suele devolver la subida
+      (1990-91, 2022, 2025). Es un ETC sintético sobre futuros: si la curva está en contango pierde algo cada mes
+      aunque el Brent no baje. No es UCITS.
+  - id: DFEN
+    tema: Defensa
+    clase: defensa
+    riesgo: >-
+      Sector muy concentrado (pocas empresas) que ya subió mucho desde 2022: un acuerdo de paz o recortes de gasto
+      pueden tumbarlo un 20-30 %.
+  - id: XDW0
+    tema: Energía (petroleras)
+    clase: energia
+    riesgo: Depende del precio del petróleo y del gas; cae con fuerza en desescaladas y recesiones.
+  - id: 8PSG
+    tema: Oro
+    clase: oro
+    riesgo: Puede pasar años sin subir; reacciona a tipos de interés reales y al dólar, no solo a las guerras.
+  - id: EUNH
+    tema: Bonos de gobiernos del euro (refugio)
+    clase: renta_fija_calidad
+    tarde_1m_pct: 4
+    riesgo: Riesgo bajo, pero pierden valor si los tipos suben (como en 2022).

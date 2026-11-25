@@ -8,6 +8,7 @@
 #      inflación alta sí/no, tendencia) para decidir la postura táctica.
 #
 # Convenciones de impacto: -2 muy negativo, -1 negativo, 0 neutro, +1 positivo, +2 muy positivo.
+# `impacto_tematico` (opcional): efecto en temas que solo usan las "ideas tácticas" (defensa, energía). Ver docs/04.
 # Son impactos TÍPICOS a corto plazo (días-semanas), no garantías.
 
 regimenes:
@@ -28,6 +29,7 @@ eventos:
     palabras: [war, invasion, invade, airstrike, air strike, missile, troops, military escalation, bombing,
                guerra, invasión, invade, bombardeo, ataque aéreo, misil, tropas, escalada militar]
     impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 1, dolar: 1, petroleo: 1}
+    impacto_tematico: {defensa: 2, energia: 1}
     historia:
       caida_media_sp500_pct: -4.5
       caida_mediana_sp500_pct: -2.9
@@ -45,6 +47,7 @@ eventos:
     palabras: [oil supply, opec cut, strait of hormuz, pipeline attack, refinery attack, oil embargo, brent surges, oil spike,
                petróleo se dispara, recorte opep, estrecho de ormuz, embargo petrolero, suministro energético]
     impacto: {renta_variable: -1, renta_fija_calidad: 0, oro: 1, dolar: 1, petroleo: 2}
+    impacto_tematico: {energia: 2}
     historia:
       nota: >-
         La mayoría de shocks de materias primas no hundieron la bolsa; la excepción fue 1973
@@ -60,6 +63,7 @@ eventos:
     nombre: Atentado terrorista de gran escala
     palabras: [terrorist attack, terror attack, bombing kills, atentado terrorista, atentado]
     impacto: {renta_variable: -1, renta_fija_calidad: 1, oro: 1, dolar: 0, petroleo: 0}
+    impacto_tematico: {defensa: 1}
     historia:
       nota: El 11-S cerró la bolsa 4 días y cayó ~11.6%; recuperó en ~1 mes. La mayoría tienen impacto de días.
       fuente: LPL Research
@@ -175,6 +179,7 @@ eventos:
     nombre: Desescalada / alto el fuego / acuerdo comercial
     palabras: [ceasefire, peace deal, truce, trade deal, tariff pause, de-escalation, alto el fuego, acuerdo de paz, tregua, acuerdo comercial, desescalada]
     impacto: {renta_variable: 1, renta_fija_calidad: 0, oro: -1, dolar: -1, petroleo: -1}
+    impacto_tematico: {defensa: -1, energia: -1}
     matices:
       - Suele provocar rebotes rápidos; perseguirlos después de subir mucho no tiene ventaja.
     postura: {expansion: mantener_plan, recesion_probable: mantener_plan, inflacion_alta: mantener_plan}

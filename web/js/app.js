@@ -23,8 +23,9 @@ async function cargarPublico() {
   const [mercado, universo, backtest, salud, indice] = await Promise.allSettled([
     store.leerPublico("mercado.json"), store.leerPublico("precios_universo.json"), store.leerPublico("backtest.json"),
     store.leerPublico("salud_fuentes.json"), store.leerPublico("historial/indice.json")]);
-  const intradia = await store.leerPublico("intradia.json").catch(() => null);
-  S.publico = { mercado: mercado.value, universo: universo.value, backtest: backtest.value, salud: salud.value, indice: indice.value || [], intradia };
+  const [intradia, ideasHistorial] = await Promise.all([store.leerPublico("intradia.json").catch(() => null),
+    store.leerPublico("ideas_historial.json").catch(() => null)]);
+  S.publico = { mercado: mercado.value, universo: universo.value, backtest: backtest.value, salud: salud.value, indice: indice.value || [], intradia, ideasHistorial };
 }
 
 /** Previsión intradía de tus activos fuera del universo (rama "intradia" del repositorio privado). No es un error si no hay. */

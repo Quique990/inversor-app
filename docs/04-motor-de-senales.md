@@ -53,6 +53,24 @@ Modificadores:
 - **Avisos:** colchón insuficiente, desviación ≥ 5 puntos (dirigir ahí las aportaciones), desviación > 15 puntos
   (considerar una venta parcial), productos apalancados y concentración > 15 % en un solo valor.
 
+## Ideas tácticas (satélites, desde el 25-11-2026)
+Petición del usuario: proponer ETF algo más arriesgados que el momento geopolítico pone a favor (p. ej. petróleo
+ante una guerra en Oriente Medio). Va **aparte** de la postura y del plan, y no cambia ninguna regla anterior.
+- **Productos** (sin apalancamiento): Brent (WisdomTree Brent Crude Oil ETC, OOEA), defensa (VanEck Defense, DFEN),
+  energía (Xtrackers MSCI World Energy, XDW0), oro (8PSG) y bonos euro como refugio (EUNH). En
+  `config/universo_etf.yaml → satelites` y `config/ideas.yaml`.
+- **Señal** = Σ intensidad × impacto típico del evento en el tema (`impacto` + `impacto_tematico` de
+  `config/reglas_eventos.yaml`). Umbral: 3.
+- **Filtros de precio** (para no comprar con el titular): "Llegas tarde" si ya subió ≥ 15 % en un mes (bonos: 4 %);
+  "Vigilar" si está por debajo de su media de 50 sesiones. Solo es "A favor" si pasa los dos.
+- **Tamaño (navegador, `reco.tamanoIdeas`)**: ≤ 5 % de la cartera por idea y ≤ 10 % en total, descontando lo que ya
+  tenga. Salida: −10 % desde la compra, o revisar a las 6 semanas / si la señal desaparece. Sale del medio plazo.
+- **Honestidad**: no hay historial de noticias de años anteriores para hacer un backtest. Por eso cada idea que pasa a
+  "A favor" se apunta (`web/data/ideas_historial.json`) y al terminar se compara con VWCE en el mismo periodo; la
+  web enseña cuántas ganaron a la bolsa mundial y la ventaja media. Si sale mal, se dice.
+- Ejemplo real (25-11-2026): con el conflicto en intensidad 3/3, el Brent estaba un 25 % por debajo de hace un
+  mes: la regla lo deja en "Vigilar". Comprarlo con los titulares de la guerra habría llegado tarde.
+
 ## Cómo evaluarlo
 Ver `docs/09-backtesting-y-evaluacion.md`. La web muestra en "Mercado" el backtest semanal y en "Cartera" si tus
 compras extra salieron más baratas que tus compras del plan.

@@ -55,6 +55,9 @@ main { overflow-x: hidden; }
 .chip { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .76rem; background: var(--fondo); border: 1px solid var(--borde); margin: 2px 4px 2px 0; }
 .chip.i3 { background: rgba(192, 57, 43, .12); border-color: var(--rojo); }
 .chip.i2 { background: rgba(183, 121, 31, .12); border-color: var(--ambar); }
+.chip.verde { background: rgba(30, 142, 90, .12); border-color: var(--verde); }
+details.idea { border-top: 1px solid var(--borde); padding: 8px 0; }
+details.idea summary { cursor: pointer; }
 .aviso { border-radius: 10px; padding: 10px 12px; margin: 8px 0; background: rgba(183, 121, 31, .12); border: 1px solid var(--ambar); font-size: .9rem; }
 .aviso.rojo { background: rgba(192, 57, 43, .1); border-color: var(--rojo); }
 .aviso.verde { background: rgba(30, 142, 90, .1); border-color: var(--verde); }

@@ -65,6 +65,28 @@ etfs:
     ter: 0.00
     notas: Alternativa de oro físico; sin TER, comisión de custodia anual pequeña.
 
+# Satélites: ETF/ETC temáticos que solo se usan en las "ideas tácticas" (config/ideas.yaml). No entran en el
+# reparto objetivo (hueco "otros") ni en la previsión intradía pública. Si el ticker falla, se busca por ISIN.
+satelites:
+  - id: OOEA
+    nombre: WisdomTree Brent Crude Oil (ETC)
+    isin: JE00B78CGV99
+    yahoo: OOEA.DE
+    rol: satelite
+    ter: 0.49
+  - id: DFEN
+    nombre: VanEck Defense UCITS ETF (Acc)
+    isin: IE000YYE6WK5
+    yahoo: DFEN.DE
+    rol: satelite
+    ter: 0.55
+  - id: XDW0
+    nombre: Xtrackers MSCI World Energy UCITS ETF (Acc)
+    isin: IE00BM67HM91
+    yahoo: XDW0.DE
+    rol: satelite
+    ter: 0.25
+
 # Indicadores de mercado (no se compran, se usan para el análisis).
 indicadores:
   - {id: SP500, yahoo: "^GSPC", nombre: S&P 500}

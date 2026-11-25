@@ -28,6 +28,14 @@ export function render() {
       P(B("Por la tarde — precios de tu cartera. "), "Si tienes ETF que no están en la lista de la app, tu repositorio privado descarga sus precios."),
       P("GitHub puede retrasar estas ejecuciones 10-30 minutos. Si una fuente falla, la app sigue con las demás y lo anota en Mercado → Salud de las fuentes.")),
 
+    seccion("2b. Ideas tácticas (más riesgo)", false,
+      P("Aparte de tu plan, la app propone apuestas pequeñas y temporales en temas que las noticias ponen a favor: petróleo, defensa, energía, oro o bonos refugio."),
+      L(h("span", {}, B("Señal: "), "suma la intensidad de cada evento por su efecto típico en ese tema (por ejemplo, un conflicto 3/3 empuja la defensa +2 → +6). Hace falta al menos 3."),
+        h("span", {}, B("Filtros: "), "si ya ha subido un 15 % en un mes, “Llegas tarde”; si el precio va en contra (por debajo de su media de 50 sesiones), “Vigilar”. Solo dice “A favor” si pasa los dos."),
+        h("span", {}, B("Tamaño: "), "como mucho un 5 % de tu cartera por idea y un 10 % en total. Sal si cae un 10 % o a las 6 semanas si la señal desaparece."),
+        h("span", {}, B("¿Funciona? "), "No se puede saber con el pasado (no hay noticias antiguas para probarlo). La app apunta cada idea y la compara con la bolsa mundial en el mismo periodo, salga bien o mal.")),
+      P(B("Cuidado con mirar atrás: "), "a toro pasado parece fácil (“comprar petróleo antes de la guerra”), pero cuando la noticia está en todos los titulares el precio suele haberse movido ya, y tras los picos por guerras el petróleo suele devolver la subida en semanas.")),
+
     seccion("2. Cómo decide la recomendación", false,
       P(B("Idea clave: "), "la oportunidad la crea el precio, no la noticia. Una noticia grave sin caída de la bolsa no cambia nada; una caída con miedo, sí."),
       P(B("Puntuación de oportunidad (0-100):")),

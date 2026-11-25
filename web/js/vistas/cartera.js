@@ -1,14 +1,14 @@
 import { abrirModal, campo, cerrarModal, claseSigno, eur, fecha, h, hoyISO, num, parseNumero, pct, tarjeta, toast, uid } from "../dom.js";
 import { eficaciaSenales, esApalancado, fuentePrecio, gananciaPeriodo, historico, restarDias, tirCartera } from "../finanzas.js";
 import { prediccionCartera } from "../intradia.js";
-import { clasificarNombre } from "../reco.js";
+import { clasificarNombre, tamanoIdeas } from "../reco.js";
 import { destruirEn, donut, lineas } from "../graficas.js";
 import { HUECOS, ROL_A_HUECO } from "../perfil.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../importar_tr.js";
 import { PAGADO_DESDE } from "../diners.js";
 import { tarjetaIntradia } from "./intradia.js";
 
-const ORIGEN = { plan: "Plan", extra: "Extra (señal)", manual: "Manual", importado: "Importado" };
+const ORIGEN = { plan: "Plan", extra: "Extra (señal)", idea: "Idea táctica", manual: "Manual", importado: "Importado" };
 
 export function render(ctx) {
   const { S, calc } = ctx;
@@ -62,6 +62,10 @@ export function render(ctx) {
         h("td", { class: `num ${claseSigno(p.latente)}` }, eur(p.latente), h("div", { class: "pequeno" }, pct(p.latentePct))))))),
     h("p", { class: "suave pequeno" }, "Toca un activo para ver la ganancia de cada compra según su momento.")));
 
+  // Ideas tácticas (satélites con algo más de riesgo según el momento geopolítico)
+  const ideas = tarjetaIdeas(ctx);
+  if (ideas) nodos.push(ideas);
+
   // Eficacia de las señales
   const ef = eficaciaSenales(cartera.operaciones);
   nodos.push(tarjeta("¿Te han servido las señales?",
@@ -99,6 +103,59 @@ function resumenPrecio(ctx, p) {
     kpi("Rentabilidad", pct(p.latentePct), claseSigno(p.latentePct)),
     h("p", { class: "suave pequeno", style: { gridColumn: "1 / -1" } }, `Precio actual: ${origen}${tickerAuto ? ` · ticker ${tickerAuto.ticker}${tickerAuto.origen === "automatico" ? " (encontrado por ISIN)" : ""}` : ""}. `,
       "El precio medio incluye comisiones. Trade Republic usa su precio en directo, así que puede haber una pequeña diferencia."));
+}
+
+// ------------------------------------------------------------------ ideas tácticas
+const ESTADO_IDEA = {
+  activa: ["A favor", "verde"], vigilar: ["Vigilar", "ambar"], tarde: ["Llegas tarde", "ambar"],
+  sin_senal: ["Sin señal", ""], en_contra: ["En contra", "rojo"], sin_datos: ["Sin datos", ""],
+};
+
+function tarjetaIdeas(ctx) {
+  const { S, calc } = ctx;
+  const bloque = S.publico.mercado?.ideas;
+  if (!bloque?.lista?.length) return null;
+  const lim = bloque.limites || {};
+  const t = tamanoIdeas(bloque.lista, calc.pos, lim);
+  const signo = (v) => (v > 0 ? `+${v}` : String(v));
+  const filaIdea = (i) => {
+    const [etq, color] = ESTADO_IDEA[i.estado] || [i.estado, ""];
+    const p = i.precio || {};
+    const max = t.porIdea[i.id] || { tienes: 0, maximo: 0 };
+    return h("details", { class: "idea", open: i.estado === "activa" || undefined },
+      h("summary", {}, h("span", { class: `chip ${color === "verde" ? "verde" : color === "rojo" ? "i3" : color === "ambar" ? "i2" : ""}` }, etq), " ",
+        h("strong", {}, i.tema), h("span", { class: "suave pequeno" }, ` · ${i.nombre || i.id}`)),
+      h("p", { class: "pequeno" }, i.explicacion),
+      i.motivos?.length ? h("p", { class: "pequeno" }, "Por qué: ", i.motivos.map((m) => `${m.evento} (intensidad ${m.intensidad}/3, efecto ${signo(m.impacto)})`).join(" · "),
+        ` → señal ${signo(i.senal)} (hace falta ${lim.umbral_senal ?? 3}).`) : h("p", { class: "pequeno suave" }, `Señal ${signo(i.senal)}.`),
+      p.ultimo ? h("p", { class: "pequeno" }, `Precio ${num(p.ultimo, 2)} € · 1 mes: `, h("span", { class: claseSigno(p.var_1m) }, pct(p.var_1m)),
+        ` · 3 meses: `, h("span", { class: claseSigno(p.var_3m) }, pct(p.var_3m)), ` · ${p.sobre_mm50 === false ? "por debajo" : p.sobre_mm50 ? "por encima" : "—"} de su media de 50 sesiones`) : null,
+      i.estado === "activa" ? h("div", { class: "aviso verde pequeno" },
+        max.maximo >= 25 ? `Como mucho ${eur(max.maximo)} (${lim.max_idea_pct ?? 5} % de tu cartera${max.tienes ? `, descontando los ${eur(max.tienes)} que ya tienes` : ""}). `
+          : `Con tu cartera actual la idea sería de ${eur(max.maximo)}: con 1 € de comisión no compensa. `,
+        `Sal si cae un ${Math.abs(lim.stop_pct ?? 10)} % desde tu compra, o en unas ${lim.revisar_semanas ?? 6} semanas si la señal desaparece. Sale del medio plazo, nunca de tu plan ni de tu colchón.`) : null,
+      max.tienes > 0 ? h("p", { class: "pequeno" }, `Ya tienes ${eur(max.tienes)} en este producto.`) : null,
+      h("p", { class: "suave pequeno" }, h("strong", {}, "Riesgo: "), i.riesgo || "—", i.ter ? ` Comisión anual (TER): ${num(i.ter, 2)} %.` : ""),
+      i.estado === "activa" && i.isin && max.maximo >= 25 ? h("button", { class: "mini", onclick: () => modalOperacion(ctx, { origen: "idea", isin: i.isin, importe: max.maximo }) }, "Registrar compra") : null);
+  };
+  const hist = S.publico.ideasHistorial;
+  const tramos = [...(hist?.tramos || [])].reverse().slice(0, 10);
+  const r = hist?.resumen;
+  return tarjeta("Ideas tácticas (más riesgo)",
+    h("p", { class: "pequeno" }, "Apuestas pequeñas y temporales que el momento geopolítico pone a favor, aparte de tu plan. ",
+      `Como mucho un ${lim.max_idea_pct ?? 5} % de tu cartera por idea y un ${lim.max_total_pct ?? 10} % en total`,
+      t.enIdeas > 0 ? ` (ahora tienes ${eur(t.enIdeas)} en estos productos)` : "", "."),
+    h("div", { class: "aviso azul pequeno" }, "Ojo con mirar atrás: comprar petróleo cuando ya está en todos los titulares suele llegar tarde. Por eso la app solo dice “A favor” si el precio también lo confirma y no ha subido ya en exceso. ",
+      "No hay historial de noticias de años anteriores para probar esta regla, así que se mide desde hoy (abajo)."),
+    ...bloque.lista.map(filaIdea),
+    h("h3", {}, "¿Funcionan?"),
+    r?.cerrados ? h("p", { class: "pequeno" }, `${r.cerrados} ideas terminadas: ${r.ganan_a_referencia} ganaron a la bolsa mundial en el mismo periodo. Ventaja media: `,
+      h("strong", { class: claseSigno(r.ventaja_media_pct) }, pct(r.ventaja_media_pct)), ".")
+      : h("p", { class: "suave pequeno" }, "Todavía no ha terminado ninguna idea. Cada vez que una pasa a “A favor” se apunta su precio y, cuando deja de estarlo, se compara con la bolsa mundial en el mismo periodo, salga bien o mal."),
+    tramos.length ? h("div", { class: "tabla-scroll" }, h("table", { class: "pequeno" },
+      h("tr", {}, h("th", {}, "Idea"), h("th", {}, "Desde"), h("th", { class: "num" }, "Resultado"), h("th", { class: "num" }, "Bolsa mundial")),
+      tramos.map((x) => h("tr", {}, h("td", {}, x.tema), h("td", {}, `${fecha(x.desde)}${x.hasta ? ` → ${fecha(x.hasta)}` : " (abierta)"}`),
+        h("td", { class: `num ${claseSigno(x.resultado_pct)}` }, pct(x.resultado_pct)), h("td", { class: `num ${claseSigno(x.referencia_pct)}` }, pct(x.referencia_pct)))))) : null);
 }
 
 // ------------------------------------------------------------------ evolución por periodos

@@ -1,6 +1,6 @@
 // Service worker: la app funciona sin conexión con los últimos datos descargados.
 // Estrategia: código -> caché primero; datos de mercado -> red primero. Nunca cachea la API de GitHub.
-const VERSION = "inversor-v11";
+const VERSION = "inversor-v12";
 const NUCLEO = [
   "./", "./index.html", "./css/app.css", "./manifest.webmanifest",
   "./vendor/chart.umd.min.js", "./vendor/hammer.min.js", "./vendor/chartjs-plugin-zoom.min.js",

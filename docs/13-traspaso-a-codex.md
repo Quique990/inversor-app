@@ -51,6 +51,8 @@
 - La tarjeta intradía solo enseña los activos del usuario.
 - Diners: asistente "Poner mi dinero a mano", tarjeta **Paga** (check por semana) y **+ Gasto** (con bloque).
 - Hoy y Mercado muestran fecha y hora del último análisis de noticias (`mercado.generado`), con aviso si > 30 h.
+- Ideas tácticas (satélites) en Cartera: `pipeline/ideas.py`, `config/ideas.yaml`, docs/04. Vigilar que los tickers
+  de los satélites (OOEA, DFEN, XDW0) funcionan en `salud_fuentes.json` y el historial `ideas_historial.json`.
 - Entrada obligatoria con PIN de 4 cifras (lo eligió el usuario frente a una contraseña): verificador PBKDF2 en
   el privado (`data/acceso.json`), ver docs/02. Evolución de la cartera por periodos (día, semana, mes, año) y zoom en gráficas.
 

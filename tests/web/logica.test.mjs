@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { calcularPosiciones, eficaciaSenales, esApalancado, fuentePrecio, gananciaPeriodo, historico, indicePrecios, precioEUR, restarDias, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
 import { avisoCorto, listaGastos, lunesDe, marcarPaga, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos, semanasPaga } from "../../web/js/diners.js";
 import { calcularPerfil } from "../../web/js/perfil.js";
-import { clasificarNombre, huecoDe, recomendar } from "../../web/js/reco.js";
+import { clasificarNombre, huecoDe, recomendar, tamanoIdeas } from "../../web/js/reco.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../../web/js/importar_tr.js";
 
 const universo = {
@@ -334,4 +334,15 @@ test("PIN: el verificador comprueba sin guardar el PIN y solo admite 4 cifras", 
   assert.match(validarPin("12345"), /4 cifras/);
   assert.match(validarPin("1234", "1235"), /no coinciden/);
   assert.equal(validarPin("1234", "1234"), null);
+});
+
+test("Ideas tácticas: tamaño máximo con tu cartera (5 % por idea, 10 % en total)", () => {
+  const ideas = [{ id: "A", isin: "XS0000000001" }, { id: "B", isin: "XS0000000002" }, { id: "C", isin: "XS0000000003" }];
+  const pos = { IE00BK5BQT80: { participaciones: 1, valor: 9000 }, XS0000000001: { participaciones: 1, valor: 400 }, XS0000000002: { participaciones: 1, valor: 400 } };
+  const t = tamanoIdeas(ideas, pos, { max_idea_pct: 5, max_total_pct: 10 });
+  assert.equal(t.total, 9800);
+  assert.equal(t.enIdeas, 800);
+  assert.equal(t.porIdea.A.maximo, 90);     // 5 % = 490, ya tienes 400
+  assert.equal(t.porIdea.C.maximo, 180);    // 5 % = 490, pero del 10 % (980) solo quedan 180
+  assert.equal(tamanoIdeas(ideas, {}, {}).porIdea.A.maximo, 0);
 });

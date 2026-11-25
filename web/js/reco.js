@@ -150,3 +150,23 @@ export function recomendar({ mercado, perfil, pos, activos, universoPorIsin, sal
 
   return { acciones, extra, actual, desviaciones };
 }
+
+/**
+ * Tamaño máximo de cada idea táctica para TU cartera: como mucho `max_idea_pct` % en una idea y `max_total_pct` %
+ * en todas, descontando lo que ya tengas en esos productos. Devuelve {total, enIdeas, libre, porIdea:{id:{tienes, maximo}}}.
+ */
+export function tamanoIdeas(ideas, pos, limites = {}) {
+  const lista = ideas || [];
+  const valorDe = (isin) => { const p = pos?.[isin]; return p && p.participaciones > 1e-9 ? (p.valor ?? p.costeVivo ?? 0) : 0; };
+  const total = Object.values(pos || {}).reduce((s, p) => s + (p.participaciones > 1e-9 ? (p.valor ?? p.costeVivo ?? 0) : 0), 0);
+  const isins = new Set(lista.map((i) => i.isin).filter(Boolean));
+  const enIdeas = [...isins].reduce((s, isin) => s + valorDe(isin), 0);
+  const libre = Math.max(0, ((limites.max_total_pct ?? 10) / 100) * total - enIdeas);
+  const porIdea = {};
+  for (const i of lista) {
+    const tienes = valorDe(i.isin);
+    const maximo = Math.max(0, Math.min(((limites.max_idea_pct ?? 5) / 100) * total - tienes, libre));
+    porIdea[i.id] = { tienes, maximo: Math.floor(maximo) };
+  }
+  return { total, enIdeas, libre, porIdea };
+}

@@ -7,6 +7,7 @@ Salidas (todas PÚBLICAS, sin datos personales):
   web/data/historial/indice.json -> lista de fechas con su postura y puntuación
   web/data/salud_fuentes.json    -> qué fuentes funcionaron
   web/data/backtest.json         -> backtest de la parte táctica (se recalcula los lunes)
+  web/data/ideas_historial.json  -> cuándo empezó y acabó cada idea táctica y su resultado frente a la bolsa mundial
 
 Uso local:  python -m pipeline.main            (SIN_IA=1 para no llamar a la IA)
 """
@@ -15,7 +16,7 @@ from __future__ import annotations
 import os
 from datetime import date
 
-from . import backtest, eventos as ev, ia, indicadores as ind, mercados, noticias, senales
+from . import backtest, eventos as ev, ia, ideas as ideas_mod, indicadores as ind, mercados, noticias, senales
 from .util import WEB_DATA, Salud, ahora_iso, cargar_yaml, configurar_log, escribir_json, hoy_iso, leer_json, log
 
 
@@ -72,6 +73,16 @@ def ejecutar() -> dict:
     # 3. Señales
     decision = senales.generar(series, eventos, reglas, ia_ok=resultado_ia is not None, noticias_ok=len(titulares) >= 30)
 
+    # 3b. Ideas tácticas (satélites) y su historial de resultados
+    cfg_ideas = cargar_yaml("ideas.yaml")
+    try:
+        ideas = ideas_mod.evaluar(eventos, series, datos["info"], reglas, cfg_ideas)
+        historial_ideas = ideas_mod.actualizar_historial(leer_json(WEB_DATA / "ideas_historial.json", None), ideas, series, hoy_iso(),
+                                                         (cfg_ideas.get("limites") or {}).get("comparar_con", "VWCE"))
+    except Exception as e:  # noqa: BLE001 - las ideas son un extra: nunca tumban el informe
+        salud.mal("ideas", repr(e))
+        ideas, historial_ideas = [], None
+
     informe = {
         "fecha": hoy_iso(),
         "generado": ahora_iso(),
@@ -81,6 +92,7 @@ def ejecutar() -> dict:
         "ia": proveedor,
         "eventos": eventos,
         "decision": decision,
+        "ideas": {"limites": cfg_ideas.get("limites"), "lista": ideas},
         "gdelt": gdelt,
         "activos": {k: {**resumenes[k], **{kk: datos["info"].get(k, {}).get(kk) for kk in ("nombre", "isin", "yahoo", "moneda")}}
                     for k in resumenes},
@@ -102,10 +114,12 @@ def ejecutar() -> dict:
     escribir_json(WEB_DATA / "precios_universo.json", {
         "generado": ahora_iso(),
         "series": {k: ind.muestrear_semanal(s) for k, s in series.items()
-                   if k in {e["id"] for e in universo["etfs"]} | {"SP500", "STOXX50", "IBEX", "VIX", "BRENT", "ORO", "EURUSD"}},
+                   if k in {e["id"] for e in universo["etfs"] + universo.get("satelites", [])} | {"SP500", "STOXX50", "IBEX", "VIX", "BRENT", "ORO", "EURUSD"}},
         "ultimo": {k: series[k][-1] for k in series},
         "info": datos["info"],
     })
+    if historial_ideas:
+        escribir_json(WEB_DATA / "ideas_historial.json", historial_ideas)
     escribir_json(WEB_DATA / "salud_fuentes.json", salud.a_dict())
 
     if date.today().weekday() == 0 or not (WEB_DATA / "backtest.json").exists() or os.environ.get("FORZAR_BACKTEST"):

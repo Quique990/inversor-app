@@ -68,3 +68,9 @@ def test_pipeline_completo_offline(monkeypatch, tmp_path):
     datos = json.loads((tmp_path / "mercado.json").read_text())
     assert datos["ia"] == "desactivada" and datos["resumen"]
     assert "VWCE" in datos["activos"]
+    # Ideas tácticas: una por tema, con su estado, y el historial guardado
+    ids = {i["id"] for i in datos["ideas"]["lista"]}
+    assert {"OOEA", "DFEN", "XDW0", "8PSG", "EUNH"} <= ids
+    assert all(i["estado"] in {"activa", "vigilar", "tarde", "sin_senal", "en_contra", "sin_datos"} for i in datos["ideas"]["lista"])
+    assert (tmp_path / "ideas_historial.json").exists()
+    assert "DFEN" in json.loads((tmp_path / "precios_universo.json").read_text())["series"]
