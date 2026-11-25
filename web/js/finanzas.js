@@ -5,8 +5,10 @@ export const DIA = 86400000;
 const t = (iso) => new Date(iso + "T12:00:00Z").getTime();
 
 // ---------------------------------------------------------------- precios
-/** Índice isin -> {puntos:[[fecha,valor]], ultimo:[fecha,valor], moneda} a partir de los datos públicos y privados. */
-export function indicePrecios(precios, universo, activos = {}) {
+/** Índice isin -> {puntos:[[fecha,valor]], ultimo:[fecha,valor], moneda, intradia?} a partir de los datos públicos y
+ * privados. Si hay previsión intradía del día (se actualiza cada hora), su último valor es el precio actual: el
+ * cierre diario solo se descarga una vez al día y con mercados moviéndose la rentabilidad quedaría desfasada. */
+export function indicePrecios(precios, universo, activos = {}, intradia = null) {
   const idx = {};
   const uni = universo || { series: {}, info: {}, ultimo: {} };
   for (const [id, info] of Object.entries(uni.info || {})) {
@@ -23,9 +25,25 @@ export function indicePrecios(precios, universo, activos = {}) {
       idx[isin] = { puntos: [...(idx[isin]?.puntos || []), [m.fecha, m.valor]], ultimo: [m.fecha, m.valor], moneda: "EUR", manual: true };
     }
   }
+  for (const a of Object.values(intradia?.activos || {})) {
+    const u = a.actual?.at(-1);
+    if (!a.isin || !u || !(u.valor > 0) || !intradia.fecha) continue;
+    const base = idx[a.isin];
+    if (base && base.ultimo?.[0] > intradia.fecha) continue; // hay un dato más reciente (p. ej. precio manual)
+    idx[a.isin] = { puntos: [], moneda: "EUR", ultimo: [intradia.fecha, u.valor], ...base,
+      intradia: { fecha: intradia.fecha, hora: u.hora, valor: u.valor, tipo: u.tipo } }; // valores ya en euros
+  }
   const fx = precios?.series?.__EURUSD?.puntos || uni.series?.EURUSD || null;
   idx.__EURUSD = fx;
   return idx;
+}
+
+/** De dónde sale el precio actual de un activo, para enseñarlo al usuario. */
+export function fuentePrecio(idx, isin) {
+  const p = idx[isin];
+  if (!p) return null;
+  if (p.intradia) return { fecha: p.intradia.fecha, hora: p.intradia.hora, tipo: p.intradia.tipo === "real" ? "real" : "estimado" };
+  return { fecha: p.ultimo?.[0], hora: null, tipo: p.manual ? "manual" : "cierre" };
 }
 
 function valorEn(puntos, fecha) {
@@ -39,6 +57,7 @@ function valorEn(puntos, fecha) {
 export function precioEUR(idx, isin, fecha = null) {
   const p = idx[isin];
   if (!p) return null;
+  if (!fecha && p.intradia) return p.intradia.valor;
   const v = fecha ? valorEn(p.puntos, fecha) : p.ultimo?.[1];
   if (v === null || v === undefined) return null;
   if (p.moneda && p.moneda !== "EUR" && p.moneda === "USD" && idx.__EURUSD) {

@@ -1,11 +1,11 @@
 // Tests de la lógica de la web (Node >= 20):  node --test tests/web/
-import { prediccionCartera, textoCalidad } from "../../web/js/intradia.js";
+import { fusionarIntradia, prediccionCartera, textoCalidad } from "../../web/js/intradia.js";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calcularPosiciones, eficaciaSenales, esApalancado, historico, indicePrecios, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
-import { avisoCorto, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos } from "../../web/js/diners.js";
+import { calcularPosiciones, eficaciaSenales, esApalancado, fuentePrecio, historico, indicePrecios, precioEUR, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
+import { avisoCorto, listaGastos, lunesDe, marcarPaga, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos, semanasPaga } from "../../web/js/diners.js";
 import { calcularPerfil } from "../../web/js/perfil.js";
-import { recomendar } from "../../web/js/reco.js";
+import { clasificarNombre, huecoDe, recomendar } from "../../web/js/reco.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../../web/js/importar_tr.js";
 
 const universo = {
@@ -194,4 +194,101 @@ test("Intradía: previsión de la cartera combina ETF y diversifica la banda", (
   assert.match(textoCalidad({ dias: 0 }), /empieza a aprender/);
   assert.match(textoCalidad({ dias: 20, mejora_pct: 12, cobertura_pct: 78 }), /12 % menos/);
   assert.equal(prediccionCartera(intradia, {}), null);
+});
+
+test("Clasificación: oro, renta fija con vencimiento, índices y acciones sueltas", () => {
+  assert.equal(clasificarNombre("WisdomTree Core Physical Gold"), "oro");
+  assert.equal(clasificarNombre("Dez. 2030"), "renta_fija_euro");
+  assert.equal(clasificarNombre("iShares iBonds Dec 2029 Term EUR Corp UCITS ETF"), "renta_fija_euro");
+  assert.equal(clasificarNombre("EUR Overnight Rate Swap"), "monetario");
+  assert.equal(clasificarNombre("Amundi Euro Stoxx 50 (Acc)"), "renta_variable_global");
+  assert.equal(clasificarNombre("Una empresa cualquiera"), "otros");
+  assert.equal(clasificarNombre("Leverage Shares 3x Gold"), "otros");
+  // El universo y la elección manual mandan sobre el nombre
+  const uni = { IE00B4WXJJ64: { rol: "renta_fija_euro" } };
+  assert.equal(huecoDe("IE00B4WXJJ64", { IE00B4WXJJ64: { nombre: "Cualquier cosa" } }, uni), "renta_fija_euro");
+  assert.equal(huecoDe("XS0000000001", { XS0000000001: { nombre: "Dez. 2030", hueco: "monetario" } }, {}), "monetario");
+});
+
+test("Precio actual: el último dato intradía manda sobre el cierre de días anteriores", () => {
+  const intra = { fecha: "2026-01-05", activos: { VWCE: { isin: "IE00BK5BQT80", actual: [{ hora: "09:00", valor: 118, tipo: "real" }, { hora: "10:00", valor: 115, tipo: "real" }] } } };
+  const idx = indicePrecios(null, universo, {}, intra);
+  assert.equal(precioEUR(idx, "IE00BK5BQT80"), 115);
+  assert.equal(precioEUR(idx, "IE00BK5BQT80", "2025-07-01"), 90);           // el histórico no cambia
+  assert.deepEqual(fuentePrecio(idx, "IE00BK5BQT80"), { fecha: "2026-01-05", hora: "10:00", tipo: "real" });
+  // Un precio manual más reciente gana
+  const idx2 = indicePrecios(null, universo, { IE00BK5BQT80: { precioManual: { valor: 130, fecha: "2026-01-06" } } }, intra);
+  assert.equal(precioEUR(idx2, "IE00BK5BQT80"), 130);
+  // Un intradía antiguo no pisa un cierre más nuevo
+  const idx3 = indicePrecios(null, universo, {}, { ...intra, fecha: "2025-12-01" });
+  assert.equal(precioEUR(idx3, "IE00BK5BQT80"), 120);
+  assert.equal(fuentePrecio(idx3, "IE00BK5BQT80").tipo, "cierre");
+});
+
+test("Intradía: fusiona la previsión pública con la privada del mismo día", () => {
+  const pub = { fecha: "2026-11-25", horas: ["07:30"], activos: { A: { id: "A", isin: "IE00BK5BQT80" } }, correlaciones: { ids: ["A"], matriz: [[1]] } };
+  const priv = { fecha: "2026-11-25", generado: "x", activos: { XS0000000001: { id: "XS0000000001", isin: "XS0000000001" }, XS0000000002: { id: "XS0000000002", isin: "XS0000000002" } },
+    correlaciones: { ids: ["XS0000000001", "XS0000000002"], matriz: [[1, 0.3], [0.3, 1]] } };
+  const f = fusionarIntradia(pub, priv);
+  assert.deepEqual(Object.keys(f.activos), ["A", "XS0000000001", "XS0000000002"]);
+  assert.equal(f.activos.XS0000000001.privado, true);
+  assert.equal(f.correlaciones.matriz[1][2], 0.3);
+  assert.equal(f.correlaciones.matriz[0][1], null);                    // pública-privada: desconocida
+  assert.equal(fusionarIntradia(pub, { ...priv, fecha: "2026-11-24" }), pub);  // la privada es de otro día
+  assert.equal(fusionarIntradia(null, priv), priv);
+  assert.equal(fusionarIntradia(pub, null), pub);
+  // La previsión de la cartera usa 0,6 cuando no conoce la correlación (sin romper)
+  const tray = [{ hora: "07:30", esperado: 10, inf: 9, sup: 11 }];
+  f.activos.A = { ...f.activos.A, plan: tray, prevision: tray, actual: [] };
+  f.activos.XS0000000001 = { ...f.activos.XS0000000001, plan: tray, prevision: tray, actual: [] };
+  const r = prediccionCartera(f, { IE00BK5BQT80: { isin: "IE00BK5BQT80", participaciones: 1 }, XS0000000001: { isin: "XS0000000001", participaciones: 1 } });
+  assert.equal(r.plan[0].esperado, 20);
+  assert.ok(r.plan[0].sup > 20 && r.plan[0].sup < 22);
+});
+
+test("Diners: paga semanal con un check y gastos que sacan dinero del bloque", () => {
+  const c = { saldosIniciales: { fecha: null, corto: 0, medio: 100, largo: 0 }, config: { pagaSemanal: 20 }, semanas: [], transferencias: [], intereses: [], inversionesManuales: [], gastos: [] };
+  let n = 0;
+  const id = () => `id${n++}`;
+  assert.equal(lunesDe("2026-11-25"), "2026-11-23");                   // miércoles -> lunes
+  assert.equal(lunesDe("2026-11-23"), "2026-11-23");
+  assert.equal(lunesDe("2026-11-29"), "2026-11-23");                   // domingo -> lunes anterior
+  marcarPaga(c, "2026-11-16", true, 20, id);
+  marcarPaga(c, "2026-11-23", true, 20, id);
+  let semanas = semanasPaga(c, "2026-11-25", 3);
+  assert.deepEqual(semanas.map((x) => x.cobrada), [true, true, false]);
+  assert.equal(saldos(c).corto, 40);
+  // Una semana con gastos no se borra al desmarcar la paga
+  c.semanas.find((s) => s.fecha === "2026-11-16").gastos.push({ importe: 5, concepto: "cine" });
+  marcarPaga(c, "2026-11-16", false, 20, id);
+  marcarPaga(c, "2026-11-23", false, 20, id);
+  assert.equal(c.semanas.length, 1);
+  assert.equal(saldos(c).corto, -5);
+  // Gasto suelto de medio plazo
+  c.gastos.push({ id: "g", fecha: "2026-11-24", importe: 30, concepto: "regalo", bloque: "medio" });
+  assert.equal(saldos(c).medio, 70);
+  assert.deepEqual(listaGastos(c).map((g) => [g.importe, g.bloque]), [[30, "medio"], [5, "corto"]]);
+  // Una semana del Excel con otra fecha dentro de la misma semana se reconoce
+  c.semanas.push({ id: "x", fecha: "2026-11-27", paga: 15, extra: 0, gastos: [] });
+  assert.equal(semanasPaga(c, "2026-11-25", 1)[0].importe, 15);
+});
+
+test("Diners: los saldos puestos a mano ya incluyen lo anterior a su fecha", () => {
+  const cartera = { activos: { A: { bloque: "largo" } }, operaciones: [
+    { fecha: "2026-10-01", tipo: "compra", isin: "A", importe: 50, comision: 0 }, { fecha: "2026-12-01", tipo: "compra", isin: "A", importe: 10, comision: 0 }] };
+  const c = { saldosIniciales: { fecha: "2026-11-25", incluyeAnteriores: true, corto: 100, medio: 0, largo: 500 }, config: {},
+    semanas: [{ id: "a", fecha: "2026-11-02", paga: 20, extra: 0, gastos: [] }, { id: "b", fecha: "2026-11-30", paga: 20, extra: 0, gastos: [] }],
+    transferencias: [], intereses: [], inversionesManuales: [], gastos: [] };
+  const s = saldos(c, null, cartera);
+  assert.equal(s.corto, 120);   // solo la semana posterior
+  assert.equal(s.largo, 490);   // solo la compra posterior
+  // La paga de la semana en curso cuenta aunque los saldos se pusieran a mitad de semana; las semanas anteriores no se ofrecen
+  marcarPaga(c, "2026-11-23", true, 25, () => "p");
+  assert.equal(c.semanas.find((x) => x.id === "p").fecha, "2026-11-25");
+  assert.equal(saldos(c, null, cartera).corto, 145);
+  assert.deepEqual(semanasPaga(c, "2026-12-02", 8).map((x) => x.lunes), ["2026-11-30", "2026-11-23"]);
+  c.semanas = c.semanas.filter((x) => x.id !== "p");
+  // Sin la marca (p. ej. importado del Excel), las semanas se suman todas como antes
+  delete c.saldosIniciales.incluyeAnteriores;
+  assert.equal(saldos(c, null, cartera).corto, 140);
 });

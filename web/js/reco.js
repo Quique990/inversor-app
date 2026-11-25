@@ -2,12 +2,28 @@
 import { esApalancado } from "./finanzas.js";
 import { HUECOS, ROL_A_HUECO } from "./perfil.js";
 
+// Clasificación por el nombre para activos fuera del universo (misma regla que pipeline/clasificar.py).
+const ORO = /(gold|\boro\b|\bgld\b)/i;
+const MONETARIO = /(overnight|money market|monetari|€str|\bestr\b|\bcash\b)/i;
+const RENTA_FIJA = /(bond|anleihe|treasur|\bgovt\b|government|aggregate|ibonds|renta fija|\bbonos?\b|\b(dez|dec|déc|dic)\.?\s*20\d\d\b|\bcorp(orate)?\b)/i;
+const RENTA_VARIABLE = /(s&p|\bsp ?500\b|msci|ftse|all.?world|\bworld\b|ibex|stoxx|\bdax\b|nasdaq|emerging|\bacwi\b|russell|nikkei|\bcac\b|\bmib\b|equity|aktien|dividend|\betf\b|\bucits\b|\bindex\b)/i;
+
+/** renta_variable_global | renta_fija_euro | monetario | oro | otros (acciones sueltas, temáticos, apalancados). */
+export function clasificarNombre(nombre = "") {
+  if (esApalancado(nombre)) return "otros";
+  if (ORO.test(nombre)) return "oro";
+  if (MONETARIO.test(nombre)) return "monetario";
+  if (RENTA_FIJA.test(nombre)) return "renta_fija_euro";
+  if (RENTA_VARIABLE.test(nombre)) return "renta_variable_global";
+  return "otros";
+}
+
 export function huecoDe(isin, activos, universoPorIsin) {
   const a = activos[isin] || {};
   if (a.hueco) return a.hueco;
   if (esApalancado(a.nombre)) return "otros";
   const rol = universoPorIsin[isin]?.rol;
-  return ROL_A_HUECO[rol] || "otros";
+  return ROL_A_HUECO[rol] || clasificarNombre(a.nombre || universoPorIsin[isin]?.nombre || "");
 }
 
 export function asignacionActual(pos, activos, universoPorIsin) {

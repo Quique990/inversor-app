@@ -12,7 +12,11 @@ export const FICHEROS = {
   cartera: "data/cartera.json",
   contabilidad: "data/contabilidad.json",
   precios: "data/precios.json",
+  intradia: "data/intradia.json", // previsión intradía de tus activos fuera del universo (workflow privado)
 };
+// Ficheros que viven en otra rama del repositorio privado (la rama "intradia" se reescribe cada hora)
+const RAMA_FICHERO = { intradia: "intradia" };
+const SOLO_WORKFLOW = new Set(["precios", "intradia"]);
 
 export const POR_DEFECTO = {
   perfil: () => ({ version: 1, cuestionario: null, perfil: null, asignacion: null, huecos: {},
@@ -21,8 +25,9 @@ export const POR_DEFECTO = {
   contabilidad: () => ({ version: 1,
     config: { umbralCorto: 300, traspaso: 150 },
     saldosIniciales: { fecha: null, corto: 0, medio: 0, largo: 0 },
-    semanas: [], transferencias: [], intereses: [], inversionesManuales: [], notas: [] }),
+    semanas: [], transferencias: [], intereses: [], inversionesManuales: [], notas: [], gastos: [] }),
   precios: () => ({ series: {} }),
+  intradia: () => null,
 };
 
 // ------------------------------------------------------------------ utilidades base64 UTF-8
@@ -108,7 +113,8 @@ export async function leer(nombre, { forzar = false } = {}) {
   let datos = null;
   if (c.modo === "github" && token()) {
     try {
-      const r = await gh(`contents/${FICHEROS[nombre]}?ref=${encodeURIComponent(c.rama || "main")}`);
+      const ref = encodeURIComponent(RAMA_FICHERO[nombre] || c.rama || "main");
+      const r = await gh(`contents/${FICHEROS[nombre]}?ref=${ref}`);
       if (r.status === 404) datos = null;
       else if (!r.ok) throw new Error(`GitHub ${r.status}`);
       else {
@@ -116,7 +122,7 @@ export async function leer(nombre, { forzar = false } = {}) {
         shas[nombre] = j.sha;
         // Ficheros >1 MB: la API no devuelve el contenido; se pide en crudo
         const texto = j.content ? deBase64(j.content)
-          : await (await gh(`contents/${FICHEROS[nombre]}?ref=${encodeURIComponent(c.rama || "main")}`,
+          : await (await gh(`contents/${FICHEROS[nombre]}?ref=${ref}`,
             { headers: { Accept: "application/vnd.github.raw+json" } })).text();
         datos = JSON.parse(texto);
       }
@@ -131,12 +137,12 @@ export async function leer(nombre, { forzar = false } = {}) {
     datos = local ? JSON.parse(local) : null;
   }
   const base = POR_DEFECTO[nombre]();
-  memoria[nombre] = datos ? { ...base, ...datos } : base;
+  memoria[nombre] = datos ? (base ? { ...base, ...datos } : datos) : base;
   return memoria[nombre];
 }
 
 export async function guardar(nombre, datos, mensaje = `Actualizar ${nombre}`) {
-  if (nombre === "precios") throw new Error("precios.json lo escribe el workflow, no la web");
+  if (SOLO_WORKFLOW.has(nombre)) throw new Error(`${nombre}.json lo escribe un workflow, no la web`);
   memoria[nombre] = datos;
   const c = leerConfig();
   const texto = JSON.stringify(datos, null, 1);

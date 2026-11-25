@@ -41,7 +41,7 @@ export const PERFILES = [
 
 export const HUECOS = {
   renta_variable_global: { nombre: "Renta variable mundial", etfPorDefecto: "IE00BK5BQT80" },
-  renta_fija_euro: { nombre: "Renta fija (bonos euro)", etfPorDefecto: "IE00B4WXJJ64" },
+  renta_fija_euro: { nombre: "Renta fija (bonos)", etfPorDefecto: "IE00B4WXJJ64" },
   monetario: { nombre: "Monetario (liquidez remunerada)", etfPorDefecto: "LU0290358497" },
   oro: { nombre: "Oro", etfPorDefecto: "IE00B579F325" },
 };

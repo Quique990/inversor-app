@@ -14,7 +14,32 @@ function correlacion(intradia, a, b) {
   if (a === b) return 1;
   const c = intradia?.correlaciones;
   const i = c?.ids?.indexOf(a), j = c?.ids?.indexOf(b);
-  return i >= 0 && j >= 0 ? c.matriz[i][j] : 0.6; // si no se conoce, correlación moderada (prudente)
+  const v = i >= 0 && j >= 0 ? c.matriz[i]?.[j] : null;
+  return typeof v === "number" ? v : 0.6; // si no se conoce, correlación moderada (prudente)
+}
+
+/**
+ * Une la previsión pública (ETF del universo) con la privada (tus activos fuera del universo, calculada en tu
+ * repositorio privado). Solo se usa la privada si es del mismo día que la pública (o si no hay pública).
+ * Las correlaciones entre un activo público y uno privado no se conocen: quedan a null (se usa 0,6).
+ */
+export function fusionarIntradia(publico, privado) {
+  if (!privado?.activos || !Object.keys(privado.activos).length) return publico || null;
+  if (!publico?.activos) return privado;
+  if (privado.fecha !== publico.fecha) return publico;
+  const activos = { ...publico.activos };
+  for (const [id, a] of Object.entries(privado.activos)) if (!activos[id]) activos[id] = { ...a, privado: true };
+  const cp = publico.correlaciones || { ids: [], matriz: [] }, cq = privado.correlaciones || { ids: [], matriz: [] };
+  const ids = [...cp.ids, ...cq.ids.filter((x) => !cp.ids.includes(x))];
+  const matriz = ids.map((a) => ids.map((b) => {
+    if (a === b) return 1;
+    for (const c of [cp, cq]) {
+      const i = c.ids.indexOf(a), j = c.ids.indexOf(b);
+      if (i >= 0 && j >= 0) return c.matriz[i]?.[j] ?? null;
+    }
+    return null;
+  }));
+  return { ...publico, activos, correlaciones: { ids, matriz }, privadoGenerado: privado.generado };
 }
 
 /** Combina trayectorias {hora, esperado, inf, sup} ponderadas por participaciones; la banda usa las correlaciones. */

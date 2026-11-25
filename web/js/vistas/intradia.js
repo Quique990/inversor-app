@@ -2,6 +2,7 @@
 import { eur, fecha, h, num, pct, tarjeta } from "../dom.js";
 import { lineas } from "../graficas.js";
 import { activoPorIsin, NOMBRE_VARIABLE, prediccionCartera, textoCalidad } from "../intradia.js";
+import { leerConfig } from "../store.js";
 
 let seleccion = null; // "cartera" o id de ETF; se recuerda mientras la app está abierta
 
@@ -9,24 +10,35 @@ const hoyMadrid = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Mad
 
 export function tarjetaIntradia(ctx) {
   const { S, calc } = ctx;
-  const intra = S.publico.intradia;
+  const intra = calc.intradia;
+  const cartera = S.privado.cartera;
+  const vivas = Object.values(calc.pos || {}).filter((p) => p.participaciones > 1e-9);
+  const nombre = (isin) => cartera.activos[isin]?.nombre || isin;
   if (!intra || !Object.keys(intra.activos || {}).length) {
     return tarjeta("Hoy, hora a hora", h("p", { class: "suave" },
       "Todavía no hay previsión intradía. Se calcula cada hora en días laborables de 7:30 a 23:00 (Actions → Predicción intradía)."));
   }
   const pred = prediccionCartera(intra, calc.pos);
   const porIsin = activoPorIsin(intra);
-  const propios = Object.values(calc.pos || {}).filter((p) => p.participaciones > 1e-9 && porIsin[p.isin]).map((p) => porIsin[p.isin]);
-  const otros = Object.values(intra.activos).filter((a) => !propios.includes(a));
-  if (!seleccion || (seleccion === "cartera" && !pred) || (seleccion !== "cartera" && !intra.activos[seleccion])) {
-    seleccion = pred ? "cartera" : (propios[0] || otros[0]).id;
+  const propios = vivas.filter((p) => porIsin[p.isin]).map((p) => porIsin[p.isin]);
+  const sinPrevision = vivas.filter((p) => !porIsin[p.isin]).map((p) => nombre(p.isin));
+  // Si tienes activos, solo se enseñan los tuyos; los ETF del universo solo si la cartera está vacía.
+  const otros = vivas.length ? [] : Object.values(intra.activos);
+  const elegibles = [...propios, ...otros];
+  if (!elegibles.length) {
+    return tarjeta("Hoy, hora a hora", h("p", { class: "suave" }, `Ninguno de tus activos tiene previsión todavía (${sinPrevision.join(", ")}).`),
+      ayudaPrivada(S));
   }
+  if (!seleccion || (seleccion === "cartera" && !pred) || (seleccion !== "cartera" && !elegibles.some((a) => a.id === seleccion))) {
+    seleccion = pred ? "cartera" : elegibles[0].id;
+  }
+  const etiqueta = (a) => (a.privado ? nombre(a.isin) : `${a.id} · ${nombre(a.isin)}`);
 
   const contenedor = h("div");
   const selector = h("select", { onchange: () => { seleccion = selector.value; pintar(); } },
     pred ? h("option", { value: "cartera", selected: seleccion === "cartera" }, "Mi cartera completa") : null,
-    propios.length ? h("optgroup", { label: "Mis ETF" }, propios.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, `${a.id} · ${a.nombre}`))) : null,
-    otros.length ? h("optgroup", { label: "Otros ETF del universo" }, otros.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, `${a.id} · ${a.nombre}`))) : null);
+    propios.length ? h("optgroup", { label: "Mis activos" }, propios.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, etiqueta(a)))) : null,
+    otros.length ? h("optgroup", { label: "ETF del universo (aún no tienes activos)" }, otros.map((a) => h("option", { value: a.id, selected: seleccion === a.id }, `${a.id} · ${a.nombre}`))) : null);
 
   const pintar = () => {
     const datos = seleccion === "cartera" ? { ...pred, nombre: "Tu cartera", esCartera: true } : intra.activos[seleccion];
@@ -39,7 +51,23 @@ export function tarjetaIntradia(ctx) {
     h("div", { class: "fila", style: { alignItems: "center", marginBottom: "8px" } }, selector,
       h("button", { class: "mini sec", onclick: () => ctx.recargarIntradia() }, "Actualizar")),
     contenedor,
-    h("p", { class: "suave pequeno" }, intra.nota, " ", h("a", { href: "#/como" }, "Cómo funciona")));
+    sinPrevision.length ? h("div", {}, h("p", { class: "suave pequeno" }, `Sin previsión todavía (se cuentan con su último precio): ${sinPrevision.join(", ")}.`), ayudaPrivada(S)) : null,
+    h("p", { class: "suave pequeno" }, `Actualizada: ${horaMadrid(intra.generado)}${intra.privadoGenerado ? ` · tus otros activos: ${horaMadrid(intra.privadoGenerado)}` : ""}. `, intra.nota, " ", h("a", { href: "#/como" }, "Cómo funciona")));
+}
+
+const horaMadrid = (iso) => (iso ? new Intl.DateTimeFormat("es-ES", { timeZone: "Europe/Madrid", day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) : "—");
+
+function ayudaPrivada(S) {
+  const usuario = leerConfig().owner || "tu usuario de GitHub";
+  const sinTicker = Object.keys(S.privado.precios?.fallos || {}).filter((k) => !k.startsWith("__")).map((k) => S.privado.cartera.activos[k]?.nombre || k);
+  return h("details", { class: "pequeno" }, h("summary", {}, "¿Cómo tener previsión de todos mis activos?"),
+    h("p", {}, "Los activos que no están en la lista pública de la app se calculan en tu repositorio privado, para que nadie vea qué tienes. Hay que hacerlo una sola vez:"),
+    h("ol", {},
+      h("li", {}, "Conecta tu repositorio privado en Ajustes (si aún usas el modo local, tus activos no salen de este móvil y no se pueden calcular)."),
+      h("li", {}, `En GitHub, en tu repositorio privado inversor-datos, crea el fichero .github/workflows/intradia.yml con el contenido de plantilla-datos/.github/workflows/intradia.yml de la app (cambiando TU_USUARIO por ${usuario}).`),
+      h("li", {}, "Pestaña Actions → “Precios de mi cartera” → Run workflow (busca el ticker de cada activo por su ISIN). Después, “Previsión intradía de mi cartera” → Run workflow."),
+      h("li", {}, "Vuelve aquí y pulsa Actualizar. A partir de ahí se recalcula sola cada hora.")),
+    sinTicker.length ? h("p", { class: "neg" }, `No se encontró el ticker de: ${sinTicker.join(", ")}. Escríbelo a mano en Cartera → toca el activo → Editar activo.`) : null);
 }
 
 function contenidoGrafica(intra, d) {
@@ -81,7 +109,6 @@ function contenidoGrafica(intra, d) {
     h("div", { class: "leyenda-intradia" }, "Línea oscura: precio real (Xetra) · naranja: estimado fuera de Xetra · gris: previsto a las 7:30 · azul: previsión actual · zona sombreada: banda del 80 %"),
     ...lineasTexto.map((t) => h("p", { class: "pequeno" }, t)),
     h("p", { class: "pequeno" }, h("strong", {}, "¿Acierta? "), textoCalidad(d.calidad))];
-  if (d.esCartera && d.sinPrediccion?.length) nodos.push(h("p", { class: "suave pequeno" }, `Sin previsión intradía (se cuentan con su último valor): ${d.sinPrediccion.join(", ")}.`));
   if (!d.esCartera && d.modelo) nodos.push(detalleModelo(d));
   if (d.esCartera) nodos.push(h("p", { class: "suave pequeno" }, "Elige un ETF en el desplegable para ver cómo se ha calculado su previsión."));
   return nodos;

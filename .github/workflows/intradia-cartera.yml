@@ -1,0 +1,66 @@
+name: Predicción intradía de mi cartera (reutilizable)
+
+# Workflow REUTILIZABLE. No se ejecuta aquí: lo llama el repositorio PRIVADO de datos
+# (plantilla en plantilla-datos/.github/workflows/intradia.yml). Corre en el contexto del repositorio privado,
+# así que tus activos nunca pasan por este repositorio público.
+#
+# Prevé tus activos que NO están en el universo público (los que sí están ya tienen previsión en la web).
+# El resultado va a la rama `intradia` del repositorio privado, que se reescribe en cada ejecución (un solo
+# commit) para no llenar de commits el historial de tus datos. Coste: ~1 minuto por ejecución.
+on:
+  workflow_call:
+    inputs:
+      repo_app:
+        description: "Repositorio público de la app (usuario/inversor-app)"
+        required: true
+        type: string
+      forzar:
+        description: "Ejecutar aunque sea fuera del horario de Trade Republic"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  prever:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Repositorio de datos (privado)
+        uses: actions/checkout@v4
+        with:
+          path: datos
+      - name: Lo aprendido hasta ahora (rama intradia)
+        working-directory: datos
+        run: |
+          mkdir -p ../salida
+          if git fetch --depth 1 origin intradia 2>/dev/null; then
+            git show FETCH_HEAD:intradia_estado.json > ../salida/intradia_estado.json 2>/dev/null || true
+          fi
+      - name: Código de la app (público)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo_app }}
+          path: app
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests PyYAML
+      - name: Calcular previsión
+        working-directory: app
+        env:
+          FORZAR: ${{ inputs.forzar && '1' || '0' }}
+        run: python -m pipeline.intradia_cartera --datos ../datos --salida ../salida
+      - name: Guardar en la rama intradia (un solo commit, se reescribe)
+        working-directory: salida
+        run: |
+          [ -f intradia.json ] || { echo "Nada que guardar"; exit 0; }
+          mkdir -p data && cp intradia.json data/intradia.json
+          git init -q -b intradia
+          git config user.name "intradia[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/intradia.json intradia_estado.json
+          git commit -q -m "Intradía de mi cartera $(TZ=Europe/Madrid date '+%F %H:%M')"
+          # Se sube desde la copia de "datos", que es la que tiene permiso de escritura
+          cd ../datos
+          git fetch -q ../salida intradia
+          git push -f origin FETCH_HEAD:refs/heads/intradia

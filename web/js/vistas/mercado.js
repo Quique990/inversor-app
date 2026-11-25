@@ -1,4 +1,4 @@
-import { claseSigno, eur, fecha, h, num, pct, tarjeta } from "../dom.js";
+import { claseSigno, eur, fecha, h, momento, num, pct, tarjeta } from "../dom.js";
 import { lineas } from "../graficas.js";
 import { NOMBRE_POSTURA } from "./hoy.js";
 
@@ -14,6 +14,7 @@ export function render({ S }) {
   const nodos = [];
   if (!m) return [tarjeta("Sin datos de mercado", h("p", {}, "Todavía no se ha ejecutado el análisis diario."))];
 
+  nodos.push(h("p", { class: "suave pequeno" }, `Último análisis de noticias y mercado: ${momento(m.generado)}.`));
   // Macro
   const met = m.decision.metricas;
   nodos.push(tarjeta("Termómetro macro",
@@ -67,6 +68,7 @@ export function render({ S }) {
 
   // Titulares
   nodos.push(tarjeta(`Titulares (${m.num_titulares})`,
+    h("p", { class: "suave pequeno" }, `Recogidos en el último análisis: ${momento(m.generado)}.`),
     h("ul", { class: "lista-titulares" }, (m.titulares || []).slice(0, 40).map((t) =>
       h("li", {}, h("a", { href: t.url, target: "_blank", rel: "noopener noreferrer" }, t.titulo), h("span", { class: "suave" }, ` · ${t.fuente}`))))));
 

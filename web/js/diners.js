@@ -12,6 +12,7 @@ export const BLOQUES = { corto: "Corto plazo", medio: "Medio plazo", largo: "Lar
 export const PAGADO_DESDE = { auto: "Automático (bloque del activo)", largo: "Largo plazo", medio: "Medio plazo", corto: "Corto plazo", fuera: "Fuera de Diners (no descontar)" };
 
 const r2 = (x) => Math.round(x * 100) / 100;
+const BLOQUE_VALIDO = new Set(["corto", "medio", "largo"]);
 export const incrementoSemana = (s) => (Number(s.paga) || 0) + (Number(s.extra) || 0) - (s.gastos || []).reduce((a, g) => a + (Number(g.importe) || 0), 0);
 
 /** Bloque del que sale (o al que vuelve) el dinero de una operación de la cartera, o null si no se descuenta. */
@@ -36,6 +37,8 @@ function movimientos(c, cartera = null) {
     ev.push(m);
   }
   for (const i of c.intereses || []) ev.push({ fecha: i.fecha || `${i.mes}-28`, largo: i.reparto?.largo || 0, medio: i.reparto?.medio || 0 });
+  // Gastos sueltos (botón "Gasto"): el dinero desaparece del bloque elegido
+  for (const g of c.gastos || []) if (BLOQUE_VALIDO.has(g.bloque)) ev.push({ fecha: g.fecha, [g.bloque]: -(Number(g.importe) || 0) });
   // Compras/ventas de la cartera de ETF posteriores a los saldos iniciales (las anteriores ya están en ellos)
   for (const op of cartera?.operaciones || []) {
     if (desde && op.fecha < desde) continue;
@@ -52,7 +55,9 @@ function movimientos(c, cartera = null) {
     ev.push({ fecha: inv.fecha, [b]: -(Number(inv.inicial) || 0) });
     if (inv.acabada && inv.fechaFin) ev.push({ fecha: inv.fechaFin, [b]: valorFinalManual(inv) });
   }
-  return ev.sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""));
+  // Saldos iniciales puestos a mano (asistente "Poner mi dinero a mano"): ya incluyen todo lo anterior a su fecha
+  const filtrados = c.saldosIniciales?.incluyeAnteriores && desde ? ev.filter((m) => (m.fecha || "") >= desde) : ev;
+  return filtrados.sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""));
 }
 
 export function saldos(c, hasta = null, cartera = null) {
@@ -156,4 +161,64 @@ export function posiblesDuplicados(c, cartera) {
     }
   }
   return res;
+}
+
+// ------------------------------------------------------------------ paga semanal y gastos
+const DIA_MS = 86400000;
+const aISO = (t) => new Date(t).toISOString().slice(0, 10);
+const desdeISO = (f) => new Date(f + "T12:00:00Z").getTime();
+
+/** Lunes de la semana de una fecha ISO. */
+export function lunesDe(fecha) {
+  const t = desdeISO(fecha);
+  const dia = (new Date(t).getUTCDay() + 6) % 7; // 0 = lunes
+  return aISO(t - dia * DIA_MS);
+}
+
+/** Semana registrada (si la hay) cuya fecha cae entre ese lunes y el domingo. */
+export function semanaDe(c, lunes) {
+  const fin = aISO(desdeISO(lunes) + 6 * DIA_MS);
+  return (c.semanas || []).find((s) => s.fecha >= lunes && s.fecha <= fin) || null;
+}
+
+/** Fecha desde la que cuentan los movimientos (solo si los saldos se pusieron a mano), o "". */
+const desdeSaldos = (c) => (c.saldosIniciales?.incluyeAnteriores && c.saldosIniciales.fecha) || "";
+
+/** Últimas `n` semanas (la actual primero) con si se cobró la paga. No incluye semanas ya contenidas en los saldos
+ * puestos a mano. */
+export function semanasPaga(c, hoy, n = 8) {
+  const actual = lunesDe(hoy);
+  const salida = [];
+  for (let k = 0; k < n; k++) {
+    const lunes = aISO(desdeISO(actual) - 7 * k * DIA_MS);
+    if (desdeSaldos(c) && aISO(desdeISO(lunes) + 6 * DIA_MS) < desdeSaldos(c)) break;
+    const s = semanaDe(c, lunes);
+    salida.push({ lunes, semana: s, cobrada: !!(s && Number(s.paga) > 0), importe: s ? Number(s.paga) || 0 : 0 });
+  }
+  return salida;
+}
+
+/** Marca (o desmarca) la paga de la semana que empieza en `lunes`. Devuelve la semana afectada (o null si se borró). */
+export function marcarPaga(c, lunes, cobrada, importe, nuevoId) {
+  c.semanas ||= [];
+  let s = semanaDe(c, lunes);
+  if (cobrada) {
+    // Si los saldos se pusieron a mano a mitad de semana, la paga se apunta ese día para que cuente
+    const fecha = desdeSaldos(c) > lunes ? desdeSaldos(c) : lunes;
+    if (!s) { s = { id: nuevoId(), fecha, paga: 0, extra: 0, gastos: [] }; c.semanas.push(s); }
+    s.paga = Number(importe) || 0;
+    return s;
+  }
+  if (!s) return null;
+  s.paga = 0;
+  if (!(Number(s.extra) > 0) && !(s.gastos || []).length) { c.semanas = c.semanas.filter((x) => x !== s); return null; }
+  return s;
+}
+
+/** Todos los gastos (los de cada semana, que salen del corto plazo, y los sueltos) del más nuevo al más viejo. */
+export function listaGastos(c) {
+  const l = [];
+  for (const s of c.semanas || []) for (const g of s.gastos || []) l.push({ fecha: s.fecha, importe: Number(g.importe) || 0, concepto: g.concepto || "", bloque: "corto", semana: s, gasto: g });
+  for (const g of c.gastos || []) l.push({ fecha: g.fecha, importe: Number(g.importe) || 0, concepto: g.concepto || "", bloque: g.bloque, suelto: g });
+  return l.sort((a, b) => b.fecha.localeCompare(a.fecha));
 }

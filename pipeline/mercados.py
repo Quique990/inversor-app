@@ -27,9 +27,15 @@ def yahoo_serie(ticker: str, rango: str = "5y", intervalo: str = "1d") -> tuple[
             res = r.json()["chart"]["result"][0]
             ts = res.get("timestamp") or []
             ind = res["indicators"]
-            valores = (ind.get("adjclose") or [{}])[0].get("adjclose") or ind["quote"][0]["close"]
+            cierres = ind["quote"][0].get("close") or []
+            ajustados = (ind.get("adjclose") or [{}])[0].get("adjclose") or cierres
             serie: Serie = []
-            for t, v in zip(ts, valores):
+            for i, t in enumerate(ts):
+                # Yahoo deja a veces sin "adjclose" la última sesión: entonces se usa su cierre (si no, el
+                # precio actual se quedaría un día atrás)
+                v = ajustados[i] if i < len(ajustados) else None
+                if v is None and i < len(cierres):
+                    v = cierres[i]
                 if v is None:
                     continue
                 f = datetime.fromtimestamp(t, tz=timezone.utc).date().isoformat()
