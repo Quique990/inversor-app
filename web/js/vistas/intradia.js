@@ -42,7 +42,7 @@ export function tarjetaIntradia(ctx) {
 
   const pintar = () => {
     const datos = seleccion === "cartera" ? { ...pred, nombre: "Tu cartera", esCartera: true } : intra.activos[seleccion];
-    contenedor.replaceChildren(...contenidoGrafica(intra, datos));
+    contenedor.replaceChildren(...contenidoGrafica(intra, datos).filter(Boolean)); // sin nulos (si no, sale "null")
   };
   pintar();
 

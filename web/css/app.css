@@ -85,6 +85,9 @@ canvas { max-width: 100%; }
 
 .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
 .modal[hidden] { display: none; }
+/* Sin sesión iniciada no se enseña nada de la app */
+.sin-sesion .pestanas, .sin-sesion .ayuda, .sin-sesion #estado-sync { display: none; }
+.tarjeta.acceso { max-width: 420px; margin: 12vh auto 0; }
 .modal .caja { background: var(--tarjeta); width: 100%; max-width: 620px; max-height: 92vh; overflow: auto; border-radius: 18px 18px 0 0;
   padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); }
 @media (min-width: 700px) { .modal { align-items: center; } .modal .caja { border-radius: 18px; } }

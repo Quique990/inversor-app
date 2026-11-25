@@ -1,6 +1,7 @@
 // Tests de la lógica de la web (Node >= 20):  node --test tests/web/
 import { fusionarIntradia, prediccionCartera, textoCalidad } from "../../web/js/intradia.js";
 import test from "node:test";
+import { comprobar, crearVerificador, validarContrasena } from "../../web/js/acceso.js";
 import assert from "node:assert/strict";
 import { calcularPosiciones, eficaciaSenales, esApalancado, fuentePrecio, gananciaPeriodo, historico, indicePrecios, precioEUR, restarDias, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
 import { avisoCorto, listaGastos, lunesDe, marcarPaga, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos, semanasPaga } from "../../web/js/diners.js";
@@ -313,4 +314,18 @@ test("Evolución por periodos: diario con los precios recientes y ganancia sin c
   const g = gananciaPeriodo(h);
   assert.ok(Math.abs(g.ganancia - 13) < 1e-9);
   assert.ok(Math.abs(g.pct - 13 / 203 * 100) < 1e-9);
+});
+
+test("Contraseña: el verificador comprueba sin guardar la contraseña", async () => {
+  const v = await crearVerificador("una-clave-larga", 1000); // pocas iteraciones para que el test sea rápido
+  assert.equal(v.algoritmo, "PBKDF2-SHA256");
+  assert.ok(!JSON.stringify(v).includes("una-clave-larga"));
+  assert.equal(await comprobar("una-clave-larga", v), true);
+  assert.equal(await comprobar("otra-clave-larga", v), false);
+  assert.equal(await comprobar("una-clave-larga", null), false);
+  const v2 = await crearVerificador("una-clave-larga", 1000);
+  assert.notEqual(v2.huella, v.huella);                       // sal distinta cada vez
+  assert.match(validarContrasena("corta"), /al menos 8/);
+  assert.match(validarContrasena("suficiente", "distinta1"), /no coinciden/);
+  assert.equal(validarContrasena("suficiente", "suficiente"), null);
 });

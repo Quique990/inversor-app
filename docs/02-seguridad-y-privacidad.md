@@ -13,9 +13,23 @@ cualquiera puede leer un periódico.
 ## La clave de GitHub
 - Es un **fine-grained personal access token** limitado a **un solo repositorio** (`inversor-datos`) con el permiso
   **Contents: Read and write**. Si alguien la robara, solo podría tocar ese repositorio.
-- Se guarda en el móvil (`localStorage`). Con PIN (recomendado) va **cifrada** con AES-GCM-256 y una clave
-  derivada del PIN con PBKDF2-SHA256 (310.000 iteraciones). Mientras la app está abierta, se guarda descifrada
-  en `sessionStorage`, que se borra al cerrar la pestaña.
+- Se guarda en el móvil (`localStorage`) **cifrada** con AES-GCM-256 y una clave derivada de la **contraseña de
+  la app** con PBKDF2-SHA256 (310.000 iteraciones). Mientras la app está abierta, se guarda descifrada en
+  `sessionStorage`, que se borra al cerrar la app.
+
+## Inicio de sesión (desde el 25-11-2026; sustituye al PIN)
+- Con el repositorio privado conectado, la app no enseña nada hasta poner la contraseña (`web/js/sesion.js`). No
+  hay botón para entrar sin ella. La sesión dura mientras la app está abierta; "Cerrar sesión" está en Ajustes.
+- La contraseña es la misma en todos los dispositivos. En el repositorio privado se guarda solo un **verificador**
+  en `data/acceso.json`: sal aleatoria + PBKDF2-SHA256 (310.000 iteraciones), `web/js/acceso.js`. La contraseña
+  no se guarda en ningún sitio.
+- Al entrar, la contraseña debe descifrar la clave de GitHub del dispositivo **y** coincidir con el verificador. Si
+  el dispositivo tenía el PIN antiguo o una contraseña ya cambiada, se pide la actual y se vuelve a cifrar la clave.
+  Sin conexión, basta con que descifre la clave del dispositivo.
+- Contraseña olvidada: borrar `data/acceso.json` en GitHub, "Volver a conectar este dispositivo" y crear otra.
+- Qué protege y qué no: protege el acceso a la app y a tus datos personales. Los datos públicos de mercado
+  (`web/data/*.json`) siguen siendo públicos por diseño: el repositorio de la app es público.
+- En modo local (sin GitHub) no hay inicio de sesión.
 - Al conectar, la web comprueba que el repositorio es **privado** y se niega a continuar si es público.
 - Pon caducidad a la clave y renuévala cuando caduque (Ajustes → Cambiar conexión).
 
@@ -29,7 +43,8 @@ cualquiera puede leer un periódico.
   resultado en el repositorio privado.
 
 ## Riesgos residuales (asumidos)
-- Si alguien tiene tu móvil desbloqueado con la app abierta, ve tus datos. Lo mismo pasa con la app del banco.
+- Si alguien tiene tu móvil desbloqueado con la app abierta (sesión iniciada), ve tus datos. Lo mismo pasa con la
+  app del banco. Cierra la sesión o la app para que vuelva a pedir la contraseña.
 - Yahoo Finance no es una API oficial y puede fallar o cambiar. En ese caso puedes introducir el precio a mano.
 - La IA puede equivocarse al resumir. Por diseño, no decide las recomendaciones.
 

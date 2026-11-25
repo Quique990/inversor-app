@@ -112,7 +112,7 @@ function tarjetaEvolucion(ctx) {
     botones.replaceChildren(...Object.entries(PERIODOS).map(([k, v]) =>
       h("button", { class: `mini ${k === periodo ? "" : "sec"}`, onclick: () => { periodo = k; pintar(); } }, v)));
     destruirEn(contenido);
-    contenido.replaceChildren(...graficaEvolucion(ctx, periodo));
+    contenido.replaceChildren(...graficaEvolucion(ctx, periodo).filter(Boolean)); // sin nulos (si no, sale "null")
   };
   pintar();
   return tarjeta("Evolución: valor vs dinero aportado", botones, contenido);

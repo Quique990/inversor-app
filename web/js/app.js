@@ -1,10 +1,11 @@
 // Arranque, estado global y navegación.
-import { abrirModal, cerrarModal, h, toast } from "./dom.js";
+import { h, toast } from "./dom.js";
 import * as store from "./store.js";
 import { calcularPosiciones, indicePrecios, resumenCartera } from "./finanzas.js";
 import { resumen as resumenDiners } from "./diners.js";
 import { recomendar, huecoDe } from "./reco.js";
 import { fusionarIntradia } from "./intradia.js";
+import { iniciarSesion } from "./sesion.js";
 import { destruirTodas } from "./graficas.js";
 
 const VISTAS = {
@@ -96,7 +97,7 @@ export async function mostrar() {
       mostrar();
     };
     const contenido = await modulo.render({ S, calc: calcular(), guardar, refrescar: mostrar, recargarIntradia });
-    vista.replaceChildren(...(Array.isArray(contenido) ? contenido : [contenido]));
+    vista.replaceChildren(...(Array.isArray(contenido) ? contenido : [contenido]).filter((n) => n !== null && n !== undefined && n !== false));
     window.scrollTo(0, 0);
   } catch (e) {
     console.error(e);
@@ -104,22 +105,6 @@ export async function mostrar() {
   } finally {
     renderizando = false;
   }
-}
-
-function pedirPin() {
-  return new Promise((resolver) => {
-    const pin = h("input", { type: "password", inputmode: "numeric", autocomplete: "current-password", placeholder: "PIN" });
-    const error = h("p", { class: "neg pequeno" });
-    const entrar = async () => {
-      try { await store.desbloquear(pin.value); cerrarModal(); resolver(true); }
-      catch { error.textContent = "PIN incorrecto."; pin.value = ""; }
-    };
-    pin.addEventListener("keydown", (e) => e.key === "Enter" && entrar());
-    abrirModal(h("h2", {}, "Desbloquear"), h("p", { class: "suave" }, "Tu clave de GitHub está cifrada en este dispositivo. Introduce tu PIN."),
-      pin, error, h("div", { class: "fila" }, h("button", { onclick: entrar }, "Entrar"),
-        h("button", { class: "sec", onclick: () => { cerrarModal(); resolver(false); } }, "Seguir sin datos privados")));
-    setTimeout(() => pin.focus(), 50);
-  });
 }
 
 async function iniciar() {
@@ -134,7 +119,7 @@ async function iniciar() {
     navigator.serviceWorker.register("sw.js").then((r) => r.update()).catch(() => {});
   }
   const publico = cargarPublico();
-  if (store.necesitaDesbloqueo()) await pedirPin();
+  if (!store.sesionAbierta()) await iniciarSesion();
   await Promise.all([publico, cargarPrivado(), cargarIntradiaPrivada()]);
   window.addEventListener("hashchange", mostrar);
   mostrar();

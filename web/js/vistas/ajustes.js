@@ -1,5 +1,7 @@
 import { abrirModal, campo, cerrarModal, descargar, h, hoyISO, parseNumero, tarjeta, toast } from "../dom.js";
 import * as store from "../store.js";
+import { comprobar, crearVerificador, LONGITUD_MINIMA, validarContrasena } from "../acceso.js";
+import { cambiarContrasena } from "../sesion.js";
 import { calcularPerfil, HUECOS, PERFILES, PREGUNTAS, ROL_A_HUECO } from "../perfil.js";
 
 export function render(ctx) {
@@ -13,11 +15,14 @@ export function render(ctx) {
   // Conexión
   nodos.push(tarjeta("Dónde se guardan tus datos",
     cfg.modo === "github"
-      ? h("p", {}, "Repositorio privado: ", h("strong", {}, `${cfg.owner}/${cfg.repo}`), cfg.tokenCifrado ? " · clave cifrada con PIN" : " · clave sin PIN")
+      ? h("p", {}, "Repositorio privado: ", h("strong", {}, `${cfg.owner}/${cfg.repo}`), " · entras con contraseña")
       : h("div", { class: "aviso" }, "Modo local: los datos solo están en este navegador. Conecta tu repositorio privado para tenerlos a salvo y en todos tus dispositivos."),
     S.errores.length ? h("div", { class: "aviso rojo" }, "Errores al cargar: " + S.errores.join(" · ")) : null,
     h("div", { class: "fila" }, h("button", { onclick: () => modalConexion(ctx) }, cfg.modo === "github" ? "Cambiar conexión" : "Conectar GitHub"),
-      cfg.modo === "github" ? h("button", { class: "sec", onclick: () => { store.usarModoLocal(); location.reload(); } }, "Pasar a modo local") : null)));
+      cfg.modo === "github" ? h("button", { class: "sec", onclick: modalCambiarContrasena }, "Cambiar contraseña") : null,
+      cfg.modo === "github" ? h("button", { class: "sec", onclick: () => { store.cerrarSesion(); location.reload(); } }, "Cerrar sesión") : null,
+      cfg.modo === "github" ? h("button", { class: "sec", onclick: () => { store.usarModoLocal(); location.reload(); } }, "Pasar a modo local") : null),
+    cfg.modo !== "github" ? h("p", { class: "suave pequeno" }, "En modo local no se pide contraseña. Al conectar tu repositorio privado la app te pedirá iniciar sesión cada vez que la abras.") : null));
 
   // Perfil
   nodos.push(tarjeta("Perfil de riesgo",
@@ -78,8 +83,8 @@ function modalConexion(ctx) {
   const owner = h("input", { value: cfg.owner || "", placeholder: "tu-usuario", autocapitalize: "none" });
   const repo = h("input", { value: cfg.repo || "inversor-datos", autocapitalize: "none" });
   const token = h("input", { type: "password", placeholder: "github_pat_…", autocomplete: "off" });
-  const pin = h("input", { type: "password", inputmode: "numeric", placeholder: "Opcional, recomendado" });
-  const pin2 = h("input", { type: "password", inputmode: "numeric", placeholder: "Repite el PIN" });
+  const clave = h("input", { type: "password", autocomplete: "current-password", placeholder: `Mínimo ${LONGITUD_MINIMA} caracteres` });
+  const clave2 = h("input", { type: "password", autocomplete: "new-password", placeholder: "Repítela" });
   const estado = h("p", { class: "pequeno" });
   abrirModal(h("h2", {}, "Conectar repositorio privado"),
     h("ol", { class: "pequeno" },
@@ -88,17 +93,25 @@ function modalConexion(ctx) {
       h("li", {}, "Permissions → Contents: Read and write. Nada más."),
       h("li", {}, "Caducidad: la máxima que te deje; cuando caduque, crea otra y pégala aquí.")),
     h("div", { class: "form2" }, campo("Usuario de GitHub", owner), campo("Repositorio de datos", repo)),
-    campo("Clave (fine-grained token)", token), h("div", { class: "form2" }, campo("PIN", pin), campo("Confirmar PIN", pin2)),
-    h("p", { class: "suave pequeno" }, "Con PIN, la clave se guarda cifrada (AES-256) y te la pedirá al abrir la app."), estado,
+    campo("Clave (fine-grained token)", token), h("div", { class: "form2" }, campo("Contraseña de la app", clave), campo("Repite la contraseña", clave2)),
+    h("p", { class: "suave pequeno" }, "Si ya tienes contraseña (de otro dispositivo), escribe la misma. Si no, se crea ahora. En tu repositorio privado solo se guarda su huella cifrada, y en este dispositivo la clave de GitHub queda cifrada (AES-256) con ella."), estado,
     h("div", { class: "fila" }, h("button", { onclick: async () => {
-      if (pin.value !== pin2.value) { estado.textContent = "Los PIN no coinciden."; return; }
-      if (pin.value && pin.value.length < 4) { estado.textContent = "El PIN debe tener al menos 4 cifras."; return; }
+      const fallo = validarContrasena(clave.value, clave2.value);
+      if (fallo) { estado.textContent = fallo; return; }
       if (!owner.value || !repo.value || !token.value) { estado.textContent = "Rellena usuario, repositorio y clave."; return; }
       estado.textContent = "Probando…";
-      await store.configurarGithub({ owner: owner.value, repo: repo.value, token: token.value, pin: pin.value || null });
+      await store.configurarGithub({ owner: owner.value, repo: repo.value, token: token.value });
       try {
         const r = await store.probarConexion();
         if (!r.privado) { estado.textContent = `⚠ ${r.nombre} es PÚBLICO. Tus datos serían visibles: hazlo privado antes de seguir.`; return; }
+        // La contraseña es la misma en todos los dispositivos: si ya existe en el repositorio, tiene que coincidir
+        const verificador = await store.leer("acceso", { forzar: true });
+        if (verificador && !(await comprobar(clave.value, verificador))) {
+          estado.textContent = "Esa no es la contraseña guardada en tu repositorio (la que usas en tus otros dispositivos).";
+          return;
+        }
+        if (!verificador) await store.guardar("acceso", await crearVerificador(clave.value), "Contraseña de acceso a la app (solo su huella, no la contraseña)");
+        await store.abrirSesion(clave.value);
         toast(`Conectado a ${r.nombre}`);
         // Si el repositorio está vacío, sube los datos que tuvieras en modo local
         for (const n of ["perfil", "cartera", "contabilidad"]) {
@@ -110,6 +123,24 @@ function modalConexion(ctx) {
         cerrarModal(); location.reload();
       } catch (e) { estado.textContent = e.message; }
     } }, "Conectar"), h("button", { class: "sec", onclick: cerrarModal }, "Cancelar")));
+}
+
+function modalCambiarContrasena() {
+  const actual = h("input", { type: "password", autocomplete: "current-password" });
+  const nueva = h("input", { type: "password", autocomplete: "new-password", placeholder: `Mínimo ${LONGITUD_MINIMA} caracteres` });
+  const nueva2 = h("input", { type: "password", autocomplete: "new-password" });
+  const estado = h("p", { class: "neg pequeno" });
+  abrirModal(h("h2", {}, "Cambiar contraseña"),
+    campo("Contraseña actual", actual), campo("Contraseña nueva", nueva), campo("Repite la nueva", nueva2),
+    h("p", { class: "suave pequeno" }, "Sirve para todos tus dispositivos: en los demás te pedirá la nueva la próxima vez que entres."), estado,
+    h("div", { class: "fila" }, h("button", { onclick: async () => {
+      estado.textContent = "Guardando…";
+      try {
+        const fallo = await cambiarContrasena(actual.value, nueva.value, nueva2.value);
+        if (fallo) { estado.textContent = fallo; return; }
+        cerrarModal(); toast("Contraseña cambiada");
+      } catch (e) { estado.textContent = "No se pudo guardar: " + e.message; }
+    } }, "Cambiar"), h("button", { class: "sec", onclick: cerrarModal }, "Cancelar")));
 }
 
 function modalTest(ctx) {

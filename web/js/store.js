@@ -13,6 +13,7 @@ export const FICHEROS = {
   contabilidad: "data/contabilidad.json",
   precios: "data/precios.json",
   intradia: "data/intradia.json", // previsión intradía de tus activos fuera del universo (workflow privado)
+  acceso: "data/acceso.json",     // verificador de la contraseña (nunca la contraseña), ver acceso.js
 };
 // Ficheros que viven en otra rama del repositorio privado (la rama "intradia" se reescribe cada hora)
 const RAMA_FICHERO = { intradia: "intradia" };
@@ -28,6 +29,7 @@ export const POR_DEFECTO = {
     semanas: [], transferencias: [], intereses: [], inversionesManuales: [], notas: [], gastos: [] }),
   precios: () => ({ series: {} }),
   intradia: () => null,
+  acceso: () => null,
 };
 
 // ------------------------------------------------------------------ utilidades base64 UTF-8
@@ -52,24 +54,44 @@ let tokenSesion = sessionStorage.getItem("inversor.token") || null;
 const memoria = {};   // nombre -> datos
 const shas = {};      // nombre -> sha del fichero en GitHub
 
-export function necesitaDesbloqueo() {
-  const c = leerConfig();
-  return c.modo === "github" && c.tokenCifrado && !tokenSesion;
-}
+// ------------------------------------------------------------------ sesión
+// Con GitHub conectado hay que iniciar sesión cada vez que se abre la app (la sesión dura mientras la app está
+// abierta: sessionStorage). La clave de GitHub se guarda en el dispositivo cifrada con la contraseña.
+export const sesionAbierta = () => leerConfig().modo !== "github" || sessionStorage.getItem("inversor.sesion") === "1";
 
-export async function desbloquear(pin) {
+/** Descifra la clave del dispositivo con la contraseña (o el PIN antiguo). Lanza si no es correcta. */
+export async function desbloquear(contrasena) {
   const c = leerConfig();
-  tokenSesion = await descifrar(c.tokenCifrado, pin); // lanza si el PIN es incorrecto
+  if (c.tokenCifrado) tokenSesion = await descifrar(c.tokenCifrado, contrasena);
+  else if (c.tokenPlano) tokenSesion = c.tokenPlano;
+  else throw new Error("Este dispositivo no tiene clave de GitHub");
   sessionStorage.setItem("inversor.token", tokenSesion);
 }
 
-export async function configurarGithub({ owner, repo, rama = "main", token, pin }) {
+/** Tras comprobar la contraseña: deja la clave cifrada con ella (y quita la copia sin cifrar) y abre la sesión. */
+export async function abrirSesion(contrasena) {
+  const c = leerConfig();
+  if (!tokenSesion) throw new Error("Primero hay que desbloquear la clave");
+  c.tokenCifrado = await cifrar(tokenSesion, contrasena);
+  delete c.tokenPlano;
+  escribirConfig(c);
+  sessionStorage.setItem("inversor.sesion", "1");
+}
+
+export function cerrarSesion() {
+  tokenSesion = null;
+  sessionStorage.removeItem("inversor.token");
+  sessionStorage.removeItem("inversor.sesion");
+  for (const k of Object.keys(memoria)) delete memoria[k];
+}
+
+/** Guarda la conexión con la clave aún sin cifrar en memoria; abrirSesion() la cifra con la contraseña. */
+export async function configurarGithub({ owner, repo, rama = "main", token }) {
   const c = { modo: "github", owner: owner.trim(), repo: repo.trim(), rama: rama.trim() || "main" };
-  if (pin) c.tokenCifrado = await cifrar(token.trim(), pin);
-  else c.tokenPlano = token.trim();
   escribirConfig(c);
   tokenSesion = token.trim();
   sessionStorage.setItem("inversor.token", tokenSesion);
+  sessionStorage.removeItem("inversor.sesion");
   for (const k of Object.keys(memoria)) delete memoria[k];
 }
 
