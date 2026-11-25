@@ -76,7 +76,7 @@ def evaluar(eventos: list[dict], series: dict[str, Serie], info: dict, reglas: d
             est, texto = estado(s, p, umbral, idea.get("tarde_1m_pct", lim.get("tarde_1m_pct", 15)))
         i = info.get(idea["id"]) or {}
         salida.append({"id": idea["id"], "tema": idea["tema"], "clase": idea["clase"], "nombre": i.get("nombre"), "isin": i.get("isin"),
-                       "yahoo": i.get("yahoo"), "ter": i.get("ter"), "riesgo": idea.get("riesgo"), "senal": s, "motivos": motivos[:4],
+                       "yahoo": i.get("yahoo"), "moneda": i.get("moneda") or "EUR", "ter": i.get("ter"), "riesgo": idea.get("riesgo"), "senal": s, "motivos": motivos[:4],
                        "precio": p, "estado": est, "explicacion": texto})
     orden = {"activa": 0, "vigilar": 1, "tarde": 2, "sin_senal": 3, "en_contra": 4, "sin_datos": 5}
     salida.sort(key=lambda x: (orden.get(x["estado"], 9), -x["senal"]))

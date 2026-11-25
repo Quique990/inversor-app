@@ -71,7 +71,7 @@ satelites:
   - id: OOEA
     nombre: WisdomTree Brent Crude Oil (ETC)
     isin: JE00B78CGV99
-    yahoo: OOEA.DE
+    yahoo: BRNT.L          # Yahoo no tiene la línea de Xetra (OOEA); BRNT.L cotiza en dólares (BRNG.L, en libras)
     rol: satelite
     ter: 0.49
   - id: DFEN

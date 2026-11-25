@@ -128,7 +128,7 @@ function tarjetaIdeas(ctx) {
       h("p", { class: "pequeno" }, i.explicacion),
       i.motivos?.length ? h("p", { class: "pequeno" }, "Por qué: ", i.motivos.map((m) => `${m.evento} (intensidad ${m.intensidad}/3, efecto ${signo(m.impacto)})`).join(" · "),
         ` → señal ${signo(i.senal)} (hace falta ${lim.umbral_senal ?? 3}).`) : h("p", { class: "pequeno suave" }, `Señal ${signo(i.senal)}.`),
-      p.ultimo ? h("p", { class: "pequeno" }, `Precio ${num(p.ultimo, 2)} € · 1 mes: `, h("span", { class: claseSigno(p.var_1m) }, pct(p.var_1m)),
+      p.ultimo ? h("p", { class: "pequeno" }, `Precio ${num(p.ultimo, 2)} ${!i.moneda || i.moneda === "EUR" ? "€" : i.moneda === "USD" ? "$" : i.moneda} · 1 mes: `, h("span", { class: claseSigno(p.var_1m) }, pct(p.var_1m)),
         ` · 3 meses: `, h("span", { class: claseSigno(p.var_3m) }, pct(p.var_3m)), ` · ${p.sobre_mm50 === false ? "por debajo" : p.sobre_mm50 ? "por encima" : "—"} de su media de 50 sesiones`) : null,
       i.estado === "activa" ? h("div", { class: "aviso verde pequeno" },
         max.maximo >= 25 ? `Como mucho ${eur(max.maximo)} (${lim.max_idea_pct ?? 5} % de tu cartera${max.tienes ? `, descontando los ${eur(max.tienes)} que ya tienes` : ""}). `

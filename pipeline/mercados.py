@@ -116,9 +116,13 @@ def recoger_mercados(universo: dict, cfg_fuentes: dict, salud: Salud) -> dict:
                     raise
                 # Satélites: si el ticker no existe en Yahoo, se busca por ISIN (son productos públicos, nada personal)
                 from .tickers import buscar_por_isin
-                for alternativo in buscar_por_isin(item["isin"])[:3]:
+                candidatos = buscar_por_isin(item["isin"])[:4]
+                # Mejor en euros o dólares (la web los pasa a euros); las líneas en libras/peniques, al final
+                for alternativo in sorted(candidatos, key=lambda t: t.endswith(".L")):
                     try:
                         s, i = yahoo_serie(alternativo, rango=rango)
+                        if i.get("moneda") not in ("EUR", "USD") and alternativo != candidatos[-1]:
+                            continue
                         salud.mal(f"yahoo:{item['yahoo']}", f"no existe; usado {alternativo} (corrígelo en universo_etf.yaml)")
                         item = {**item, "yahoo": alternativo}
                         break
