@@ -65,7 +65,9 @@ def ejecutar(dir_datos: Path, buscar=buscar_por_isin, serie=yahoo_serie) -> dict
                 semanal = ind.muestrear_semanal(s, max_puntos=700)
                 if semanal and semanal[-1][0] != s[-1][0]:
                     semanal.append(s[-1])
-                datos = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal,
+                # `puntos` es semanal (10 años); `diario` guarda los últimos ~6 meses día a día para las vistas
+                # de semana y mes de la gráfica de evolución
+                datos = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal, "diario": s[-130:],
                          "ultimo": s[-1], "var_1d": ind.variacion(s, 1)}
                 if info.get("moneda") not in MONEDAS_OK and len(lista) > 1:
                     reserva = reserva or datos

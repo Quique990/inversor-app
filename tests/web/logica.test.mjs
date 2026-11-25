@@ -2,7 +2,7 @@
 import { fusionarIntradia, prediccionCartera, textoCalidad } from "../../web/js/intradia.js";
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calcularPosiciones, eficaciaSenales, esApalancado, fuentePrecio, historico, indicePrecios, precioEUR, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
+import { calcularPosiciones, eficaciaSenales, esApalancado, fuentePrecio, gananciaPeriodo, historico, indicePrecios, precioEUR, restarDias, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
 import { avisoCorto, listaGastos, lunesDe, marcarPaga, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos, semanasPaga } from "../../web/js/diners.js";
 import { calcularPerfil } from "../../web/js/perfil.js";
 import { clasificarNombre, huecoDe, recomendar } from "../../web/js/reco.js";
@@ -296,4 +296,21 @@ test("Diners: los saldos puestos a mano ya incluyen lo anterior a su fecha", () 
   // Sin la marca (p. ej. importado del Excel), las semanas se suman todas como antes
   delete c.saldosIniciales.incluyeAnteriores;
   assert.equal(saldos(c, null, cartera).corto, 140);
+});
+
+test("Evolución por periodos: diario con los precios recientes y ganancia sin contar aportaciones", () => {
+  const precios = { series: { XS0000000001: { moneda: "EUR", puntos: [["2026-10-02", 100], ["2026-10-09", 104]],
+    diario: [["2026-10-12", 105], ["2026-10-13", 103], ["2026-10-14", 108]], ultimo: ["2026-10-14", 108] } } };
+  const idx = indicePrecios(precios, null, {});
+  assert.equal(precioEUR(idx, "XS0000000001", "2026-10-13"), 103);          // el diario completa al semanal
+  const ops = [{ fecha: "2026-10-01", tipo: "compra", isin: "XS0000000001", participaciones: 1, importe: 100, comision: 0 },
+    { fecha: "2026-10-13", tipo: "compra", isin: "XS0000000001", participaciones: 1, importe: 103, comision: 0 }];
+  const h = historico(ops, idx, "2026-10-14", { desde: restarDias("2026-10-14", 7), pasoDias: 1 });
+  assert.equal(h[0].fecha, "2026-10-07");
+  assert.ok(!h.some((p) => ["2026-10-10", "2026-10-11"].includes(p.fecha)));   // sin fin de semana
+  assert.deepEqual(h.slice(-3).map((p) => [p.fecha, p.valor, p.aportado]), [["2026-10-12", 105, 100], ["2026-10-13", 206, 203], ["2026-10-14", 216, 203]]);
+  // Del 7 (valor 100) al 14 (216) con 103 € metidos: ganancia 13 €
+  const g = gananciaPeriodo(h);
+  assert.ok(Math.abs(g.ganancia - 13) < 1e-9);
+  assert.ok(Math.abs(g.pct - 13 / 203 * 100) < 1e-9);
 });

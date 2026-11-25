@@ -58,6 +58,8 @@ arrastra su último valor y la hora queda como "estimado" (antes se perdía la h
 pública se habían actualizado en momentos distintos). La gráfica tiene zoom horizontal (chartjs-plugin-zoom 2.2.0 +
 hammerjs 2.0.8, vendorizados con licencia MIT) y el eje vertical se ajusta al tramo visible. Si el último cálculo
 tiene más de 90 min en horario, la tarjeta explica que GitHub ha retrasado o saltado la ejecución.
+La gráfica "Evolución" de Cartera usa `actual` de la cartera para su vista **Día**; las vistas Semana y Mes usan
+precios diarios (`precios.json → series[isin].diario`, ~6 meses) y Año, los semanales.
 
 ## Activos propios fuera del universo (repositorio privado)
 - `pipeline/intradia_cartera.py` elige los activos de `data/cartera.json` con participaciones vivas que **no** están

@@ -51,6 +51,7 @@ export function render() {
       L("Cada compra es un \"lote\" con su fecha y su precio. Ves cuánto ganas o pierdes en cada una según el momento en que compraste.",
         "Las ventas se descuentan de los lotes más antiguos primero (FIFO), como hace Hacienda.",
         "TIR anual: la rentabilidad anual real teniendo en cuenta cuándo metiste cada euro.",
+        "Evolución: compara lo que vale tu cartera con el dinero que has metido. Eliges el periodo (día hora a hora, semana, mes o año) y ves cuánto has ganado o perdido en él sin contar lo que has aportado.",
         "\"¿Funcionan las señales?\": compara el precio de tus compras extra con el de tus compras del plan de los 90 días alrededor.",
         "Avisa si tienes productos apalancados (x2, x3): pierden valor con el tiempo aunque el índice no baje.",
         "Tipo de cada activo: si no está en la lista de la app, se deduce del nombre (\"Gold\" = oro; \"Bond\", \"iBonds\" o \"Dez. 2030\" = renta fija; S&P 500, IBEX, MSCI… = renta variable; el resto, acción suelta). Puedes cambiarlo tocando el activo.",

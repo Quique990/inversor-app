@@ -1,7 +1,8 @@
 import { abrirModal, campo, cerrarModal, claseSigno, eur, fecha, h, hoyISO, num, parseNumero, pct, tarjeta, toast, uid } from "../dom.js";
-import { eficaciaSenales, esApalancado, fuentePrecio, historico, tirCartera } from "../finanzas.js";
+import { eficaciaSenales, esApalancado, fuentePrecio, gananciaPeriodo, historico, restarDias, tirCartera } from "../finanzas.js";
+import { prediccionCartera } from "../intradia.js";
 import { clasificarNombre } from "../reco.js";
-import { donut, lineas } from "../graficas.js";
+import { destruirEn, donut, lineas } from "../graficas.js";
 import { HUECOS, ROL_A_HUECO } from "../perfil.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../importar_tr.js";
 import { PAGADO_DESDE } from "../diners.js";
@@ -36,19 +37,8 @@ export function render(ctx) {
 
   nodos.push(tarjetaIntradia(ctx));
 
-  // Evolución
-  const hist = historico(cartera.operaciones, calc.idx);
-  if (hist.length > 1) {
-    const extras = cartera.operaciones.filter((o) => o.origen === "extra" && o.tipo === "compra");
-    const etiquetas = hist.map((p) => p.fecha);
-    nodos.push(tarjeta("Evolución: valor vs dinero aportado",
-      lineas(etiquetas, [
-        { nombre: "Valor", valores: hist.map((p) => Math.round(p.valor * 100) / 100), relleno: "rgba(30,142,90,.08)" },
-        { nombre: "Aportado", valores: hist.map((p) => Math.round(p.aportado * 100) / 100), discontinua: true },
-      ], { formatoY: (v) => `${v} €`,
-        puntos: extras.length ? { nombre: "Compras extra", datos: extras.map((o) => ({ x: o.fecha, y: hist.find((p) => p.fecha >= o.fecha)?.valor ?? null })) } : null }),
-      hist.some((p) => !p.completo) ? h("p", { class: "suave pequeno" }, "Algunos tramos no tienen precio histórico de todos los activos; la línea de valor puede quedar por debajo de la real.") : null));
-  }
+  // Evolución (por periodos: día, semana, mes, año)
+  nodos.push(tarjetaEvolucion(ctx));
 
   // Asignación
   const r = calc.reco;
@@ -109,6 +99,63 @@ function resumenPrecio(ctx, p) {
     kpi("Rentabilidad", pct(p.latentePct), claseSigno(p.latentePct)),
     h("p", { class: "suave pequeno", style: { gridColumn: "1 / -1" } }, `Precio actual: ${origen}${tickerAuto ? ` · ticker ${tickerAuto.ticker}${tickerAuto.origen === "automatico" ? " (encontrado por ISIN)" : ""}` : ""}. `,
       "El precio medio incluye comisiones. Trade Republic usa su precio en directo, así que puede haber una pequeña diferencia."));
+}
+
+// ------------------------------------------------------------------ evolución por periodos
+const PERIODOS = { dia: "Día", semana: "Semana", mes: "Mes", ano: "Año" };
+let periodo = "mes"; // se recuerda mientras la app está abierta
+
+function tarjetaEvolucion(ctx) {
+  const contenido = h("div");
+  const botones = h("div", { class: "fila segmentos" });
+  const pintar = () => {
+    botones.replaceChildren(...Object.entries(PERIODOS).map(([k, v]) =>
+      h("button", { class: `mini ${k === periodo ? "" : "sec"}`, onclick: () => { periodo = k; pintar(); } }, v)));
+    destruirEn(contenido);
+    contenido.replaceChildren(...graficaEvolucion(ctx, periodo));
+  };
+  pintar();
+  return tarjeta("Evolución: valor vs dinero aportado", botones, contenido);
+}
+
+function graficaEvolucion(ctx, clave) {
+  const { S, calc } = ctx;
+  const ops = S.privado.cartera.operaciones;
+  const hoy = new Date().toISOString().slice(0, 10);
+  const redondo = (v) => Math.round(v * 100) / 100;
+  let etiquetas, valores, aportado, puntos, nota = null;
+  if (clave === "dia") {
+    // Hora a hora con la previsión intradía (lo que lleva hoy la cartera)
+    const pred = calc.intradia ? prediccionCartera(calc.intradia, calc.pos) : null;
+    if (!pred?.actual?.length) return [h("p", { class: "suave" }, "Todavía no hay datos de hoy hora a hora (se calculan los días laborables de 7:30 a 23:00).")];
+    const ap = historico(ops, calc.idx, hoy).at(-1)?.aportado ?? 0;
+    etiquetas = pred.actual.map((x) => x.hora);
+    valores = pred.actual.map((x) => redondo(x.valor));
+    aportado = etiquetas.map(() => redondo(ap));
+    puntos = pred.actual.map((x) => ({ valor: x.valor, aportado: ap }));
+    if (pred.fecha !== hoy) nota = `Datos del ${fecha(pred.fecha)} (hoy aún no hay mercado o no se ha calculado).`;
+    else if (pred.actual.some((x) => x.tipo !== "real")) nota = "Las horas fuera del horario de bolsa de alguno de tus activos son estimadas.";
+  } else {
+    const dias = { semana: 7, mes: 31, ano: 365 }[clave];
+    const hist = historico(ops, calc.idx, hoy, { desde: restarDias(hoy, dias), pasoDias: clave === "ano" ? 7 : 1 });
+    if (hist.length < 2) return [h("p", { class: "suave" }, "Aún no hay datos suficientes para este periodo.")];
+    etiquetas = hist.map((p) => p.fecha.slice(5).split("-").reverse().join("/"));
+    valores = hist.map((p) => redondo(p.valor));
+    aportado = hist.map((p) => redondo(p.aportado));
+    puntos = hist;
+    if (hist.some((p) => !p.completo)) nota = "Algunos días no tienen precio de todos los activos; la línea de valor puede quedar por debajo de la real.";
+  }
+  const g = gananciaPeriodo(puntos);
+  const textoPeriodo = { dia: "Hoy", semana: "En la última semana", mes: "En el último mes", ano: "En el último año" }[clave];
+  return [
+    g ? h("p", {}, `${textoPeriodo}: `, h("strong", { class: claseSigno(g.ganancia) }, `${g.ganancia >= 0 ? "+" : ""}${eur(g.ganancia)}`),
+      g.pct === null ? "" : ` (${pct(g.pct)})`, h("span", { class: "suave pequeno" }, " sin contar el dinero que has metido o sacado")) : null,
+    lineas(etiquetas, [
+      { nombre: "Valor", valores, relleno: "rgba(30,142,90,.08)" },
+      { nombre: "Aportado", valores: aportado, discontinua: true },
+    ], { formatoY: (v) => `${num(v, 0)} €`, zoom: {} }),
+    nota ? h("p", { class: "suave pequeno" }, nota) : null,
+  ];
 }
 
 function kpi(etiqueta, valor, clase = "") { return h("div", { class: "kpi" }, h("div", { class: "eti" }, etiqueta), h("div", { class: `val ${clase}` }, valor)); }

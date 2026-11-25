@@ -7,6 +7,11 @@ export const COLORES = () => [css("--primario"), css("--verde"), css("--ambar"),
 
 export function destruirTodas() { for (const g of activas) g.destroy(); activas.clear(); }
 
+/** Destruye las gráficas que haya dentro de un nodo (al redibujar solo una parte de la vista). */
+export function destruirEn(nodo) {
+  for (const g of [...activas]) if (nodo.contains(g.canvas)) { g.destroy(); activas.delete(g); }
+}
+
 function base() {
   return {
     responsive: true, maintainAspectRatio: false, animation: false,

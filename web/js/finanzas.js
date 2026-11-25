@@ -17,7 +17,7 @@ export function indicePrecios(precios, universo, activos = {}, intradia = null) 
   }
   for (const [clave, s] of Object.entries(precios?.series || {})) {
     if (clave.startsWith("__")) continue;
-    idx[clave] = { puntos: s.puntos, ultimo: s.ultimo || s.puntos.at(-1), moneda: s.moneda || "EUR" };
+    idx[clave] = { puntos: unirPuntos(s.puntos, s.diario), ultimo: s.ultimo || s.puntos.at(-1), moneda: s.moneda || "EUR" };
   }
   for (const [isin, a] of Object.entries(activos)) {
     const m = a.precioManual;
@@ -45,6 +45,14 @@ export function fuentePrecio(idx, isin) {
   if (!p) return null;
   if (p.intradia) return { fecha: p.intradia.fecha, hora: p.intradia.hora, tipo: p.intradia.tipo === "real" ? "real" : "estimado" };
   return { fecha: p.ultimo?.[0], hora: null, tipo: p.manual ? "manual" : "cierre" };
+}
+
+/** Une la serie semanal con los precios diarios recientes (sin fechas repetidas, ordenado). */
+function unirPuntos(semanal = [], diario = []) {
+  if (!diario?.length) return semanal;
+  const m = new Map(semanal);
+  for (const [f, v] of diario) m.set(f, v);
+  return [...m].sort((a, b) => a[0].localeCompare(b[0]));
 }
 
 function valorEn(puntos, fecha) {
@@ -166,19 +174,33 @@ export function tirCartera(operaciones, valorActual, hoy = new Date().toISOStrin
 }
 
 // ---------------------------------------------------------------- histórico para la gráfica
-export function historico(operaciones, idx, hoy = new Date().toISOString().slice(0, 10)) {
+/** Fecha ISO `dias` días antes de `hoy`. */
+export const restarDias = (hoy, dias) => new Date(t(hoy) - dias * DIA).toISOString().slice(0, 10);
+
+/**
+ * Valor de la cartera y dinero aportado en el tiempo.
+ * @param desde  primera fecha que se devuelve (null = desde la primera operación). El aportado se acumula igual desde el principio.
+ * @param pasoDias  1 = un punto por día laborable; 7 = semanal.
+ */
+export function historico(operaciones, idx, hoy = new Date().toISOString().slice(0, 10), { desde = null, pasoDias = 7 } = {}) {
   if (!operaciones.length) return [];
   const ops = [...operaciones].sort((a, b) => a.fecha.localeCompare(b.fecha));
-  const inicio = ops[0].fecha;
-  // Fechas: semanales desde la primera operación + cada fecha de operación + hoy
-  const fechas = new Set(ops.map((o) => o.fecha));
-  for (let d = t(inicio); d <= t(hoy); d += 7 * DIA) fechas.add(new Date(d).toISOString().slice(0, 10));
+  const inicio = desde && desde > ops[0].fecha ? desde : ops[0].fecha;
+  // Fechas: cada `pasoDias` desde el inicio + cada fecha de operación + hoy (sin fines de semana si es diario)
+  const fechas = new Set(ops.map((o) => o.fecha).filter((f) => f >= inicio));
+  for (let d = t(inicio); d <= t(hoy); d += pasoDias * DIA) {
+    const dia = new Date(d).getUTCDay();
+    if (pasoDias === 1 && (dia === 0 || dia === 6)) continue;
+    fechas.add(new Date(d).toISOString().slice(0, 10));
+  }
+  fechas.add(inicio);
   fechas.add(hoy);
   const orden = [...fechas].sort();
   const participaciones = {};
   let aportado = 0, i = 0;
   const salida = [];
   for (const f of orden) {
+    if (f > hoy) continue;
     while (i < ops.length && ops[i].fecha <= f) {
       const o = ops[i++];
       const n = Number(o.participaciones || 0);
@@ -195,6 +217,15 @@ export function historico(operaciones, idx, hoy = new Date().toISOString().slice
     salida.push({ fecha: f, valor, aportado, completo });
   }
   return salida;
+}
+
+/** Ganancia en un periodo: lo que ha cambiado el valor menos lo que has metido (o sacado) en ese tiempo. */
+export function gananciaPeriodo(puntos) {
+  if (!puntos || puntos.length < 2) return null;
+  const a = puntos[0], b = puntos.at(-1);
+  const ganancia = (b.valor - a.valor) - (b.aportado - a.aportado);
+  const base = a.valor + Math.max(0, b.aportado - a.aportado);
+  return { ganancia, pct: base > 0 ? (ganancia / base) * 100 : null };
 }
 
 // ---------------------------------------------------------------- ¿sirven las señales?

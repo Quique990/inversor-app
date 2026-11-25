@@ -71,6 +71,7 @@ def test_precios_resuelve_ticker_por_isin_y_lo_recuerda(tmp_path, monkeypatch):
     assert r["tickers"]["XS0000000001"] == {"ticker": "BUENO.PA", "moneda": "EUR", "origen": "automatico"}
     assert r["tickers"]["XS0000000002"]["origen"] == "manual"
     assert busquedas == ["XS0000000001"]               # el que tiene ticker manual no se busca
+    assert len(r["series"]["XS0000000001"]["diario"]) == 30   # precios diarios recientes para la gráfica
     precios_cartera.ejecutar(datos, buscar=buscar, serie=serie)
     assert busquedas == ["XS0000000001"]               # la segunda vez se recuerda: no se vuelve a buscar
 
