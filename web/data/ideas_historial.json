@@ -1,0 +1,21 @@
+{
+ "referencia": "VWCE",
+ "tramos": [
+  {
+   "id": "EUNH",
+   "tema": "Bonos de gobiernos del euro (refugio)",
+   "desde": "2026-11-25",
+   "precio_desde": 106.5,
+   "ref_desde": 161.05999755859375,
+   "senal_desde": 6,
+   "resultado_pct": 0.0,
+   "referencia_pct": 0.0
+  }
+ ],
+ "resumen": {
+  "cerrados": 0,
+  "abiertos": 1,
+  "ganan_a_referencia": 0,
+  "ventaja_media_pct": null
+ }
+}
