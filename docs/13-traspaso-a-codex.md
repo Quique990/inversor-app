@@ -51,8 +51,8 @@
 - La tarjeta intradía solo enseña los activos del usuario.
 - Diners: asistente "Poner mi dinero a mano", tarjeta **Paga** (check por semana) y **+ Gasto** (con bloque).
 - Hoy y Mercado muestran fecha y hora del último análisis de noticias (`mercado.generado`), con aviso si > 30 h.
-- Inicio de sesión obligatorio con contraseña (sustituye al PIN): verificador PBKDF2 en el privado
-  (`data/acceso.json`), ver docs/02. Evolución de la cartera por periodos (día, semana, mes, año) y zoom en gráficas.
+- Entrada obligatoria con PIN de 4 cifras (lo eligió el usuario frente a una contraseña): verificador PBKDF2 en
+  el privado (`data/acceso.json`), ver docs/02. Evolución de la cartera por periodos (día, semana, mes, año) y zoom en gráficas.
 
 ### Funciona pero sin probar con datos reales del usuario
 - Conexión al repositorio privado (token de grano fino + PIN). El usuario **todavía no** ha conectado el token,

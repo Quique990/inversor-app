@@ -17,21 +17,25 @@ cualquiera puede leer un periódico.
   la app** con PBKDF2-SHA256 (310.000 iteraciones). Mientras la app está abierta, se guarda descifrada en
   `sessionStorage`, que se borra al cerrar la app.
 
-## Inicio de sesión (desde el 25-11-2026; sustituye al PIN)
-- Con el repositorio privado conectado, la app no enseña nada hasta poner la contraseña (`web/js/sesion.js`). No
-  hay botón para entrar sin ella. La sesión dura mientras la app está abierta; "Cerrar sesión" está en Ajustes.
-- La contraseña es la misma en todos los dispositivos. En el repositorio privado se guarda solo un **verificador**
-  en `data/acceso.json`: sal aleatoria + PBKDF2-SHA256 (310.000 iteraciones), `web/js/acceso.js`. La contraseña
-  no se guarda en ningún sitio.
-- Al entrar, la contraseña debe descifrar la clave de GitHub del dispositivo **y** coincidir con el verificador. Si
-  el dispositivo tenía el PIN antiguo o una contraseña ya cambiada, se pide la actual y se vuelve a cifrar la clave.
-  Sin conexión, basta con que descifre la clave del dispositivo.
-- Contraseña olvidada: borrar `data/acceso.json` en GitHub, "Volver a conectar este dispositivo" y crear otra.
-- Qué protege y qué no: protege el acceso a la app y a tus datos personales. Los datos públicos de mercado
-  (`web/data/*.json`) siguen siendo públicos por diseño: el repositorio de la app es público.
-- En modo local (sin GitHub) no hay inicio de sesión.
-- Al conectar, la web comprueba que el repositorio es **privado** y se niega a continuar si es público.
-- Pon caducidad a la clave y renuévala cuando caduque (Ajustes → Cambiar conexión).
+## Entrada con PIN (desde el 25-11-2026)
+- Con el repositorio privado conectado, la app no enseña nada hasta poner el **PIN de 4 cifras**
+  (`web/js/sesion.js`). No hay botón para entrar sin él. La sesión dura mientras la app está abierta; "Cerrar
+  sesión" y "Cambiar PIN" están en Ajustes. Con el PIN creado, la app entra sola al escribir la 4.ª cifra.
+- El PIN es el mismo en todos los dispositivos. En el repositorio privado se guarda solo un **verificador** en
+  `data/acceso.json` (`tipo: "pin"`, sal aleatoria + PBKDF2-SHA256, 310.000 iteraciones; `web/js/acceso.js`). El
+  PIN no se guarda en ningún sitio.
+- Al entrar, el PIN debe descifrar la clave de GitHub del dispositivo **y** coincidir con el verificador. Si el
+  dispositivo tenía otro PIN (cambiado en otro dispositivo), se pide el actual y se vuelve a cifrar la clave. Sin
+  conexión, basta con que descifre la clave del dispositivo.
+- Hubo unas horas con contraseña en vez de PIN (verificador sin `tipo`): al entrar con esa contraseña se pide
+  crear el PIN y se sustituye.
+- PIN olvidado: borrar `data/acceso.json` en GitHub, "Volver a conectar este dispositivo" y crear otro.
+- Límite asumido (decisión del usuario): 4 cifras son 10.000 combinaciones. Protege frente a alguien que coja el
+  móvil o abra la web, pero no frente a quien ya tenga una copia del almacenamiento del navegador o acceso al
+  repositorio privado (podría probarlas todas). La protección de fondo sigue siendo que el repositorio es privado
+  y la clave de GitHub solo toca ese repositorio.
+- Los datos públicos de mercado (`web/data/*.json`) siguen siendo públicos por diseño: el repositorio de la app
+  es público. En modo local (sin GitHub) no se pide PIN.
 
 ## Protecciones de la web
 - **CSP:** `script-src 'self'`, de modo que solo se ejecuta código del propio repositorio. `connect-src` solo

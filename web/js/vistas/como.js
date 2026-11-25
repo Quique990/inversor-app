@@ -96,8 +96,8 @@ export function render() {
 
     seccion("6. Privacidad y seguridad", false,
       L("El código es público, pero tus datos (perfil, cartera, cuentas) están en tu repositorio PRIVADO de GitHub. Nadie más puede verlos.",
-        "Para entrar hace falta tu contraseña, cada vez que abres la app y en todos tus dispositivos. En tu repositorio privado solo se guarda una huella cifrada de ella, nunca la contraseña.",
-        "La web se conecta a tu repositorio privado con una clave que solo puede tocar ese repositorio. La clave se guarda cifrada en tu móvil con tu contraseña.",
+        "Para entrar hace falta tu PIN de 4 cifras, cada vez que abres la app y en todos tus dispositivos. En tu repositorio privado solo se guarda una huella cifrada de él, nunca el PIN.",
+        "La web se conecta a tu repositorio privado con una clave que solo puede tocar ese repositorio. La clave se guarda cifrada en tu móvil con tu PIN.",
         "Tu Excel y tus CSV se leen en el propio móvil; solo se guarda el resultado en tu repositorio privado.",
         "La web no carga nada de fuera (ni anuncios ni rastreadores); solo habla con GitHub.",
         "Coste: 0 €. Todo funciona con planes gratuitos.")),

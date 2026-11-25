@@ -1,12 +1,13 @@
-// Contraseña de acceso a la app. En el repositorio PRIVADO (data/acceso.json) solo se guarda un verificador:
-// sal aleatoria + PBKDF2-SHA256 (310.000 iteraciones). Con él se comprueba la contraseña, pero no se puede sacar.
-// La misma contraseña cifra en cada dispositivo la clave de GitHub (cripto.js). Funciones puras (sin DOM ni red).
+// PIN de acceso a la app (4 cifras). En el repositorio PRIVADO (data/acceso.json) solo se guarda un verificador:
+// sal aleatoria + PBKDF2-SHA256 (310.000 iteraciones). Con él se comprueba el PIN, pero no se guarda el PIN.
+// El mismo PIN cifra en cada dispositivo la clave de GitHub (cripto.js). Funciones puras (sin DOM ni red).
+// Los verificadores antiguos sin `tipo: "pin"` eran de una contraseña: al entrar con ella se pide crear el PIN.
 
 const enc = new TextEncoder();
 const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
 const deB64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
 export const ITERACIONES = 310000;
-export const LONGITUD_MINIMA = 8;
+export const CIFRAS_PIN = 4;
 
 async function huella(contrasena, sal, iteraciones) {
   const base = await crypto.subtle.importKey("raw", enc.encode(contrasena), "PBKDF2", false, ["deriveBits"]);
@@ -16,7 +17,7 @@ async function huella(contrasena, sal, iteraciones) {
 /** Verificador para guardar en el repositorio privado. */
 export async function crearVerificador(contrasena, iteraciones = ITERACIONES) {
   const sal = crypto.getRandomValues(new Uint8Array(16));
-  return { version: 1, algoritmo: "PBKDF2-SHA256", iteraciones, sal: b64(sal), huella: b64(await huella(contrasena, sal, iteraciones)),
+  return { version: 1, tipo: "pin", algoritmo: "PBKDF2-SHA256", iteraciones, sal: b64(sal), huella: b64(await huella(contrasena, sal, iteraciones)),
     creado: new Date().toISOString() };
 }
 
@@ -31,9 +32,12 @@ export async function comprobar(contrasena, v) {
   return dif === 0;
 }
 
-/** Mensaje de error si la contraseña nueva no vale, o null. */
-export function validarContrasena(c, repetida) {
-  if (!c || c.length < LONGITUD_MINIMA) return `La contraseña debe tener al menos ${LONGITUD_MINIMA} caracteres.`;
-  if (repetida !== undefined && c !== repetida) return "Las dos contraseñas no coinciden.";
+/** Mensaje de error si el PIN nuevo no vale, o null. */
+export function validarPin(pin, repetido) {
+  if (!new RegExp(`^\\d{${CIFRAS_PIN}}$`).test(pin || "")) return `El PIN tiene que ser de ${CIFRAS_PIN} cifras.`;
+  if (repetido !== undefined && pin !== repetido) return "Los dos PIN no coinciden.";
   return null;
 }
+
+/** ¿El verificador guardado es de un PIN? (los antiguos eran de una contraseña) */
+export const esPin = (v) => v?.tipo === "pin";

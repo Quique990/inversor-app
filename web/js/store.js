@@ -73,6 +73,7 @@ export async function abrirSesion(contrasena) {
   const c = leerConfig();
   if (!tokenSesion) throw new Error("Primero hay que desbloquear la clave");
   c.tokenCifrado = await cifrar(tokenSesion, contrasena);
+  c.pinActivo = true; // este dispositivo ya entra con el PIN de 4 cifras
   delete c.tokenPlano;
   escribirConfig(c);
   sessionStorage.setItem("inversor.sesion", "1");
