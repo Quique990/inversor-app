@@ -32,6 +32,21 @@ def test_ordenar_candidatos_prefiere_xetra_y_euros():
     quotes = [{"symbol": "XYZ.L", "quoteType": "ETF"}, {"symbol": "XYZ", "quoteType": "ETF"}, {"symbol": "XYZ.PA", "quoteType": "ETF"},
               {"symbol": "XYZ.DE", "quoteType": "ETF"}, {"symbol": "XYZ.F", "quoteType": "ETF"}, {"symbol": "OPC", "quoteType": "OPTION"}]
     assert ordenar_candidatos(quotes) == ["XYZ.DE", "XYZ.PA", "XYZ", "XYZ.L", "XYZ.F"]
+    assert ordenar_candidatos([{"symbol": "IE0000000000.SG"}, {"symbol": "ABC.L"}]) == ["ABC.L"]  # el ISIN no es un ticker
+
+
+def test_precios_descarta_peniques_si_hay_euros(tmp_path, monkeypatch):
+    monkeypatch.setattr(precios_cartera.time, "sleep", lambda s: None)
+    datos = tmp_path / "datos"
+    (datos / "data").mkdir(parents=True)
+    (datos / "data" / "cartera.json").write_text(json.dumps({"activos": {"XS0000000001": {"nombre": "Oro"}}, "operaciones": []}))
+    (datos / "data" / "precios.json").write_text(json.dumps({"tickers": {"XS0000000001": {"ticker": "ORO.L", "moneda": "GBp", "origen": "automatico"}}}))
+
+    def serie(ticker, rango="10y"):
+        return [("2026-01-01", 10.0), ("2026-01-02", 11.0)], {"moneda": {"ORO.L": "GBp", "EURUSD=X": "USD"}.get(ticker, "EUR")}
+
+    r = precios_cartera.ejecutar(datos, buscar=lambda i: ["ORO.L", "ORO.DE"], serie=serie)
+    assert r["tickers"]["XS0000000001"]["ticker"] == "ORO.DE"   # se vuelve a buscar y gana el de euros
 
 
 def test_precios_resuelve_ticker_por_isin_y_lo_recuerda(tmp_path, monkeypatch):

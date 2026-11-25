@@ -6,6 +6,8 @@ las de Xetra (en euros y con barras horarias), luego otras bolsas europeas en eu
 """
 from __future__ import annotations
 
+import re
+
 from .util import http_get
 
 # Orden de preferencia por sufijo del ticker ("" = bolsa de EE. UU.)
@@ -22,7 +24,8 @@ def ordenar_candidatos(quotes: list[dict]) -> list[str]:
     vistos: list[str] = []
     for q in quotes or []:
         t = q.get("symbol")
-        if not t or t in vistos or (q.get("quoteType") and q["quoteType"] not in TIPOS):
+        # Yahoo a veces devuelve el propio ISIN como ticker (p. ej. "IE00XXXXXXXX.SG"): no tiene precios
+        if not t or t in vistos or re.match(r"^[A-Z]{2}[A-Z0-9]{9}\d(\.|$)", t) or (q.get("quoteType") and q["quoteType"] not in TIPOS):
             continue
         vistos.append(t)
     rango = {s: i for i, s in enumerate(PREFERENCIA)}

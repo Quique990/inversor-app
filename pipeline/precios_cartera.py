@@ -21,6 +21,9 @@ from .tickers import buscar_por_isin
 from .util import ahora_iso, configurar_log, escribir_json, leer_json, log
 
 
+MONEDAS_OK = {"EUR", "USD"}  # la web y el intradía saben pasar estas a euros
+
+
 def resolver_tickers(activos: dict, anteriores: dict, buscar=buscar_por_isin) -> tuple[dict, dict]:
     """isin -> lista de tickers a probar (el primero que funcione gana). Devuelve (candidatos, fallos)."""
     candidatos: dict[str, list[str]] = {}
@@ -28,7 +31,8 @@ def resolver_tickers(activos: dict, anteriores: dict, buscar=buscar_por_isin) ->
     for isin, a in activos.items():
         if a.get("yahoo"):
             candidatos[isin] = [a["yahoo"]]
-        elif (anteriores.get(isin) or {}).get("ticker"):
+        elif (anteriores.get(isin) or {}).get("ticker") and (anteriores[isin].get("origen") == "manual"
+                                                            or anteriores[isin].get("moneda") in MONEDAS_OK):
             candidatos[isin] = [anteriores[isin]["ticker"]]
         else:
             try:
@@ -53,22 +57,30 @@ def ejecutar(dir_datos: Path, buscar=buscar_por_isin, serie=yahoo_serie) -> dict
     candidatos["__EURUSD"] = ["EURUSD=X"]
     for clave, lista in candidatos.items():
         errores = []
+        reserva = None  # cotización en una moneda que la web no convierte (p. ej. peniques): solo si no hay otra
         for ticker in lista:
             try:
                 s, info = serie(ticker, rango="10y")
                 semanal = ind.muestrear_semanal(s, max_puntos=700)
                 if semanal and semanal[-1][0] != s[-1][0]:
                     semanal.append(s[-1])
-                salida["series"][clave] = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal,
-                                           "ultimo": s[-1], "var_1d": ind.variacion(s, 1)}
-                if not clave.startswith("__"):
-                    origen = "manual" if activos.get(clave, {}).get("yahoo") else "automatico"
-                    salida["tickers"][clave] = {"ticker": ticker, "moneda": info.get("moneda"), "origen": origen}
+                datos = {"ticker": ticker, "moneda": info.get("moneda"), "puntos": semanal,
+                         "ultimo": s[-1], "var_1d": ind.variacion(s, 1)}
+                if info.get("moneda") not in MONEDAS_OK and len(lista) > 1:
+                    reserva = reserva or datos
+                    continue
+                salida["series"][clave] = datos
                 break
             except Exception as e:  # noqa: BLE001
                 errores.append(f"{ticker}: {e!r}"[:120])
             finally:
                 time.sleep(0.6)
+        if clave not in salida["series"] and reserva:
+            salida["series"][clave] = reserva
+        if clave in salida["series"] and not clave.startswith("__"):
+            d = salida["series"][clave]
+            origen = "manual" if activos.get(clave, {}).get("yahoo") else "automatico"
+            salida["tickers"][clave] = {"ticker": d["ticker"], "moneda": d["moneda"], "origen": origen}
         if clave not in salida["series"]:
             salida["fallos"][clave] = " · ".join(errores)[:300]
             log.warning("Sin precio para %s: %s", clave, errores)
