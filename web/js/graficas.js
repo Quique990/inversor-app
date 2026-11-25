@@ -19,7 +19,12 @@ function base() {
   };
 }
 
-export function lineas(etiquetas, series, { baja = false, formatoY = null, puntos = null } = {}) {
+/**
+ * Gráfica de líneas. Con `zoom` se puede ampliar con dos dedos (o la rueda del ratón) y moverse arrastrando, solo en
+ * horizontal; el eje vertical se ajusta a lo que se ve. `zoom.atajos` = [{texto, desde, hasta}] (índices de etiqueta)
+ * añade botones de acceso rápido, además de "Ver todo".
+ */
+export function lineas(etiquetas, series, { baja = false, formatoY = null, puntos = null, zoom = null } = {}) {
   const lienzo = h("canvas");
   const caja = h("div", { class: baja ? "grafica baja" : "grafica" }, lienzo);
   if (!window.Chart) { caja.append(h("p", { class: "suave" }, "Gráfica no disponible (Chart.js no cargó).")); return caja; }
@@ -32,8 +37,51 @@ export function lineas(etiquetas, series, { baja = false, formatoY = null, punto
   const opciones = base();
   if (series.some((s) => s.sinLeyenda)) opciones.plugins.legend.labels.filter = (item) => !series[item.datasetIndex]?.sinLeyenda;
   if (formatoY) opciones.scales.y.ticks.callback = formatoY;
-  requestAnimationFrame(() => activas.add(new window.Chart(lienzo, { type: "line", data: { labels: etiquetas, datasets }, options: opciones })));
-  return caja;
+  let grafica = null, envoltorio = null;
+  const conZoom = !!(zoom && window.ChartZoom); // vendor/chartjs-plugin-zoom.min.js (+ hammer.min.js para los dedos)
+  if (conZoom) {
+    opciones.plugins.zoom = {
+      zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: "x" },
+      pan: { enabled: true, mode: "x" },
+      limits: { x: { minRange: 2 } },
+    };
+    // Sin esto, el eje vertical mantiene la escala de todo el día al ampliar
+    opciones.scales.y.afterDataLimits = (escala) => ajustarY(escala, etiquetas);
+    const ver = (desde, hasta) => grafica?.zoomScale("x", { min: Math.max(0, desde), max: Math.min(etiquetas.length - 1, hasta) });
+    envoltorio = h("div", {}, caja);
+    envoltorio.append(h("div", { class: "fila zoom-botones", style: { marginTop: "6px" } },
+      ...(zoom.atajos || []).map((a) => h("button", { class: "mini sec", onclick: () => ver(a.desde, a.hasta) }, a.texto)),
+      h("button", { class: "mini sec", onclick: () => grafica?.resetZoom() }, "Ver todo")),
+      h("p", { class: "suave pequeno" }, "Pellizca con dos dedos para ampliar y arrastra para moverte."));
+  }
+  requestAnimationFrame(() => {
+    grafica = new window.Chart(lienzo, { type: "line", data: { labels: etiquetas, datasets }, options: opciones });
+    activas.add(grafica);
+    // Hammer bloquea todo gesto sobre la gráfica; así el desplazamiento vertical de la página sigue funcionando
+    // (el pellizco y el arrastre horizontal siguen llegando al zoom)
+    if (conZoom) lienzo.style.touchAction = "pan-y";
+    if (conZoom && zoom.inicial) grafica.zoomScale("x", { min: Math.max(0, zoom.inicial.desde), max: Math.min(etiquetas.length - 1, zoom.inicial.hasta) });
+  });
+  return envoltorio || caja;
+}
+
+/** Ajusta el eje vertical a los valores que se ven con el zoom horizontal actual. */
+function ajustarY(escala, etiquetas) {
+  // El complemento de zoom guarda el rango visible en las opciones del eje x (índices de etiqueta)
+  const ox = escala.chart.scales.x?.options || {};
+  const desde = typeof ox.min === "number" ? ox.min : 0, hasta = typeof ox.max === "number" ? ox.max : etiquetas.length - 1;
+  if (desde <= 0 && hasta >= etiquetas.length - 1) return;
+  let min = Infinity, max = -Infinity;
+  for (const ds of escala.chart.data.datasets) {
+    for (let i = Math.max(0, Math.floor(desde)); i <= Math.min(etiquetas.length - 1, Math.ceil(hasta)); i++) {
+      const v = ds.data[i];
+      if (typeof v === "number") { min = Math.min(min, v); max = Math.max(max, v); }
+    }
+  }
+  if (min === Infinity) return;
+  const margen = (max - min) * 0.08 || Math.abs(max) * 0.001 || 1;
+  escala.min = min - margen;
+  escala.max = max + margen;
 }
 
 export function donut(etiquetas, valores) {

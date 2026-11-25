@@ -184,8 +184,9 @@ test("Intradía: previsión de la cartera combina ETF y diversifica la banda", (
   const r = prediccionCartera(intradia, pos);
   assert.equal(r.plan[0].esperado, 230);                       // 100 + 2·50 + 30 fijo
   assert.deepEqual(r.sinPrediccion, ["XS0000000000"]);
-  assert.equal(r.actual.length, 1);                            // a las 12:00 falta el dato de B
+  assert.equal(r.actual.length, 2);                            // a las 12:00 falta B: se usa su último valor
   assert.equal(r.actual[0].tipo, "estimado");
+  assert.deepEqual(r.actual[1], { hora: "12:00", valor: 101 + 2 * 50 + 30, tipo: "estimado" });
   // Con correlación 0 la banda de la cartera es más estrecha que la suma de bandas
   const s = Math.log(r.plan[2].sup / 230) / 1.2816;
   assert.ok(s < (100 * 0.02 + 100 * 0.02) / 230);

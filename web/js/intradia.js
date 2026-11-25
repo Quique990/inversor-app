@@ -82,15 +82,21 @@ export function prediccionCartera(intradia, pos) {
     else { fijo += p.valor ?? p.costeVivo ?? 0; sinPrediccion.push(p.isin); }
   }
   if (!partes.length) return null;
-  // Lo real de la cartera solo en horas en que todos los ETF con previsión tienen dato
+  // Lo que lleva la cartera hoy, hasta la última hora con algún dato. Si a un activo le falta esa hora (p. ej. tus
+  // activos privados se actualizan en otro momento que los públicos), se usa su último valor conocido y la hora
+  // cuenta como "estimado". Es "real" solo si todos los activos tienen precio real en esa hora.
   const actual = [];
-  for (const hora of intradia.horas || []) {
+  const horas = intradia.horas || [];
+  const ultimaHora = Math.max(-1, ...partes.map(({ a }) => horas.indexOf(a.actual?.at(-1)?.hora)));
+  for (let k = 0; k <= ultimaHora; k++) {
+    const hora = horas[k];
     let v = fijo, estimado = false, ok = true;
     for (const { a, n } of partes) {
-      const x = a.actual?.find((q) => q.hora === hora);
+      const previos = (a.actual || []).filter((q) => horas.indexOf(q.hora) <= k);
+      const x = previos.at(-1);
       if (!x) { ok = false; break; }
       v += n * x.valor;
-      if (x.tipo !== "real") estimado = true;
+      if (x.tipo !== "real" || x.hora !== hora) estimado = true;
     }
     if (ok) actual.push({ hora, valor: v, tipo: estimado ? "estimado" : "real" });
   }

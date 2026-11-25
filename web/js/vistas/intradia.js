@@ -48,6 +48,7 @@ export function tarjetaIntradia(ctx) {
 
   return tarjeta("Hoy, hora a hora (previsión)",
     intra.fecha !== hoyMadrid() ? h("div", { class: "aviso" }, `La previsión es del ${fecha(intra.fecha)}. Hoy no hay mercado o todavía no se ha calculado.`) : null,
+    avisoRetraso(intra) ? h("div", { class: "aviso" }, avisoRetraso(intra)) : null,
     h("div", { class: "fila", style: { alignItems: "center", marginBottom: "8px" } }, selector,
       h("button", { class: "mini sec", onclick: () => ctx.recargarIntradia() }, "Actualizar")),
     contenedor,
@@ -93,7 +94,7 @@ function contenidoGrafica(intra, d) {
     { nombre: "Previsión actual", valores: prevision.map(r2), discontinua: true, color: "#2f80ed" },
     { nombre: "Real", valores: real.map(r2), radio: 2, huecos: true, color: "#102a43" },
     { nombre: "Estimado (fuera de Xetra)", valores: estimado.map(r2), discontinua: true, huecos: true, color: "#e09f3e" },
-  ], { formatoY: (v) => (d.esCartera ? `${v} €` : num(v, 2)) });
+  ], { formatoY: (v) => (d.esCartera ? `${num(v, 0)} €` : num(v, 2)), zoom: atajosZoom(horas, act.at(-1)?.hora) });
 
   const ultimo = act.at(-1);
   const fin = (d.prevision || d.plan || []).at(-1);
@@ -112,6 +113,26 @@ function contenidoGrafica(intra, d) {
   if (!d.esCartera && d.modelo) nodos.push(detalleModelo(d));
   if (d.esCartera) nodos.push(h("p", { class: "suave pequeno" }, "Elige un ETF en el desplegable para ver cómo se ha calculado su previsión."));
   return nodos;
+}
+
+/** Botones de zoom: alrededor de la última hora con dato, mañana y tarde. */
+function atajosZoom(horas, ultimaHora) {
+  const i = (hhmm) => Math.max(0, horas.indexOf(hhmm));
+  const atajos = [];
+  const u = ultimaHora ? horas.indexOf(ultimaHora) : -1;
+  if (u >= 0) atajos.push({ texto: "Ahora", desde: u - 3, hasta: u + 3 });
+  atajos.push({ texto: "Mañana", desde: 0, hasta: i("15:00") }, { texto: "Tarde", desde: i("15:00"), hasta: horas.length - 1 });
+  return { atajos };
+}
+
+/** Si el último dato es de hace más de una hora y media (en horario), explica por qué faltan horas. */
+export function avisoRetraso(intra, ahora = new Date()) {
+  const loc = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", hour12: false }).format(ahora);
+  const generado = intra.generado ? new Date(intra.generado) : null;
+  if (!generado || loc < "08:30" || loc > "23:30" || intra.fecha !== hoyMadrid()) return null;
+  const min = Math.round((ahora - generado) / 60000);
+  if (min < 90) return null;
+  return `La última actualización es de hace ${Math.round(min / 6) / 10} h. GitHub retrasa a veces las ejecuciones programadas (o se salta alguna), por eso faltan las últimas horas: aparecerán en la siguiente ejecución. Pulsa “Actualizar” dentro de un rato.`;
 }
 
 function detalleModelo(d) {

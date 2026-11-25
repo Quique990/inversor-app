@@ -53,6 +53,11 @@ cada día su error frente al modelo ingenuo ("el precio no cambia"). **No ajuste
 `prediccionCartera(intradia, pos)` suma participaciones × trayectoria de cada ETF. La banda de la cartera usa las
 correlaciones de rendimientos diarios publicadas (`correlaciones`). Si falta alguna, se usa 0,6. Los activos sin
 previsión se suman con su último valor y se listan. La calidad de la cartera es la media ponderada por valor.
+`actual` de la cartera llega hasta la última hora con dato de cualquier activo; a los que les falta esa hora se les
+arrastra su último valor y la hora queda como "estimado" (antes se perdía la hora entera si la parte privada y la
+pública se habían actualizado en momentos distintos). La gráfica tiene zoom horizontal (chartjs-plugin-zoom 2.2.0 +
+hammerjs 2.0.8, vendorizados con licencia MIT) y el eje vertical se ajusta al tramo visible. Si el último cálculo
+tiene más de 90 min en horario, la tarjeta explica que GitHub ha retrasado o saltado la ejecución.
 
 ## Activos propios fuera del universo (repositorio privado)
 - `pipeline/intradia_cartera.py` elige los activos de `data/cartera.json` con participaciones vivas que **no** están
