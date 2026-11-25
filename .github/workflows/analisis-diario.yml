@@ -41,13 +41,20 @@ jobs:
           GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL }}
           SIN_IA: ${{ github.event.inputs.sin_ia }}
         run: python -m pipeline.main
+      - name: Actualizar la predicción intradía con el análisis nuevo
+        continue-on-error: true
+        env:
+          FORZAR: "1"
+        run: python -m pipeline.intradia
       - name: Guardar resultados
         run: |
           git config user.name "analisis-diario[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add web/data
+          git reset -q -- web/data/intradia_estado.json   # el estado intradía lo guarda su propio workflow
           git diff --cached --quiet || git commit -m "Análisis diario $(date -u +%F)"
-          git pull --rebase --autostash origin main || true
+          git checkout -- web/data/intradia_estado.json 2>/dev/null || rm -f web/data/intradia_estado.json
+          git pull --rebase -X theirs --autostash origin main || true
           git push
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v5

@@ -1,0 +1,103 @@
+// "Cómo funciona": explicación de todo lo que hace la app, en lenguaje llano. Solo texto (sin datos personales).
+import { h } from "../dom.js";
+
+const P = (...t) => h("p", {}, ...t);
+const L = (...items) => h("ul", {}, items.map((i) => h("li", {}, i)));
+const B = (t) => h("strong", {}, t);
+const seccion = (titulo, abierta, ...contenido) => h("details", { class: "tarjeta como", open: abierta || undefined },
+  h("summary", {}, h("h2", { style: { display: "inline" } }, titulo)), ...contenido);
+
+export function render() {
+  return [
+    h("section", { class: "tarjeta como" },
+      h("h2", {}, "La app en 30 segundos"),
+      P("Es tu ayudante para invertir en ETF con Trade Republic y llevar tus cuentas (Diners). Cada mañana lee noticias y datos de mercado, ",
+        "decide si hoy merece la pena hacer algo más que tu plan habitual y te lo dice en la pestaña ", B("Hoy"), "."),
+      L("Casi siempre te dirá que sigas con tu plan: es lo que mejor funciona a largo plazo.",
+        "Solo propone comprar de más cuando la bolsa ha caído y hay miedo, y con ahorro que ya tenías apartado.",
+        "Vender casi nunca: solo para corregir desequilibrios grandes o salir de productos apalancados.",
+        "Nada de lo que ves es asesoramiento financiero: es una herramienta personal para decidir con datos.")),
+
+    seccion("1. Qué pasa cada día", true,
+      P(B("07:43 (hora de Madrid, en invierno) — análisis diario. "), "Un programa gratuito en GitHub (Actions) se ejecuta solo y:"),
+      L("Descarga precios de ETF, índices, VIX, petróleo, oro, bonos y euro/dólar (Yahoo Finance), y datos económicos de la Reserva Federal (FRED) y del BCE.",
+        "Lee unos 300 titulares de más de 20 medios (bancos centrales, BBC, Al Jazeera, DW, El País, Expansión, Cinco Días, CNBC…) y Google News.",
+        "Detecta eventos (conflictos, petróleo, aranceles, decisiones de tipos, recesión…) por palabras clave y los puntúa de 1 a 3.",
+        "Calcula la señal del día y publica el resultado en la web."),
+      P(B("Cada hora, de 7:30 a 23:00 — predicción intradía. "), "Actualiza los precios del día y la previsión hora a hora (apartado 4)."),
+      P(B("Por la tarde — precios de tu cartera. "), "Si tienes ETF que no están en la lista de la app, tu repositorio privado descarga sus precios."),
+      P("GitHub puede retrasar estas ejecuciones 10-30 minutos. Si una fuente falla, la app sigue con las demás y lo anota en Mercado → Salud de las fuentes.")),
+
+    seccion("2. Cómo decide la recomendación", false,
+      P(B("Idea clave: "), "la oportunidad la crea el precio, no la noticia. Una noticia grave sin caída de la bolsa no cambia nada; una caída con miedo, sí."),
+      P(B("Puntuación de oportunidad (0-100):")),
+      L("Caída de la bolsa mundial desde su máximo de 52 semanas: hasta 45 puntos (empieza a contar a partir de −3 %, máximo en −20 %).",
+        "Miedo del mercado (VIX): hasta 30 puntos (a partir de 20, máximo en 40). Históricamente, comprar con el VIX por encima de 40 ha dado muy buenos resultados a 12 meses.",
+        "Shock geopolítico fuerte con la bolsa ya un 5 % abajo: +10 puntos."),
+      P(B("Régimen económico: "), "expansión, recesión probable (regla de Sahm, diferencial de bonos basura, curva de tipos invertida) o inflación alta. ",
+        "Fuera de la expansión, la app prefiere escalonar las compras porque las caídas pueden durar más."),
+      P(B("Postura del día:")),
+      L("Menos de 20 puntos → seguir con el plan.",
+        "De 20 a 45 → aportación extra de 3 veces tu aportación mensual, en 3 partes.",
+        "45 o más → extra de 6 veces (10 si pasa de 70).",
+        "Petróleo disparado con inflación alta, o crisis de crédito → precaución.",
+        "Tendencia bajista larga (40 sesiones bajo la media de 200 días con la media cayendo) → escalonar."),
+      P(B("Tu recomendación personal "), "se calcula en tu móvil con tu perfil (Ajustes): el extra nunca supera tu máximo mensual ni deja tu colchón (corto + medio plazo de Diners) por debajo del mínimo. ",
+        "Si cada parte es menor de 100 €, te propone subir ese mes el plan de inversión (gratis) en lugar de pagar 1 € de comisión por una orden manual. ",
+        "El extra va a la renta variable mundial, salvo que ya esté muy por encima de su objetivo."),
+      P(B("La IA "), "solo redacta el resumen y ayuda a clasificar titulares; no decide nada. Ahora mismo el resumen lo hace una plantilla automática.")),
+
+    seccion("3. Cartera: ganancias por compra", false,
+      L("Cada compra es un \"lote\" con su fecha y su precio. Ves cuánto ganas o pierdes en cada una según el momento en que compraste.",
+        "Las ventas se descuentan de los lotes más antiguos primero (FIFO), como hace Hacienda.",
+        "TIR anual: la rentabilidad anual real teniendo en cuenta cuándo metiste cada euro.",
+        "\"¿Funcionan las señales?\": compara el precio de tus compras extra con el de tus compras del plan de los 90 días alrededor.",
+        "Avisa si tienes productos apalancados (x2, x3): pierden valor con el tiempo aunque el índice no baje."),
+      P("Puedes añadir operaciones a mano o importar el CSV de Trade Republic. Cada operación indica de qué bloque de Diners sale el dinero.")),
+
+    seccion("4. Predicción del día, hora a hora", false,
+      P(B("Qué es honesto esperar: "), "nadie predice de forma fiable si un ETF va a subir o bajar en las próximas horas: se comporta casi como un paseo aleatorio. ",
+        "Lo que sí se puede prever bastante bien es cuánto se va a mover. Por eso ves una línea esperada y una banda: con un 80 % de probabilidad el precio estará dentro."),
+      P(B("Los datos. "), "De 9:00 a 17:30 los precios son reales (bolsa alemana Xetra). Trade Republic cotiza de 7:30 a 23:00, pero esos precios no son públicos gratis. ",
+        "Fuera de Xetra el valor se estima con algo que cotiza casi 24 horas y se mueve parecido: los futuros del S&P 500 (para la renta variable) o del oro, pasados a euros. ",
+        "La app calcula cuánto se mueve cada ETF por cada 1 % del indicador (la \"beta\"). En la gráfica, lo estimado va en línea discontinua."),
+      P(B("Las piezas del modelo:")),
+      L(h("span", {}, B("Cuánto se moverá hoy (GARCH). "), "Tras días agitados suelen venir días agitados. El modelo GARCH (Bollerslev, 1986) aprende ese patrón con los últimos 2 años y da la volatilidad esperada de hoy."),
+        h("span", {}, B("Cuándo se moverá (estacionalidad intradía). "), "La volatilidad no se reparte por igual: hay más movimiento a la apertura de Xetra, al abrir Wall Street (15:30) y en el cierre (Andersen y Bollerslev, 1997). La banda se ensancha justo en esas horas."),
+        h("span", {}, B("Hacia dónde (filtro de Kalman). "), "Una pequeña regresión estima la rentabilidad del día con 5 variables: el tono geopolítico del análisis de la mañana (eventos × su efecto típico en ese tipo de activo), el cambio del VIX, lo que se ha movido durante la noche, la rentabilidad de ayer y una tendencia de fondo. ",
+          "Los coeficientes empiezan en cero (es decir, \"no sé nada\") y el filtro de Kalman (1960) los corrige un poco cada día con el resultado real, olvidando poco a poco el pasado lejano. Así aprende de las noticias que capta la app."),
+        h("span", {}, B("Competición con \"no cambia\" (pesos exponenciales). "), "Cada noche se compara el error del modelo con el de suponer que el precio no se mueve. El que menos falla gana peso en la previsión del día siguiente (algoritmo Hedge). Si el modelo no aporta, su peso tiende a cero y la línea queda plana: es lo honesto."),
+        h("span", {}, B("Calibración de la banda. "), "Si el precio se sale de la banda más del 20 % de las horas, la banda se ensancha; si nunca se sale, se estrecha.")),
+      P(B("Durante el día: "), "la línea gris es lo que se previó a las 7:30 (es la que se evalúa). La azul discontinua se recalcula cada hora partiendo del último precio. ",
+        "\"Mi cartera completa\" suma tus participaciones de cada ETF; la banda tiene en cuenta que no todos se mueven a la vez (correlaciones)."),
+      P(B("¿Acierta? "), "Debajo de la gráfica ves cuánto ha fallado el modelo frente a \"no cambia\" en los últimos días y cuántas horas cayó el precio dentro de la banda. Si sale peor, la app te lo dice."),
+      P(B("Límites. "), "No uses esta predicción para comprar y vender en el día: las comisiones y los impuestos se comerían cualquier ventaja. Sirve para saber qué movimiento es normal hoy y no asustarte. ",
+        "Solo cubre los ETF de la lista de la app; los demás se cuentan con su último precio.")),
+
+    seccion("5. Diners: tus cuentas", false,
+      P("Es tu Excel convertido en app, con las mismas reglas y algunos errores corregidos."),
+      L(h("span", {}, B("Bloques: "), "corto plazo (semanal), medio plazo, largo plazo e inversiones."),
+        h("span", {}, B("Corto plazo: "), "cada semana: paga + extra − gastos. Los saldos se calculan solos, no se escriben a mano."),
+        h("span", {}, B("Regla de los 300 €: "), "cuando el corto plazo llega a 300 €, te avisa de pasar 150 € a medio plazo (lo haces tú con un botón)."),
+        h("span", {}, B("Intereses: "), "se reparten entre largo y medio plazo según lo que había en cada uno ese mes, y el reparto queda fijado. En el Excel se recalculaban con el saldo de hoy y cambiaban los meses pasados."),
+        h("span", {}, B("Cobros extraordinarios: "), "son transferencias desde \"Extraordinario\" hacia un bloque."),
+        h("span", {}, B("Compras: "), "comprar un ETF saca el dinero del bloque que lo paga (largo o medio). Si no, ese dinero contaría dos veces: como saldo y como inversión. Si una compra se pagó con dinero que no estaba en Diners, márcala como \"Fuera de Diners\"."),
+        h("span", {}, B("Inversiones manuales: "), "lo que no es ETF (renta fija, acciones sueltas). Si una ya está en Cartera, la app te avisa para no sumarla dos veces."),
+        h("span", {}, B("Excel: "), "puedes importar tu Diners.xlsx (la app te enseña qué fórmulas del original tenían problemas) y exportar todo a Excel cuando quieras."))),
+
+    seccion("6. Privacidad y seguridad", false,
+      L("El código es público, pero tus datos (perfil, cartera, cuentas) están en tu repositorio PRIVADO de GitHub. Nadie más puede verlos.",
+        "La web se conecta a tu repositorio privado con una clave que solo puede tocar ese repositorio. La clave se guarda cifrada en tu móvil con tu PIN.",
+        "Tu Excel y tus CSV se leen en el propio móvil; solo se guarda el resultado en tu repositorio privado.",
+        "La web no carga nada de fuera (ni anuncios ni rastreadores); solo habla con GitHub.",
+        "Coste: 0 €. Todo funciona con planes gratuitos.")),
+
+    seccion("7. Qué hacer si…", false,
+      L(h("span", {}, B("La web no carga datos: "), "mira en GitHub → Actions que el último \"Análisis diario\" esté en verde."),
+        h("span", {}, B("No veo mi cartera ni Diners: "), "en Ajustes, conecta tu repositorio privado (clave + PIN)."),
+        h("span", {}, B("Un saldo de Diners sale negativo: "), "alguna compra se pagó con dinero de fuera de Diners: márcala así en Cartera, o corrige los saldos iniciales."),
+        h("span", {}, B("La predicción intradía no aparece: "), "solo se calcula los días laborables de 7:30 a 23:00. Pulsa \"Actualizar\" o mira Actions → Predicción intradía."),
+        h("span", {}, B("Me dice que compre extra y no tengo dinero: "), "ignóralo; revisa tu colchón mínimo y tu máximo mensual en Ajustes."),
+        h("span", {}, B("Ha pasado algo gordo y la app dice \"mantener plan\": "), "es lo esperado si la bolsa todavía no ha caído. La mayoría de sustos geopolíticos se recuperan en semanas."))),
+  ];
+}

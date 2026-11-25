@@ -1,8 +1,9 @@
 // Tests de la lógica de la web (Node >= 20):  node --test tests/web/
+import { prediccionCartera, textoCalidad } from "../../web/js/intradia.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { calcularPosiciones, eficaciaSenales, esApalancado, historico, indicePrecios, resumenCartera, tirCartera, xirr } from "../../web/js/finanzas.js";
-import { avisoCorto, repartirInteres, resumen, saldos } from "../../web/js/diners.js";
+import { avisoCorto, posiblesDuplicados, recalcularRepartos, repartirInteres, resumen, saldos, saldosNegativos } from "../../web/js/diners.js";
 import { calcularPerfil } from "../../web/js/perfil.js";
 import { recomendar } from "../../web/js/reco.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../../web/js/importar_tr.js";
@@ -115,4 +116,82 @@ test("CSV de Trade Republic: detecta columnas, ignora efectivo y no duplica", ()
   assert.equal(r.descartadas.length, 1);
   const f = fusionar(r.operaciones, r.operaciones);
   assert.equal(f.añadidas, 0);
+});
+
+test("Diners: las compras de ETF salen del bloque y no se cuentan dos veces", () => {
+  const c = { config: {}, saldosIniciales: { fecha: "2026-01-01", corto: 0, medio: 200, largo: 1000 },
+    semanas: [], transferencias: [], intereses: [], inversionesManuales: [] };
+  const cartera = { activos: { IE00BK5BQT80: { nombre: "Vanguard FTSE All-World", bloque: "largo" }, IE00B579F325: { nombre: "Invesco Physical Gold", bloque: "medio" } },
+    operaciones: [
+      { fecha: "2025-12-15", tipo: "compra", isin: "IE00BK5BQT80", importe: 500, comision: 0 }, // anterior: ya en saldos iniciales
+      { fecha: "2026-02-01", tipo: "compra", isin: "IE00BK5BQT80", importe: 99, comision: 1 },
+      { fecha: "2026-03-01", tipo: "compra", isin: "IE00B579F325", importe: 50, comision: 1 },
+      { fecha: "2026-04-01", tipo: "compra", isin: "IE00BK5BQT80", importe: 30, comision: 0, pagadoDesde: "fuera" },
+      { fecha: "2026-05-01", tipo: "venta", isin: "IE00B579F325", importe: 20, comision: 1 },
+    ] };
+  const s = saldos(c, null, cartera);
+  assert.equal(s.largo, 900);
+  assert.equal(s.medio, 200 - 51 + 19);
+  // Total: valor de la cartera + saldos, sin duplicar
+  const b = resumen(c, { largo: 650, medio: 30 }, cartera);
+  assert.equal(b.total, 900 + 168 + 680);
+  c.config.comprasCartera = "no";
+  assert.equal(saldos(c, null, cartera).largo, 1000);
+});
+
+test("Diners: inversión manual con origen, acabada, duplicados y saldo negativo", () => {
+  const c = { config: {}, saldosIniciales: { fecha: "2026-01-01", corto: 0, medio: 0, largo: 100 }, semanas: [], transferencias: [], intereses: [],
+    inversionesManuales: [{ nombre: "SP500", tipo: "variable", inicial: 152, actual: 173.04 },
+      { nombre: "Bono", tipo: "fija", inicial: 50, actual: 52, comisiones: 1, fecha: "2026-02-01", pagadoDesde: "largo", acabada: true, fechaFin: "2026-06-01" }] };
+  const cartera = { activos: { IE00B5BMR087: { nombre: "iShares Core S&P 500" } }, operaciones: [{ fecha: "2025-06-01", tipo: "compra", isin: "IE00B5BMR087", importe: 152 }] };
+  assert.equal(saldos(c, "2026-03-01").largo, 50);
+  assert.equal(saldos(c).largo, 101); // 100 − 50 + (52 − 1)
+  const d = posiblesDuplicados(c, cartera);
+  assert.equal(d.length, 1);
+  assert.equal(d[0].inv.nombre, "SP500");
+  c.inversionesManuales[0].enCartera = true;
+  assert.equal(resumen(c).inversiones, 0);
+  assert.equal(posiblesDuplicados(c, cartera).length, 0);
+  c.saldosIniciales.largo = 10;
+  c.inversionesManuales[1].acabada = false;
+  assert.deepEqual(saldosNegativos(c, cartera), [{ bloque: "largo", saldo: -40 }]);
+});
+
+test("Diners: recalcular repartos usa los saldos de cada mes, en orden", () => {
+  const c = { config: {}, saldosIniciales: { fecha: "2025-12-01", corto: 0, medio: 0, largo: 0 }, semanas: [], inversionesManuales: [],
+    transferencias: [{ fecha: "2026-02-01", cantidad: 300, de: "extraordinario", a: "largo" }],
+    intereses: [{ mes: "2026-03", fecha: "2026-03-28", importe: 10, reparto: { largo: 5, medio: 5 } }, { mes: "2026-01", fecha: "2026-01-28", importe: 2, reparto: { largo: 0, medio: 0 } }] };
+  c.saldosIniciales.medio = 100;
+  recalcularRepartos(c);
+  const ene = c.intereses.find((i) => i.mes === "2026-01");
+  const mar = c.intereses.find((i) => i.mes === "2026-03");
+  assert.deepEqual([ene.reparto.largo, ene.reparto.medio], [0, 2]);
+  assert.ok(Math.abs(mar.reparto.pesoLargo - 300 / 402) < 1e-9);
+  assert.equal(saldos(c).medio + saldos(c).largo, 412);
+});
+
+test("Intradía: previsión de la cartera combina ETF y diversifica la banda", () => {
+  const horas = ["07:30", "12:00", "23:00"];
+  const tray = (v, s) => horas.map((hora, i) => ({ hora, esperado: v, inf: v * Math.exp(-1.2816 * s * i), sup: v * Math.exp(1.2816 * s * i) }));
+  const intradia = { z: 1.2816, horas, fecha: "2026-11-25",
+    correlaciones: { ids: ["A", "B"], matriz: [[1, 0], [0, 1]] },
+    activos: {
+      A: { id: "A", isin: "IE00BK5BQT80", ancla: { valor: 100 }, plan: tray(100, 0.01), prevision: tray(100, 0.01), actual: [{ hora: "07:30", valor: 100, tipo: "estimado" }, { hora: "12:00", valor: 101, tipo: "real" }], calidad: { dias: 10, mejora_pct: 5, cobertura_pct: 80 } },
+      B: { id: "B", isin: "IE00B579F325", ancla: { valor: 50 }, plan: tray(50, 0.01), prevision: tray(50, 0.01), actual: [{ hora: "07:30", valor: 50, tipo: "estimado" }], calidad: { dias: 12, mejora_pct: -5, cobertura_pct: 70 } },
+    } };
+  const pos = { IE00BK5BQT80: { isin: "IE00BK5BQT80", participaciones: 1, valor: 101 }, IE00B579F325: { isin: "IE00B579F325", participaciones: 2, valor: 100 },
+    XS0000000000: { isin: "XS0000000000", participaciones: 3, valor: 30 } };
+  const r = prediccionCartera(intradia, pos);
+  assert.equal(r.plan[0].esperado, 230);                       // 100 + 2·50 + 30 fijo
+  assert.deepEqual(r.sinPrediccion, ["XS0000000000"]);
+  assert.equal(r.actual.length, 1);                            // a las 12:00 falta el dato de B
+  assert.equal(r.actual[0].tipo, "estimado");
+  // Con correlación 0 la banda de la cartera es más estrecha que la suma de bandas
+  const s = Math.log(r.plan[2].sup / 230) / 1.2816;
+  assert.ok(s < (100 * 0.02 + 100 * 0.02) / 230);
+  assert.ok(Math.abs(r.calidad.mejora_pct) < 1e-9);            // 5 % y −5 % con el mismo peso
+  assert.equal(r.calidad.dias, 10);
+  assert.match(textoCalidad({ dias: 0 }), /empieza a aprender/);
+  assert.match(textoCalidad({ dias: 20, mejora_pct: 12, cobertura_pct: 78 }), /12 % menos/);
+  assert.equal(prediccionCartera(intradia, {}), null);
 });

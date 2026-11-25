@@ -11,7 +11,12 @@ Idioma: **castellano de España** en la interfaz, los comentarios, los commits y
 - `tests/`: `python -m pytest -q` y `node --test tests/web/logica.test.mjs`. Ambos tienen que pasar antes de
   cualquier commit.
 - `plantilla-datos/`: contenido inicial del repositorio PRIVADO de datos.
-- `docs/`: empieza por `00-vision.md` y `01-arquitectura.md`.
+- `docs/`: empieza por `00-vision.md` y `01-arquitectura.md`. La predicción intradía está en `docs/12`.
+- Workflows: `analisis-diario.yml` (06:43 UTC), `intradia.yml` (cada hora laborable; solo él guarda
+  `web/data/intradia_estado.json`), `publicar-web.yml`, `tests.yml` y `precios-cartera.yml` (reutilizable desde el
+  repositorio privado).
+- La pantalla "Cómo funciona" (`web/js/vistas/como.js`) explica la app al usuario: **si cambias una regla o un
+  modelo, actualízala también.**
 
 ## Reglas que no se rompen
 1. **Privacidad:** nada personal (perfil, cartera, contabilidad, tickers propios) entra en este repositorio ni en
@@ -26,7 +31,7 @@ Idioma: **castellano de España** en la interfaz, los comentarios, los commits y
 6. **Honestidad:** si un backtest sale mal, la web lo dice. No ajustes parámetros para que el pasado reciente
    salga bonito.
 7. **Funciones puras:** la lógica de negocio (`finanzas.js`, `diners.js`, `reco.js`, `perfil.js`,
-   `importar_tr.js`, `pipeline/senales.py`, `indicadores.py`) no toca el DOM ni la red. Cada cambio en ella
+   `importar_tr.js`, `intradia.js`, `pipeline/senales.py`, `indicadores.py`, `intradia.py`) no toca el DOM ni la red. Cada cambio en ella
    lleva su test.
 
 ## Comandos

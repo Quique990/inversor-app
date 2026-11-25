@@ -12,6 +12,7 @@ const VISTAS = {
   diners: ["Diners", () => import("./vistas/diners.js")],
   mercado: ["Mercado", () => import("./vistas/mercado.js")],
   ajustes: ["Ajustes", () => import("./vistas/ajustes.js")],
+  como: ["Cómo funciona", () => import("./vistas/como.js")],
 };
 
 export const S = { publico: {}, privado: {}, errores: [] };
@@ -20,7 +21,8 @@ async function cargarPublico() {
   const [mercado, universo, backtest, salud, indice] = await Promise.allSettled([
     store.leerPublico("mercado.json"), store.leerPublico("precios_universo.json"), store.leerPublico("backtest.json"),
     store.leerPublico("salud_fuentes.json"), store.leerPublico("historial/indice.json")]);
-  S.publico = { mercado: mercado.value, universo: universo.value, backtest: backtest.value, salud: salud.value, indice: indice.value || [] };
+  const intradia = await store.leerPublico("intradia.json").catch(() => null);
+  S.publico = { mercado: mercado.value, universo: universo.value, backtest: backtest.value, salud: salud.value, indice: indice.value || [], intradia };
 }
 
 async function cargarPrivado() {
@@ -51,7 +53,7 @@ export function calcular() {
     const bloque = cartera.activos[p.isin]?.bloque === "medio" ? "medio" : "largo";
     valorCartera[bloque] += v;
   }
-  const bloques = resumenDiners(contabilidad, valorCartera);
+  const bloques = resumenDiners(contabilidad, valorCartera, cartera);
   const reco = recomendar({ mercado: S.publico.mercado, perfil, pos, activos: cartera.activos, universoPorIsin, saldos: bloques });
   return { idx, pos, res, bloques, reco, universoPorIsin, huecoDe: (isin) => huecoDe(isin, cartera.activos, universoPorIsin) };
 }
@@ -78,7 +80,8 @@ export async function mostrar() {
     const modulo = await cargar();
     destruirTodas();
     const vista = document.getElementById("vista");
-    const contenido = await modulo.render({ S, calc: calcular(), guardar, refrescar: mostrar });
+    const recargarIntradia = async () => { S.publico.intradia = await store.leerPublico("intradia.json").catch(() => S.publico.intradia); mostrar(); };
+    const contenido = await modulo.render({ S, calc: calcular(), guardar, refrescar: mostrar, recargarIntradia });
     vista.replaceChildren(...(Array.isArray(contenido) ? contenido : [contenido]));
     window.scrollTo(0, 0);
   } catch (e) {

@@ -1,5 +1,5 @@
 import { abrirModal, campo, cerrarModal, claseSigno, descargar, eur, fecha, h, hoyISO, parseNumero, pct, tarjeta, toast, uid } from "../dom.js";
-import { avisoCorto, BLOQUES, evolucion, incrementoSemana, rentabilidadManual, repartirInteres, saldos } from "../diners.js";
+import { avisoCorto, BLOQUES, evolucion, incrementoSemana, posiblesDuplicados, recalcularRepartos, rentabilidadManual, repartirInteres, saldos, saldosNegativos } from "../diners.js";
 import { donut, lineas } from "../graficas.js";
 import { exportarExcel, importarDiners } from "../importar_excel.js";
 
@@ -7,9 +7,10 @@ export function render(ctx) {
   const { S, calc } = ctx;
   const c = S.privado.contabilidad;
   const b = calc.bloques;
+  const cartera = S.privado.cartera;
   const nodos = [];
 
-  const a300 = avisoCorto(c);
+  const a300 = avisoCorto(c, cartera);
   nodos.push(tarjeta(null,
     h("div", { class: "rejilla" }, kpi("Corto plazo", eur(b.corto)), kpi("Medio plazo", eur(b.medio)), kpi("Largo plazo", eur(b.largo)),
       kpi("Inversiones", eur(b.inversiones)), kpi("Total", eur(b.total))),
@@ -20,10 +21,20 @@ export function render(ctx) {
       h("button", { class: "sec", onclick: () => modalTransferencia(ctx) }, "+ Transferencia"),
       h("button", { class: "sec", onclick: () => modalInteres(ctx) }, "+ Intereses"))));
 
+  const negativos = saldosNegativos(c, cartera);
+  const dups = posiblesDuplicados(c, cartera);
+  if (negativos.length || dups.length) {
+    nodos.push(tarjeta("Revisa esto",
+      negativos.map((x) => h("div", { class: "aviso" }, `${BLOQUES[x.bloque]} en ${eur(x.saldo)}. Puede que alguna compra se pagara con dinero que no está en Diners: márcala como “Fuera de Diners” en Cartera, o corrige los saldos iniciales.`)),
+      dups.map(({ inv, nombreActivo }) => h("div", { class: "aviso" }, `“${inv.nombre}” (inversión manual) parece el mismo activo que “${nombreActivo}” de tu Cartera. Si es el mismo, se está sumando dos veces. `,
+        h("button", { class: "mini", onclick: async () => { inv.enCartera = true; await persistir(ctx, `Inversión ${inv.nombre}: ya está en Cartera`); } }, "Es el mismo"), " ",
+        h("button", { class: "mini sec", onclick: async () => { inv.distintaDeCartera = true; await persistir(ctx, `Inversión ${inv.nombre}: distinta de Cartera`); } }, "Son distintos")))));
+  }
+
   if (b.total > 0) {
     nodos.push(tarjeta("Clasificación del dinero", donut(["Corto", "Medio", "Largo", "Inversiones"], [b.corto, b.medio, b.largo, b.inversiones].map((x) => Math.max(0, x)))));
   }
-  const ev = evolucion(c);
+  const ev = evolucion(c, cartera);
   if (ev.length > 1) {
     nodos.push(tarjeta("Variación del dinero", lineas(ev.map((p) => p.fecha), [
       { nombre: "Corto", valores: ev.map((p) => p.corto), escalonada: true }, { nombre: "Medio", valores: ev.map((p) => p.medio), escalonada: true },
@@ -40,7 +51,7 @@ export function render(ctx) {
         h("td", {}, fecha(s.fecha), (s.gastos || []).some((g) => g.concepto) ? h("div", { class: "suave pequeno" }, s.gastos.map((g) => g.concepto).filter(Boolean).join(", ")) : null),
         h("td", { class: "num" }, eur((Number(s.paga) || 0) + (Number(s.extra) || 0))),
         h("td", { class: "num neg" }, eur((s.gastos || []).reduce((a, g) => a + Number(g.importe || 0), 0))),
-        h("td", { class: "num" }, eur(saldos(c, s.fecha).corto))))))
+        h("td", { class: "num" }, eur(saldos(c, s.fecha, cartera).corto))))))
       : h("p", { class: "suave" }, "Sin semanas registradas.")));
 
   // Transferencias
@@ -67,12 +78,13 @@ export function render(ctx) {
       h("tr", {}, h("th", {}, "Inversión"), h("th", { class: "num" }, "Inicial"), h("th", { class: "num" }, "Actual"), h("th", { class: "num" }, "Rent.")),
       c.inversionesManuales.map((i) => {
         const r = i.inicial ? ((Number(i.actual ?? i.inicial) - (Number(i.comisiones) || 0)) / i.inicial - 1) * 100 : null;
-        return h("tr", { onclick: () => modalInversion(ctx, i), style: { cursor: "pointer", opacity: i.acabada ? 0.55 : 1 } },
-          h("td", {}, i.nombre, h("div", { class: "suave pequeno" }, `${i.tipo === "fija" ? "Renta fija" : "Renta variable"} · ${i.largoPlazo !== false ? "largo" : "medio"} plazo${i.acabada ? " · acabada" : ""}`)),
+        return h("tr", { onclick: () => modalInversion(ctx, i), style: { cursor: "pointer", opacity: i.acabada || i.enCartera ? 0.55 : 1 } },
+          h("td", {}, i.nombre, h("div", { class: "suave pequeno" }, `${i.tipo === "fija" ? "Renta fija" : "Renta variable"} · ${i.largoPlazo !== false ? "largo" : "medio"} plazo${i.acabada ? " · acabada" : ""}${i.enCartera ? " · ya en Cartera (no suma)" : ""}`)),
           h("td", { class: "num" }, eur(i.inicial)), h("td", { class: "num" }, eur(i.actual)), h("td", { class: `num ${claseSigno(r)}` }, pct(r)));
       })))
       : null,
-    h("p", { class: "pequeno" }, `Renta fija: ${eur(rm.fija.beneficio)} (${pct(rm.fija.pct)}) · Renta variable: ${eur(rm.variable.beneficio)} (${pct(rm.variable.pct)})`),
+    h("p", { class: "pequeno" }, `Renta fija: ${eur(rm.fija.beneficio)} (${pct(rm.fija.pct)}) · Renta variable: ${eur(rm.variable.beneficio)} (${pct(rm.variable.pct)})`,
+      rm.historial.inicial ? ` · Historial (acabadas): ${eur(rm.historial.beneficio)} (${pct(rm.historial.pct)})` : ""),
     h("button", { class: "sec", onclick: () => modalInversion(ctx) }, "+ Inversión manual")));
 
   if (c.notas?.length) nodos.push(tarjeta("Tus instrucciones (del Excel)", h("ul", { class: "pequeno" }, c.notas.map((n) => h("li", {}, n)))));
@@ -118,7 +130,7 @@ function modalSemana(ctx, s = null) {
         gastos: [...lista.children].map((f) => f._leer()).filter((g) => g.importe > 0) };
       c.semanas = c.semanas.filter((x) => x.id !== nueva.id).concat(nueva);
       await persistir(ctx, `Semana ${nueva.fecha}: ${incrementoSemana(nueva).toFixed(2)} €`);
-      const a = avisoCorto(c);
+      const a = avisoCorto(c, ctx.S.privado.cartera);
       if (a) toast(`Corto plazo en ${a.saldo.toFixed(0)} €: toca pasar ${a.traspaso} € a medio plazo`, 4500);
     }, s ? async () => { c.semanas = c.semanas.filter((x) => x.id !== s.id); await persistir(ctx, "Borrar semana"); } : null));
 }
@@ -153,7 +165,7 @@ function modalInteres(ctx, i = null) {
   const calcular = () => {
     const imp = parseNumero(importe.value) || 0;
     const otros = { ...c, intereses: c.intereses.filter((x) => x.id !== i?.id) };
-    const r = repartirInteres(imp, saldos(otros, `${mes.value}-28`));
+    const r = repartirInteres(imp, saldos(otros, `${mes.value}-28`, ctx.S.privado.cartera));
     vista.textContent = `Reparto: ${r.largo.toFixed(2)} € a largo y ${r.medio.toFixed(2)} € a medio (${(r.pesoLargo * 100).toFixed(0)} % / ${(100 - r.pesoLargo * 100).toFixed(0)} %).`;
     return r;
   };
@@ -177,13 +189,24 @@ function modalInversion(ctx, inv = null) {
   const comisiones = h("input", { inputmode: "decimal", value: inv?.comisiones ?? "" });
   const largo = h("input", { type: "checkbox", checked: inv?.largoPlazo !== false });
   const acabada = h("input", { type: "checkbox", checked: !!inv?.acabada });
+  const fechaI = h("input", { type: "date", value: inv?.fecha || (inv ? "" : hoyISO()) });
+  const fechaFin = h("input", { type: "date", value: inv?.fechaFin || "" });
+  const pagado = h("select", {}, h("option", { value: "", selected: !inv?.pagadoDesde }, "No descontar (ya estaba fuera de los saldos)"),
+    ["largo", "medio", "corto"].map((k) => h("option", { value: k, selected: inv?.pagadoDesde === k }, `De ${BLOQUES[k].toLowerCase()}`)));
+  if (!inv) pagado.value = "largo";
+  const enCartera = h("input", { type: "checkbox", checked: !!inv?.enCartera });
   abrirModal(h("h2", {}, inv ? "Editar inversión" : "Nueva inversión manual"), campo("Nombre", nombre), campo("Tipo", tipo),
     h("div", { class: "form2" }, campo("Inversión inicial (€)", inicial), campo("Valor actual (€)", actual), campo("Comisiones (€)", comisiones)),
     h("label", { class: "opcion" }, largo, "Largo plazo (si no, medio plazo). La renta fija siempre cuenta como largo."),
+    h("div", { class: "form2" }, campo("Fecha de compra", fechaI), campo("Se pagó con", pagado)),
     h("label", { class: "opcion" }, acabada, "Acabada (pasa al historial, mantiene su configuración de plazo)"),
+    campo("Fecha en que acabó (el valor final vuelve al bloque que la pagó)", fechaFin),
+    h("label", { class: "opcion" }, enCartera, "Ya está en Cartera (no sumarla dos veces)"),
+    h("p", { class: "suave pequeno" }, "Si eliges un bloque, el dinero sale de ese bloque en la fecha de compra. Así no cuenta a la vez como saldo y como inversión."),
     botones(async () => {
       const n = { ...(inv || {}), id: inv?.id || uid(), nombre: nombre.value.trim() || "Inversión", tipo: tipo.value, inicial: parseNumero(inicial.value) || 0,
-        actual: parseNumero(actual.value), comisiones: parseNumero(comisiones.value) || 0, largoPlazo: tipo.value === "fija" ? true : largo.checked, acabada: acabada.checked };
+        actual: parseNumero(actual.value), comisiones: parseNumero(comisiones.value) || 0, largoPlazo: tipo.value === "fija" ? true : largo.checked, acabada: acabada.checked,
+        fecha: fechaI.value || null, pagadoDesde: pagado.value || null, fechaFin: acabada.checked ? (fechaFin.value || hoyISO()) : null, enCartera: enCartera.checked };
       if (Number.isNaN(n.actual)) n.actual = n.inicial;
       c.inversionesManuales = c.inversionesManuales.filter((x) => x.id !== n.id).concat(n);
       await persistir(ctx, `Inversión ${n.nombre}`);
@@ -198,14 +221,21 @@ function modalAjustesDiners(ctx) {
   const campos = Object.fromEntries(["corto", "medio", "largo"].map((k) => [k, h("input", { inputmode: "decimal", value: ini[k] ?? 0 })]));
   const umbral = h("input", { inputmode: "decimal", value: c.config.umbralCorto });
   const traspaso = h("input", { inputmode: "decimal", value: c.config.traspaso });
+  const compras = h("select", {}, h("option", { value: "descontar", selected: (c.config.comprasCartera || "descontar") === "descontar" }, "Salen del bloque del ETF (largo o medio)"),
+    h("option", { value: "no", selected: c.config.comprasCartera === "no" }, "No se descuentan (se pagan con dinero fuera de Diners)"));
+  const recalc = h("input", { type: "checkbox", checked: true });
   abrirModal(h("h2", {}, "Saldos iniciales y reglas"),
     h("p", { class: "suave pequeno" }, "Saldo de cada bloque ANTES del primer movimiento registrado. Los saldos actuales se calculan solos sumando semanas, transferencias e intereses."),
     campo("Fecha de los saldos iniciales", f), h("div", { class: "form2" }, campo("Corto (€)", campos.corto), campo("Medio (€)", campos.medio), campo("Largo (€)", campos.largo)),
     h("h3", {}, "Regla del corto plazo"), h("div", { class: "form2" }, campo("Avisar al llegar a (€)", umbral), campo("Cantidad a traspasar (€)", traspaso)),
+    h("h3", {}, "Compras de la Cartera"), campo("El dinero de las compras de ETF posteriores a la fecha inicial…", compras),
+    h("p", { class: "suave pequeno" }, "Cada operación puede tener su propia opción en Cartera → Editar."),
+    h("label", { class: "opcion" }, recalc, "Recalcular el reparto de los intereses ya guardados con estos saldos"),
     botones(async () => {
       c.saldosIniciales = { fecha: f.value || null, corto: parseNumero(campos.corto.value) || 0, medio: parseNumero(campos.medio.value) || 0, largo: parseNumero(campos.largo.value) || 0 };
-      c.config = { umbralCorto: parseNumero(umbral.value) || 300, traspaso: parseNumero(traspaso.value) || 150 };
-      await persistir(ctx, "Ajustes de Diners");
+      c.config = { ...c.config, umbralCorto: parseNumero(umbral.value) || 300, traspaso: parseNumero(traspaso.value) || 150, comprasCartera: compras.value };
+      const n = recalc.checked ? recalcularRepartos(c, ctx.S.privado.cartera) : 0;
+      await persistir(ctx, `Ajustes de Diners${n ? ` (${n} repartos de intereses recalculados)` : ""}`);
     }));
 }
 
@@ -216,12 +246,14 @@ function modalImportarExcel(ctx) {
   fichero.addEventListener("change", async () => {
     zona.replaceChildren(h("p", { class: "suave" }, "Leyendo…"));
     try {
-      const r = await importarDiners(await fichero.files[0].arrayBuffer());
-      const s = saldos(r.contabilidad);
+      const r = await importarDiners(await fichero.files[0].arrayBuffer(), ctx.S.privado.cartera);
+      const s = saldos(r.contabilidad, null, ctx.S.privado.cartera);
       zona.replaceChildren(
         h("p", {}, `Encontrado: ${r.resumen.semanas} semanas con movimientos, ${r.resumen.transferencias} transferencias, ${r.resumen.intereses} meses de intereses, ${r.resumen.inversiones} inversiones y ${r.resumen.notas} instrucciones.`),
         h("p", {}, `Saldos resultantes: corto ${eur(s.corto)}, medio ${eur(s.medio)}, largo ${eur(s.largo)}.`),
         ...r.avisos.map((a) => h("div", { class: "aviso" }, a)),
+        r.revision?.length ? h("details", {}, h("summary", {}, `Revisión de tu Excel (${r.revision.length} observaciones)`),
+          h("ul", { class: "pequeno" }, r.revision.map((x) => h("li", {}, x)))) : null,
         h("div", { class: "aviso rojo" }, "Esto SUSTITUYE tu contabilidad actual de la app."),
         h("button", { onclick: async () => { ctx.S.privado.contabilidad = r.contabilidad; await persistir(ctx, "Importar Diners.xlsx"); } }, "Importar"));
     } catch (e) {

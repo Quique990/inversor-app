@@ -3,6 +3,8 @@ import { eficaciaSenales, esApalancado, historico, tirCartera } from "../finanza
 import { donut, lineas } from "../graficas.js";
 import { HUECOS } from "../perfil.js";
 import { convertir, detectarColumnas, fusionar, parsearCSV } from "../importar_tr.js";
+import { PAGADO_DESDE } from "../diners.js";
+import { tarjetaIntradia } from "./intradia.js";
 
 const ORIGEN = { plan: "Plan", extra: "Extra (señal)", manual: "Manual", importado: "Importado" };
 
@@ -18,6 +20,7 @@ export function render(ctx) {
   if (!cartera.operaciones.length) {
     nodos.push(tarjeta("Tu cartera está vacía",
       h("p", {}, "Añade tus compras a mano o importa el CSV de Trade Republic (Perfil → Extractos → Exportar transacciones)."), acciones));
+    nodos.push(tarjetaIntradia(ctx));
     return nodos;
   }
 
@@ -29,6 +32,8 @@ export function render(ctx) {
       kpi("TIR anual", tir === null ? "— (<3 meses)" : pct(tir), claseSigno(tir)), kpi("Realizado + dividendos", eur(res.realizado), claseSigno(res.realizado))),
     res.sinPrecio.length ? h("div", { class: "aviso" }, `Sin precio actualizado: ${res.sinPrecio.map((i) => cartera.activos[i]?.nombre || i).join(", ")}. Pon su ticker de Yahoo (para el workflow privado) o un precio manual tocando el activo.`) : null,
     h("div", { style: { marginTop: "10px" } }, acciones)));
+
+  nodos.push(tarjetaIntradia(ctx));
 
   // Evolución
   const hist = historico(cartera.operaciones, calc.idx);
@@ -154,6 +159,7 @@ export function modalOperacion(ctx, preset = {}) {
   const importe = h("input", { inputmode: "decimal", value: preset.importe ?? "", placeholder: "€ invertidos (sin comisión)" });
   const comision = h("input", { inputmode: "decimal", value: preset.comision ?? (preset.origen === "plan" ? 0 : 1) });
   const origen = h("select", {}, Object.entries(ORIGEN).map(([k, v]) => h("option", { value: k, selected: (preset.origen || "manual") === k }, v)));
+  const pagado = h("select", {}, Object.entries(PAGADO_DESDE).map(([k, v]) => h("option", { value: k, selected: (preset.pagadoDesde || "auto") === k }, v)));
   const autocompletar = () => {
     const p = parseNumero(part.value), pr = parseNumero(precio.value), im = parseNumero(importe.value);
     if (p > 0 && pr > 0 && !(im > 0)) importe.value = (p * pr).toFixed(2);
@@ -168,7 +174,8 @@ export function modalOperacion(ctx, preset = {}) {
     const isin = activo.value === "__otro" ? isinI.value.trim().toUpperCase() : activo.value;
     if (!/^[A-Z]{2}[A-Z0-9]{9}\d$/.test(isin)) { error.textContent = "ISIN no válido (12 caracteres, p. ej. IE00BK5BQT80)."; return; }
     const op = { id: preset.id || uid(), fecha: fechaI.value, tipo: tipo.value, isin, participaciones: parseNumero(part.value) || 0,
-      precio: parseNumero(precio.value) || 0, importe: parseNumero(importe.value) || 0, comision: parseNumero(comision.value) || 0, origen: origen.value };
+      precio: parseNumero(precio.value) || 0, importe: parseNumero(importe.value) || 0, comision: parseNumero(comision.value) || 0, origen: origen.value,
+      pagadoDesde: pagado.value === "auto" ? undefined : pagado.value };
     if (op.tipo !== "dividendo" && !(op.participaciones > 0 && op.importe > 0)) { error.textContent = "Faltan participaciones o importe."; return; }
     if (!cartera.activos[isin]) {
       const u = Object.entries(universo).find(([, i]) => i.isin === isin);
@@ -187,8 +194,8 @@ export function modalOperacion(ctx, preset = {}) {
     h("div", { class: "form2" }, campo("Fecha", fechaI), campo("Tipo", tipo)),
     campo("Activo", activo), isinI, nombreI,
     h("div", { class: "form2" }, campo("Participaciones", part), campo("Precio (€)", precio), campo("Importe (€)", importe), campo("Comisión (€)", comision)),
-    campo("Origen", origen),
-    h("p", { class: "suave pequeno" }, "Rellena dos de los tres (participaciones, precio, importe) y se calcula el tercero. Marca “Extra (señal)” si la compra la hiciste por una recomendación de la app."),
+    h("div", { class: "form2" }, campo("Origen", origen), campo("Dinero en Diners", pagado)),
+    h("p", { class: "suave pequeno" }, "“Dinero en Diners”: de qué bloque sale el dinero de la compra (o adónde vuelve el de una venta). Así no cuenta dos veces, como saldo y como inversión. Rellena dos de los tres (participaciones, precio, importe) y se calcula el tercero. Marca “Extra (señal)” si la compra la hiciste por una recomendación de la app."),
     error,
     h("div", { class: "fila" }, h("button", { onclick: guardarOp }, "Guardar"), editando ? h("button", { class: "peligro", onclick: borrar }, "Borrar") : null,
       h("button", { class: "sec", onclick: cerrarModal }, "Cancelar")));

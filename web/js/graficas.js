@@ -26,10 +26,11 @@ export function lineas(etiquetas, series, { baja = false, formatoY = null, punto
   const colores = COLORES();
   const datasets = series.map((s, i) => ({
     label: s.nombre, data: s.valores, borderColor: s.color || colores[i % colores.length], backgroundColor: s.relleno || "transparent",
-    fill: !!s.relleno, borderWidth: 2, pointRadius: 0, tension: 0, stepped: !!s.escalonada, borderDash: s.discontinua ? [5, 4] : undefined, spanGaps: true,
+    fill: s.fill ?? !!s.relleno, borderWidth: s.ancho ?? 2, pointRadius: s.radio ?? 0, pointBackgroundColor: s.color, tension: 0, stepped: !!s.escalonada, borderDash: s.discontinua ? [5, 4] : undefined, spanGaps: s.huecos === undefined ? true : !s.huecos,
   }));
   if (puntos) datasets.push({ type: "scatter", label: puntos.nombre, data: puntos.datos, pointRadius: 4, pointBackgroundColor: puntos.color || colores[2], showLine: false });
   const opciones = base();
+  if (series.some((s) => s.sinLeyenda)) opciones.plugins.legend.labels.filter = (item) => !series[item.datasetIndex]?.sinLeyenda;
   if (formatoY) opciones.scales.y.ticks.callback = formatoY;
   requestAnimationFrame(() => activas.add(new window.Chart(lienzo, { type: "line", data: { labels: etiquetas, datasets }, options: opciones })));
   return caja;

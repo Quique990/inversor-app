@@ -1,7 +1,7 @@
 // Importación y exportación de Excel (Diners.xlsx) con ExcelJS (vendor/, se carga solo al usarlo).
 import { cargarScript, uid } from "./dom.js";
 import { POR_DEFECTO } from "./store.js";
-import { incrementoSemana, repartirInteres, saldos } from "./diners.js";
+import { incrementoSemana, recalcularRepartos, saldos } from "./diners.js";
 
 async function excel() {
   await cargarScript("vendor/exceljs.min.js");
@@ -71,12 +71,13 @@ export function mesDesdeTexto(texto, anoPrevio) {
 const BLOQUE = { "corto plazo": "corto", "medio plazo": "medio", "largo plazo": "largo", extraordinari: "extraordinario", extraordinario: "extraordinario" };
 
 // ------------------------------------------------------------------ importación
-export async function importarDiners(arrayBuffer) {
+export async function importarDiners(arrayBuffer, cartera = null) {
   const ExcelJS = await excel();
   const wb = new ExcelJS.Workbook();
   await wb.xlsx.load(arrayBuffer);
   const c = POR_DEFECTO.contabilidad();
   const avisos = [];
+  const revision = []; // observaciones sobre las fórmulas del Excel original
   const hoja = (nombre) => wb.worksheets.find((w) => norm(w.name) === norm(nombre));
 
   // Corto plazo (semanal)
@@ -85,9 +86,12 @@ export async function importarDiners(arrayBuffer) {
     const cab = buscarCabecera(cp, "Semana");
     const col = columnas(cp, cab.fila, 1, 12);
     let primera = true;
+    const sinFormula = [];
     for (let r = cab.fila + 1; r <= cp.rowCount; r++) {
       const f = valor(cp.getCell(r, col.semana));
       if (!(f instanceof Date)) continue;
+      const inc = col["incremento semana"] ? cp.getCell(r, col["incremento semana"])?.value : null;
+      if (!primera && col["incremento semana"] && !(inc && typeof inc === "object" && ("formula" in inc || "sharedFormula" in inc))) sinFormula.push(r);
       if (primera) {
         // Saldo inicial del corto plazo: número al principio de la fórmula de Total (=67.04-D2-E2)
         const tot = cp.getCell(r, col.total)?.value;
@@ -101,6 +105,9 @@ export async function importarDiners(arrayBuffer) {
         gastos: gastos.map((g) => ({ importe: g, concepto: "" })) };
       if (semana.paga || semana.extra || semana.gastos.length) c.semanas.push(semana);
     }
+    if (sinFormula.length) revision.push(`Corto Plazo: la columna "Incremento Semana" no tenía fórmula en ${sinFormula.length} filas (de la ${sinFormula[0]} a la ${sinFormula.at(-1)}). Lo que apuntaras ahí no sumaba al Total. La app calcula todas las semanas igual: paga + extra − gastos.`);
+    const tot1 = cp.getCell(cab.fila + 1, col.total)?.value?.formula || "";
+    if (/^\s*\d/.test(tot1)) revision.push(`Corto Plazo: la primera fila del Total era "=${tot1}": restaba solo los gastos 1 y 2 e ignoraba paga, extra y gasto 3. La app toma ${c.saldosIniciales.corto} € como saldo inicial y trata esa semana como las demás.`);
   } else avisos.push("No se encontró la hoja 'Corto Plazo'.");
 
   // Transferencias
@@ -129,6 +136,7 @@ export async function importarDiners(arrayBuffer) {
       if (k && v !== null) sx[k] = v;
     }
     if (Object.keys(sx).length) saldosExcel = sx;
+    else revision.push("General: los saldos de Largo, Medio, Inversions, Corto y Total estaban vacíos (se escribían a mano). En la app se calculan solos a partir de los movimientos.");
     const cab = buscarCabecera(g, "Interesos") || buscarCabecera(g, "Intereses");
     if (cab) {
       let ano = null;
@@ -143,6 +151,9 @@ export async function importarDiners(arrayBuffer) {
         interesesBrutos.push({ mes, importe: imp, cuadrado: valor(g.getCell(r, cab.col + 6)) === true });
       }
       c._interesesPendientes = interesesBrutos;
+      const fJ = g.getCell(cab.fila + 1, cab.col + 2)?.value?.formula || "";
+      if (fJ.includes("$B$2")) revision.push(`General: el peso de cada mes de intereses era "=${fJ}" en todas las filas, es decir, el saldo de HOY. Cada vez que cambiaba un saldo se reescribían los repartos de meses pasados (y si los saldos están vacíos, da #¡DIV/0!). En la app cada reparto usa los saldos de su mes y queda fijado.`);
+      revision.push("General: los intereses repartidos no se sumaban a los saldos de largo y medio plazo (si lo hubieras hecho con fórmula habría sido una referencia circular). En la app se suman solos.");
     }
     const instr = buscarCabecera(g, "Instruccions", 60, 30);
     if (instr) {
@@ -156,6 +167,9 @@ export async function importarDiners(arrayBuffer) {
   // Inversiones manuales
   const inv = hoja("Inversions") || hoja("Inversiones");
   if (inv) {
+    let columnaEntera = false;
+    inv.eachRow((row) => row.eachCell((cel) => { if (/SUM\([A-Z]:[A-Z]\)/i.test(cel.value?.formula || "")) columnaEntera = true; }));
+    if (columnaEntera) revision.push("Inversions: la rentabilidad total usaba SUM(B:B) y SUM(C:C), columnas enteras, así que mezclaba las inversiones activas con las del historial. La app separa activas e historial.");
     const filasTabla = (fila, colIni, colFin) => {
       const col = columnas(inv, fila, colIni, colFin);
       const filas = [];
@@ -197,27 +211,27 @@ export async function importarDiners(arrayBuffer) {
     }
   }
 
-  // Intereses: reparto fijado con los saldos que había en cada momento
+  // Intereses: se registran y su reparto se fija con los saldos de cada momento (al final, cuando ya se conocen los saldos iniciales)
   for (const i of c._interesesPendientes || []) {
-    const fecha = `${i.mes}-28`;
-    const s = saldos(c, fecha);
-    c.intereses.push({ id: uid(), mes: i.mes, fecha, importe: i.importe, reparto: repartirInteres(i.importe, s), cuadrado: i.cuadrado });
+    c.intereses.push({ id: uid(), mes: i.mes, fecha: `${i.mes}-28`, importe: i.importe, reparto: { largo: 0, medio: 0, pesoLargo: 0.5 }, cuadrado: i.cuadrado });
   }
   delete c._interesesPendientes;
+  recalcularRepartos(c, cartera);
 
   // Ajuste para que los saldos actuales coincidan con los del Excel (si estaban rellenos)
   if (saldosExcel) {
-    const calc = saldos(c);
+    const calc = saldos(c, null, cartera);
     for (const k of ["corto", "medio", "largo"]) {
       if (saldosExcel[k] !== undefined) c.saldosIniciales[k] = Math.round((c.saldosIniciales[k] + saldosExcel[k] - calc[k]) * 100) / 100;
     }
+    recalcularRepartos(c, cartera);
     avisos.push("Saldos iniciales ajustados para cuadrar con los de la hoja General.");
   } else {
-    avisos.push("La hoja General no tenía saldos: revisa los saldos iniciales de medio y largo plazo en Diners → Ajustes.");
+    avisos.push("La hoja General no tenía saldos: revisa los saldos iniciales de medio y largo plazo en Diners → Saldos iniciales y reglas (al guardarlos se recalcula el reparto de los intereses).");
   }
 
   return { contabilidad: c, resumen: { semanas: c.semanas.length, transferencias: c.transferencias.length, intereses: c.intereses.length,
-    inversiones: c.inversionesManuales.length, notas: c.notas.length, saldoInicialCorto: c.saldosIniciales.corto }, avisos };
+    inversiones: c.inversionesManuales.length, notas: c.notas.length, saldoInicialCorto: c.saldosIniciales.corto }, avisos, revision };
 }
 
 // ------------------------------------------------------------------ exportación

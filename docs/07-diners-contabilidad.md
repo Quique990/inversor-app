@@ -26,16 +26,40 @@ Migración del Excel `Diners.xlsx` (hojas General, Transferencies, Inversions, C
 5. **Límites fijos** (20 filas en la evolución del dinero, 3 gastos por semana): ahora no hay límite y cada gasto
    puede llevar un concepto.
 
+## Revisión de noviembre de 2026 (fórmulas y duplicados)
+Revisado fórmula a fórmula contra `Diners_4.xlsx`. Al importar, la app enseña estas observaciones ("Revisión de tu
+Excel"):
+- `Corto Plazo!G3:G52` no tenía fórmula (solo desde la fila 53): lo apuntado ahí no sumaba al Total.
+- `Corto Plazo!H2 = 67.04-D2-E2` ignoraba paga, extra y gasto 3 de la primera semana.
+- `General!J3:J6 = $B$2/($B$2+$B$3)`: el mismo peso (el saldo de HOY) en todas las filas → reescribía el pasado y
+  daba #¡DIV/0! con saldos vacíos. Los intereses repartidos tampoco se sumaban a los saldos (habría sido circular).
+- `Inversions!I17 = (SUM(C:C)-SUM(B:B))/SUM(B:B)`: columnas enteras → mezclaba activas e historial.
+
+**Doble conteo corregido en la app:**
+1. *Compras de la Cartera.* Antes, comprar un ETF no restaba nada del bloque que la pagaba, así que el dinero
+   contaba como saldo y como inversión. Ahora cada operación de la cartera posterior a `saldosIniciales.fecha`
+   mueve dinero del bloque del activo (`activos[isin].bloque`, largo por defecto): compra = −(importe + comisión);
+   venta y dividendo = +(importe − comisión). Se cambia por operación con `pagadoDesde`
+   (`largo|medio|corto|fuera`) o para todo con `config.comprasCartera = "no"`.
+2. *Inversiones manuales repetidas en Cartera.* `posiblesDuplicados()` busca nombres equivalentes (SP500 ↔
+   S&P 500, gold ↔ oro, ibex…) y la vista pide confirmar: `enCartera: true` (no suma) o `distintaDeCartera: true`.
+3. *Inversiones manuales nuevas* pueden llevar `fecha` + `pagadoDesde` (salen del bloque) y, al acabar, `fechaFin`
+   (el valor final menos comisiones vuelve al mismo bloque). Las importadas del Excel no llevan origen.
+4. *Repartos de intereses.* `recalcularRepartos()` los recalcula en orden con los saldos de cada mes. Se ejecuta al
+   importar y, opcionalmente, al cambiar los saldos iniciales.
+5. Un saldo negativo se avisa en "Revisa esto" (suele indicar una compra pagada con dinero de fuera de Diners).
+
 ## Modelo de datos (`contabilidad.json`)
 ```jsonc
 {
   "version": 1,
-  "config": { "umbralCorto": 300, "traspaso": 150 },
+  "config": { "umbralCorto": 300, "traspaso": 150, "comprasCartera": "descontar" },
   "saldosIniciales": { "fecha": "2025-12-28", "corto": 67.04, "medio": 0, "largo": 0 },
   "semanas": [{ "id": "…", "fecha": "2026-01-04", "paga": 50, "extra": 0, "gastos": [{ "importe": 12.5, "concepto": "cine" }] }],
   "transferencias": [{ "id": "…", "fecha": "2026-08-17", "cantidad": 60, "concepto": "", "de": "extraordinario", "a": "medio" }],
   "intereses": [{ "id": "…", "mes": "2026-01", "fecha": "2026-01-28", "importe": 8.02, "reparto": { "largo": 4.01, "medio": 4.01, "pesoLargo": 0.5 }, "cuadrado": true }],
-  "inversionesManuales": [{ "id": "…", "nombre": "Interés fijo USD 2026", "tipo": "fija", "inicial": 0, "actual": 0, "comisiones": 0, "caduca": "2026-12-31", "largoPlazo": true, "acabada": false }],
+  "inversionesManuales": [{ "id": "…", "nombre": "Interés fijo USD 2026", "tipo": "fija", "inicial": 0, "actual": 0, "comisiones": 0, "caduca": "2026-12-31", "largoPlazo": true, "acabada": false,
+      "fecha": null, "pagadoDesde": null, "fechaFin": null, "enCartera": false }],
   "notas": ["Instrucciones importadas del Excel"]
 }
 ```

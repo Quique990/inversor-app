@@ -1,0 +1,71 @@
+name: Predicción intradía
+
+# Cada hora en días laborables, de 07:13 a 23:13 hora de Madrid (los cron van en UTC; se cubre invierno y verano
+# y el propio script no hace nada fuera del horario de Trade Republic). En repositorios públicos es gratis.
+# GitHub puede retrasar las ejecuciones programadas 10-30 minutos.
+on:
+  schedule:
+    - cron: "13 5-22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  actions: read
+  id-token: write
+
+concurrency:
+  group: intradia
+  cancel-in-progress: false
+
+jobs:
+  prever:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      activo: ${{ steps.horario.outputs.activo }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - id: horario
+        run: |
+          H=$(TZ=Europe/Madrid date +%H)
+          if [ "$H" -ge 7 ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "activo=1" >> "$GITHUB_OUTPUT"; else echo "activo=0" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.horario.outputs.activo == '1'
+        run: pip install -r requirements.txt
+      - name: Calcular previsión
+        if: steps.horario.outputs.activo == '1'
+        env:
+          FORZAR: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+        run: python -m pipeline.intradia
+      - name: Guardar el plan del día (solo cuando es nuevo)
+        if: steps.horario.outputs.activo == '1'
+        run: |
+          git config user.name "intradia[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- web/data/intradia_estado.json || [ -n "$(git status --porcelain -- web/data/intradia_estado.json)" ]; then
+            git add web/data/intradia.json web/data/intradia_estado.json
+            git commit -m "Intradía: plan del $(TZ=Europe/Madrid date +%F)"
+            git pull --rebase -X theirs --autostash origin main || true
+            git push
+          fi
+      - if: steps.horario.outputs.activo == '1'
+        uses: actions/configure-pages@v5
+      - if: steps.horario.outputs.activo == '1'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: web
+
+  desplegar:
+    needs: prever
+    if: needs.prever.outputs.activo == '1'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4

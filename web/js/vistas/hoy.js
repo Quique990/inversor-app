@@ -36,7 +36,7 @@ export function render({ S, calc, guardar, refrescar }) {
 
   // Recomendación personal
   const acciones = [...calc.reco.acciones];
-  const a300 = avisoCorto(S.privado.contabilidad);
+  const a300 = avisoCorto(S.privado.contabilidad, S.privado.cartera);
   const tuya = tarjeta("Para ti",
     ...acciones.map((a) => h("div", { class: `aviso ${a.nivel}` }, a.texto, a.detalle ? h("div", { class: "pequeno" }, a.detalle) : null)));
   if (calc.reco.extra) {

@@ -8,6 +8,8 @@ export function render(ctx) {
   const cfg = store.leerConfig();
   const nodos = [];
 
+  nodos.push(tarjeta(null, h("p", { style: { margin: 0 } }, "¿Quieres saber qué hace la app y cómo decide? ", h("a", { href: "#/como" }, "Cómo funciona"))));
+
   // Conexión
   nodos.push(tarjeta("Dónde se guardan tus datos",
     cfg.modo === "github"
