@@ -55,6 +55,7 @@ def ejecutar(dir_datos: Path, buscar=buscar_por_isin, serie=yahoo_serie) -> dict
     salida = {"generado": ahora_iso(), "series": {}, "tickers": {}, "fallos": {}}
     candidatos, salida["fallos"] = resolver_tickers(activos, previo.get("tickers") or {}, buscar)
     candidatos["__EURUSD"] = ["EURUSD=X"]
+    candidatos["__EURGBP"] = ["EURGBP=X"]  # para cotizaciones en libras o peniques (Londres)
     for clave, lista in candidatos.items():
         errores = []
         reserva = None  # cotización en una moneda que la web no convierte (p. ej. peniques): solo si no hay otra

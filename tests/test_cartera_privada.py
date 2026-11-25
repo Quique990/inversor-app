@@ -117,3 +117,5 @@ def test_intradia_de_un_activo_en_dolares(tmp_path):
     assert abs(real["valor"] - usd[I.instante(d, "12:00")] / 1.25) < 1e-3  # pasado a euros
     assert a["modelo"]["indicador"] == "ES=F"
     assert I.cierre_por_defecto("ABC.DE") == "17:30" and I.cierre_por_defecto("ABC") is None
+    t0 = I.instante(d, "12:00")
+    assert I.a_euros([(t0, 25000.0)], [(t0, 0.8)], 100.0) == [(t0, 312.5)]  # peniques -> euros

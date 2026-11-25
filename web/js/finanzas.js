@@ -35,6 +35,7 @@ export function indicePrecios(precios, universo, activos = {}, intradia = null) 
   }
   const fx = precios?.series?.__EURUSD?.puntos || uni.series?.EURUSD || null;
   idx.__EURUSD = fx;
+  idx.__EURGBP = precios?.series?.__EURGBP?.puntos || null; // libras por euro (solo si tienes algo en libras)
   return idx;
 }
 
@@ -60,11 +61,15 @@ export function precioEUR(idx, isin, fecha = null) {
   if (!fecha && p.intradia) return p.intradia.valor;
   const v = fecha ? valorEn(p.puntos, fecha) : p.ultimo?.[1];
   if (v === null || v === undefined) return null;
-  if (p.moneda && p.moneda !== "EUR" && p.moneda === "USD" && idx.__EURUSD) {
+  if (p.moneda === "USD" && idx.__EURUSD) {
     const fx = fecha ? valorEn(idx.__EURUSD, fecha) : idx.__EURUSD.at(-1)[1];
     return fx ? v / fx : v;
   }
-  if (p.moneda === "GBp") return v / 100; // peniques
+  if (p.moneda === "GBp" || p.moneda === "GBP") {
+    const libras = p.moneda === "GBp" ? v / 100 : v; // GBp = peniques
+    const fx = idx.__EURGBP ? (fecha ? valorEn(idx.__EURGBP, fecha) : idx.__EURGBP.at(-1)[1]) : null;
+    return fx ? libras / fx : libras;
+  }
   return v;
 }
 

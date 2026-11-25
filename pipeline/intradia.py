@@ -414,15 +414,16 @@ def cierre_por_defecto(ticker: str) -> str | None:
     return "17:30" if ticker.upper().endswith(SUFIJOS_1730) else None
 
 
-def a_euros(reales: Puntos, eurusd: Puntos | None) -> Puntos:
-    """Precios en USD -> EUR con el EUR/USD de cada momento (EURUSD=X son USD por EUR)."""
-    if not eurusd:
-        raise ValueError("Sin EUR/USD para convertir un activo en dólares")
+def a_euros(reales: Puntos, cambio: Puntos | None, divisor: float = 1.0) -> Puntos:
+    """Precios en otra moneda -> EUR con el cambio de cada momento (EURUSD=X son USD por EUR; EURGBP=X, GBP por
+    EUR). `divisor` = 100 para cotizaciones en peniques (GBp)."""
+    if not cambio:
+        raise ValueError("Sin tipo de cambio para pasar el activo a euros")
     salida: Puntos = []
     for t, v in reales:
-        fx = ultimo_hasta(eurusd, t) or (eurusd[0] if eurusd else None)
+        fx = ultimo_hasta(cambio, t) or cambio[0]
         if fx and fx[1] > 0:
-            salida.append((t, v / fx[1]))
+            salida.append((t, v / divisor / fx[1]))
     return salida
 
 
@@ -463,6 +464,8 @@ def ejecutar(ahora: datetime | None = None, horario: Callable = yahoo_horario, d
             reales = puntos(ticker, etf.get("cierre_intradia", cierre_por_defecto(ticker)))
             if etf.get("moneda") == "USD":
                 reales = a_euros(reales, eurusd)
+            elif etf.get("moneda") in ("GBp", "GBP"):
+                reales = a_euros(reales, puntos("EURGBP=X", None), 100.0 if etf["moneda"] == "GBp" else 1.0)
             salud.bien(f"yahoo_60m:{ticker}", f"{len(reales)} puntos")
         except Exception as e:  # noqa: BLE001
             salud.mal(f"yahoo_60m:{ticker}", str(e))

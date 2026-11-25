@@ -223,6 +223,10 @@ test("Precio actual: el último dato intradía manda sobre el cierre de días an
   const idx3 = indicePrecios(null, universo, {}, { ...intra, fecha: "2025-12-01" });
   assert.equal(precioEUR(idx3, "IE00BK5BQT80"), 120);
   assert.equal(fuentePrecio(idx3, "IE00BK5BQT80").tipo, "cierre");
+  // Cotización de Londres en peniques: /100 y de libras a euros
+  const precios = { series: { XS0000000001: { moneda: "GBp", puntos: [["2026-01-02", 25000]], ultimo: ["2026-01-02", 25000] },
+    __EURGBP: { puntos: [["2026-01-01", 0.8]] } } };
+  assert.equal(precioEUR(indicePrecios(precios, universo, {}), "XS0000000001"), 312.5);
 });
 
 test("Intradía: fusiona la previsión pública con la privada del mismo día", () => {
