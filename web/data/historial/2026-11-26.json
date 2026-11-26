@@ -1,0 +1,1485 @@
+{
+ "fecha": "2026-11-26",
+ "generado": "2026-11-26T08:14:25+00:00",
+ "resumen": "Temas que dominan hoy: guerra comercial / aranceles / sanciones (intensidad 3/3); conflicto militar / invasión / ataque entre estados (intensidad 3/3); elecciones / incertidumbre política relevante (intensidad 2/3). Si aportas extra, hazlo en varias partes; la caída podría prolongarse. (Resumen automático sin IA.)",
+ "riesgos_a_vigilar": [],
+ "tono_global": null,
+ "ia": "ninguna",
+ "eventos": [
+  {
+   "tipo": "aranceles_sanciones",
+   "nombre": "Guerra comercial / aranceles / sanciones",
+   "intensidad": 3,
+   "titulares": 44,
+   "ejemplos": [
+    {
+     "titulo": "US announces new tariffs on host of countries including China",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "North Korea expels Swiss diplomat in sanctions row",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/cq0l34e4kkr5o?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "What we know about Trump's Thanksgiving tariffs",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/videos/c3x29v11ed1xo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "'Unacceptable': China, EU among major economies against new US tariffs",
+     "fuente": "France 24",
+     "url": "https://www.france24.com/en/americas/20261126-unacceptable-major-economies-push-back-against-new-us-tariffs"
+    },
+    {
+     "titulo": "'Unacceptable': Major economies push back against new US tariffs",
+     "fuente": "France 24",
+     "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOSzlzNkVzNEdFVU9tanZOU0tVbWJxVW9oV2VueklTWlU5bDNSbFFLNkRzbEZlRGVJVnkzWjk5cGdLZzdmXy1PNmtHTHROU0VPY1ZSdk1QUmVZWVYzQ0xSWXhHUWxtVXd4M0xvSHRpNFNiNkdWMm9sRW16ZjktcEg5dnl6bWx1a0pKRlo2bXl4VE1yNTlqTVpnTFF6WVJhd2dWSlhXQVhMek55Nkk?oc=5"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 1,
+    "oro": 1,
+    "dolar": 0,
+    "petroleo": -1
+   },
+   "historia": {
+    "nota": "Abril 2025: el S&P 500 cayó ~12% en 4 días tras los aranceles del 2 de abril, subió un 9.5% en un día al anunciarse la pausa y superó máximos en menos de 20 semanas. El rebote se debió sobre todo a la marcha atrás de la política, no a que el shock fuera inocuo.",
+    "fuente": "AP; BIS Quarterly Review (sept. 2025)"
+   },
+   "matices": [
+    {
+     "Mercado muy sensible a titulares de \"pausa\" o \"acuerdo\"": "movimientos bruscos en ambos sentidos."
+    },
+    {
+     "No vender en el pánico inicial": "el riesgo de perderse el rebote es alto."
+    }
+   ]
+  },
+  {
+   "tipo": "conflicto_militar",
+   "nombre": "Conflicto militar / invasión / ataque entre estados",
+   "intensidad": 3,
+   "titulares": 21,
+   "ejemplos": [
+    {
+     "titulo": "As foreign troops withdraw from Somalia, could al-Shabab take over?",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/ck62y23z58yeo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "Russia's own figures show it has lost nearly 500,000 people in Ukraine war",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/cmx27g533zwyo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "My family were killed in Ukraine. My mum blamed Zelensky's troops - the truth is complicated",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/cw24e17v9e51o?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "Ukraine War, Day 1,736: Trump Mega-Donor Acquires Overseas Assets of Russia's Largest Private Oil Company",
+     "fuente": "EA WorldView",
+     "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE52NUI2OExHNW9GUnZEeXlRbjNzTlUzOTM0SURXWkV0Vk5Vd1JwN19reE9MdDJKbkxPRy00bklDNDFSYUxJQkFILVZ0akJiUUNJQ010aUZ3NEFrWmp4eEp5c3hYaDZhVzY5azUybDJPR3AwTUpGVzZaOENiZGRPbzQ?oc=5"
+    },
+    {
+     "titulo": "War and drought threaten livelihoods of Sudan’s farmers",
+     "fuente": "Al Jazeera",
+     "url": "https://www.aljazeera.com/features/2026/11/26/war-and-drought-threaten-livelihoods-of-sudans-farmers?traffic_source=rss"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": -1,
+    "renta_fija_calidad": 1,
+    "oro": 1,
+    "dolar": 1,
+    "petroleo": 1
+   },
+   "historia": {
+    "caida_media_sp500_pct": -4.5,
+    "caida_mediana_sp500_pct": -2.9,
+    "dias_hasta_suelo": 18,
+    "dias_recuperacion": 39,
+    "fuente": "LPL Research (26 eventos geopolíticos desde 1941); Deutsche Bank (mediana -6.1%)"
+   },
+   "matices": [
+    "La magnitud del evento rara vez predice la magnitud del impacto en bolsa.",
+    "Si el conflicto afecta al suministro de energía, tratar también como shock_petroleo.",
+    "Bolsas emergentes del país implicado caen mucho más que las desarrolladas."
+   ]
+  },
+  {
+   "tipo": "elecciones_politica",
+   "nombre": "Elecciones / incertidumbre política relevante",
+   "intensidad": 2,
+   "titulares": 6,
+   "ejemplos": [
+    {
+     "titulo": "France's political mainstream risks presidential vote debacle with no clear candidate",
+     "fuente": "BBC World",
+     "url": "https://www.bbc.co.uk/news/articles/cq772vedgepro?at_medium=RSS&at_campaign=rss"
+    },
+    {
+     "titulo": "Los valores del Ibex más sensibles a las elecciones",
+     "fuente": "Expansión Mercados",
+     "url": "https://www.expansion.com/mercados/2026/11/26/valores-ibex-sensibles-elecciones.html"
+    },
+    {
+     "titulo": "Elecciones anticipadas en España: cinco claves para los mercados financieros",
+     "fuente": "MarketScreener España",
+     "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNc0FHb0p3SjhkU29fcVBVc0xiZWtINEFRVVlLN2dBQ1BuNkVwQVQyb3o1UjlkeUFfbFlpajlPUXlGVjlQbTJUa0lkVnR4ZjA2bWpmREVESklYam1KYjBSdTVDZm0zalFQYXZZbWxCT0lYOWdHVC01WGlFd1d6Q0FhWWJ2bTdYODF6cUJublEyY1VlUmZOc1BNVjNiRnE1Q1Bja1I3VTlsTXpGV0tBM3hOaVRmZWphS3h6bEx4UHF4LUVqSG1kLVVPd0RXSQ?oc=5"
+    },
+    {
+     "titulo": "Spain's snap election: Five key questions for financial markets",
+     "fuente": "Reuters",
+     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOaFZGRnlyUS1kZHlNY28tLXpFdGFiMGhPZTNCTGtkaDNaZ0t6YVdqU3VGeTA0YWVIdHp0STNadFg5Nmx0alp6SkRlTGFzV0NiZFo3STdpV1FxaTI3WnJvYjFQU05FOURkbVE4RVE5Sm1ZZVdLYkVYTFVVNXhMY0JOU3Bza0VkckxwdUFwVU1hUGNuSThTakxkSlpkWHFiQWdHM3hYYVpiNUVSN3lLMDB3?oc=5"
+    },
+    {
+     "titulo": "Cape Town court shuts down Ramaphosa's Farmgate scandal",
+     "fuente": "France 24",
+     "url": "https://www.france24.com/en/cape-town-court-shuts-down-ramaphosa-s-farmgate-scandal"
+    }
+   ],
+   "explicacion_ia": null,
+   "region": null,
+   "gdelt_ratio": null,
+   "impacto_tipico": {
+    "renta_variable": 0,
+    "renta_fija_calidad": 0,
+    "oro": 0,
+    "dolar": 0,
+    "petroleo": 0
+   },
+   "historia": {
+    "nota": "Los años de midterms en EE. UU. son históricamente los más volátiles del ciclo presidencial, pero el mercado suele subir en los 12 meses siguientes a la cita. El partido ganador no predice la rentabilidad.",
+    "fuente": "LPL Research; Fidelity; BlackRock (2026)"
+   },
+   "matices": []
+  }
+ ],
+ "decision": {
+  "metricas": {
+   "proxy": "VWCE",
+   "caida_52s": -6.73,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.23,
+   "sesiones_bajo_mm200": 0,
+   "var_1m": -4.38,
+   "vix": 28.29,
+   "vstoxx": null,
+   "brent_3m": 1.08,
+   "oro_1m": -11.75,
+   "sahm": 0.0,
+   "curva_10a3m": 0.51,
+   "curva_min_24m": -0.4,
+   "high_yield": 3.72,
+   "ipc_eeuu": 4.08,
+   "ipca_euro": 1.9,
+   "tipo_bce": 2.5,
+   "gpr": 150.14,
+   "gpr_media_1a": 176.83
+  },
+  "regimen": {
+   "principal": "inflacion_alta",
+   "recesion_probable": false,
+   "inflacion_alta": true,
+   "motivos": [
+    "Inflación de EE. UU. en 4.08% interanual."
+   ]
+  },
+  "puntuacion": 29.1,
+  "factores": [
+   {
+    "factor": "Caída desde máximos (52 semanas)",
+    "valor": "-6.7%",
+    "puntos": 8.8
+   },
+   {
+    "factor": "Miedo en el mercado (VIX/VSTOXX)",
+    "valor": "28.3",
+    "puntos": 10.4
+   },
+   {
+    "factor": "Caída provocada por un shock geopolítico (suelen recuperarse en semanas)",
+    "valor": "Guerra comercial / aranceles / sanciones, Conflicto militar / invasión / ataque entre estados",
+    "puntos": 10.0
+   }
+  ],
+  "postura": "escalonar",
+  "multiplicador_extra": 3,
+  "tramos": 3,
+  "tendencia_bajista": false,
+  "avisos": [],
+  "texto_postura": "Si aportas extra, hazlo en varias partes; la caída podría prolongarse.",
+  "confianza": "media"
+ },
+ "ideas": {
+  "limites": {
+   "umbral_senal": 3,
+   "max_idea_pct": 5,
+   "max_total_pct": 10,
+   "stop_pct": -10,
+   "revisar_semanas": 6,
+   "tarde_1m_pct": 15,
+   "comparar_con": "VWCE"
+  },
+  "lista": [
+   {
+    "id": "EUNH",
+    "tema": "Bonos de gobiernos del euro (refugio)",
+    "clase": "renta_fija_calidad",
+    "nombre": "iShares Core Euro Government Bond UCITS ETF (Dist)",
+    "isin": "IE00B4WXJJ64",
+    "yahoo": "EUNH.DE",
+    "moneda": "EUR",
+    "ter": 0.07,
+    "riesgo": "Riesgo bajo, pero pierden valor si los tipos suben (como en 2022).",
+    "senal": 6,
+    "motivos": [
+     {
+      "evento": "Guerra comercial / aranceles / sanciones",
+      "tipo": "aranceles_sanciones",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     },
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-24",
+     "ultimo": 106.14,
+     "var_1m": 1.2737933119463252,
+     "var_3m": -1.048804368993983,
+     "mm50": 105.1258,
+     "sobre_mm50": true,
+     "caida_max_52s": -3.5780277384028003
+    },
+    "estado": "activa",
+    "explicacion": "Las noticias van a favor y el precio lo confirma (sobre su media de 50 sesiones y sin haber subido ya en exceso)."
+   },
+   {
+    "id": "DFEN",
+    "tema": "Defensa",
+    "clase": "defensa",
+    "nombre": "VanEck Defense UCITS ETF (Acc)",
+    "isin": "IE000YYE6WK5",
+    "yahoo": "DFEN.DE",
+    "moneda": "EUR",
+    "ter": 0.55,
+    "riesgo": "Sector muy concentrado (pocas empresas) que ya subió mucho desde 2022: un acuerdo de paz o recortes de gasto pueden tumbarlo un 20-30 %.",
+    "senal": 6,
+    "motivos": [
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 2,
+      "aporte": 6
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-24",
+     "ultimo": 47.595,
+     "var_1m": -6.105735825321323,
+     "var_3m": -11.975214556438962,
+     "mm50": 50.8511,
+     "sobre_mm50": false,
+     "caida_max_52s": -25.737238351869742
+    },
+    "estado": "vigilar",
+    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
+   },
+   {
+    "id": "8PSG",
+    "tema": "Oro",
+    "clase": "oro",
+    "nombre": "Invesco Physical Gold ETC",
+    "isin": "IE00B579F325",
+    "yahoo": "8PSG.DE",
+    "moneda": "EUR",
+    "ter": 0.12,
+    "riesgo": "Puede pasar años sin subir; reacciona a tipos de interés reales y al dólar, no solo a las guerras.",
+    "senal": 6,
+    "motivos": [
+     {
+      "evento": "Guerra comercial / aranceles / sanciones",
+      "tipo": "aranceles_sanciones",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     },
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-24",
+     "ultimo": 312.82,
+     "var_1m": -8.883839959608563,
+     "var_3m": -18.417482439897228,
+     "mm50": 348.7452,
+     "sobre_mm50": false,
+     "caida_max_52s": -28.193004130562883
+    },
+    "estado": "vigilar",
+    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
+   },
+   {
+    "id": "XDW0",
+    "tema": "Energía (petroleras)",
+    "clase": "energia",
+    "nombre": "Xtrackers MSCI World Energy UCITS ETF (Acc)",
+    "isin": "IE00BM67HM91",
+    "yahoo": "XDW0.DE",
+    "moneda": "EUR",
+    "ter": 0.25,
+    "riesgo": "Depende del precio del petróleo y del gas; cae con fuerza en desescaladas y recesiones.",
+    "senal": 3,
+    "motivos": [
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-24",
+     "ultimo": 66.1,
+     "var_1m": -11.619203549978963,
+     "var_3m": 1.927525103179173,
+     "mm50": 69.5742,
+     "sobre_mm50": false,
+     "caida_max_52s": -12.28768851012788
+    },
+    "estado": "vigilar",
+    "explicacion": "Las noticias van a favor, pero el precio va en contra (está por debajo de su media de 50 sesiones). Espera a que el precio lo confirme."
+   },
+   {
+    "id": "OOEA",
+    "tema": "Petróleo (Brent)",
+    "clase": "petroleo",
+    "nombre": "WisdomTree Brent Crude Oil (ETC)",
+    "isin": "JE00B78CGV99",
+    "yahoo": "BRNT.L",
+    "moneda": "USD",
+    "ter": 0.49,
+    "riesgo": "Muy volátil: puede moverse ±30 % en pocas semanas, y tras los picos por guerras suele devolver la subida (1990-91, 2022, 2025). Es un ETC sintético sobre futuros: si la curva está en contango pierde algo cada mes aunque el Brent no baje. No es UCITS.",
+    "senal": 0,
+    "motivos": [
+     {
+      "evento": "Guerra comercial / aranceles / sanciones",
+      "tipo": "aranceles_sanciones",
+      "intensidad": 3,
+      "impacto": -1,
+      "aporte": -3
+     },
+     {
+      "evento": "Conflicto militar / invasión / ataque entre estados",
+      "tipo": "conflicto_militar",
+      "intensidad": 3,
+      "impacto": 1,
+      "aporte": 3
+     }
+    ],
+    "precio": {
+     "fecha": "2026-11-24",
+     "ultimo": 91.24,
+     "var_1m": -20.363098449155913,
+     "var_3m": 11.254719530682,
+     "mm50": 101.5277,
+     "sobre_mm50": false,
+     "caida_max_52s": -21.547725305592337
+    },
+    "estado": "sin_senal",
+    "explicacion": "Las noticias de hoy no apuntan con fuerza a este tema."
+   }
+  ]
+ },
+ "gdelt": {},
+ "activos": {
+  "VWCE": {
+   "fecha": "2026-11-24",
+   "ultimo": 161.88,
+   "var_1d": -1.91,
+   "var_1m": -4.38,
+   "var_3m": -2.66,
+   "var_1a": 13.63,
+   "caida_max_52s": -6.73,
+   "mm200": 161.27,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.23,
+   "vol_1m": 24.01,
+   "nombre": "Vanguard FTSE All-World UCITS ETF (Acc)",
+   "isin": "IE00BK5BQT80",
+   "yahoo": "VWCE.DE",
+   "moneda": "EUR"
+  },
+  "EUNL": {
+   "fecha": "2026-11-24",
+   "ultimo": 124.565,
+   "var_1d": -1.64,
+   "var_1m": -4.06,
+   "var_3m": -1.56,
+   "var_1a": 13.69,
+   "caida_max_52s": -5.81,
+   "mm200": 122.74,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.3,
+   "vol_1m": 22.33,
+   "nombre": "iShares Core MSCI World UCITS ETF (Acc)",
+   "isin": "IE00B4L5Y983",
+   "yahoo": "EUNL.DE",
+   "moneda": "EUR"
+  },
+  "IS3N": {
+   "fecha": "2026-11-24",
+   "ultimo": 42.1,
+   "var_1d": -3.75,
+   "var_1m": -7.49,
+   "var_3m": -10.7,
+   "var_1a": 11.75,
+   "caida_max_52s": -16.94,
+   "mm200": 45.63,
+   "sobre_mm200": false,
+   "pendiente_mm200": 0.69,
+   "vol_1m": 40.48,
+   "nombre": "iShares Core MSCI EM IMI UCITS ETF (Acc)",
+   "isin": "IE00BKM4GZ66",
+   "yahoo": "IS3N.DE",
+   "moneda": "EUR"
+  },
+  "SXR8": {
+   "fecha": "2026-11-24",
+   "ultimo": 705.18,
+   "var_1d": -1.88,
+   "var_1m": -4.45,
+   "var_3m": -0.43,
+   "var_1a": 13.47,
+   "caida_max_52s": -6.56,
+   "mm200": 690.4,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.45,
+   "vol_1m": 24.69,
+   "nombre": "iShares Core S&P 500 UCITS ETF (Acc)",
+   "isin": "IE00B5BMR087",
+   "yahoo": "SXR8.DE",
+   "moneda": "EUR"
+  },
+  "EUNH": {
+   "fecha": "2026-11-24",
+   "ultimo": 106.14,
+   "var_1d": 0.04,
+   "var_1m": 1.27,
+   "var_3m": -1.05,
+   "var_1a": -1.9,
+   "caida_max_52s": -3.58,
+   "mm200": 107.03,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.25,
+   "vol_1m": 3.95,
+   "nombre": "iShares Core Euro Government Bond UCITS ETF (Dist)",
+   "isin": "IE00B4WXJJ64",
+   "yahoo": "EUNH.DE",
+   "moneda": "EUR"
+  },
+  "EUNA": {
+   "fecha": "2026-11-24",
+   "ultimo": 4.8927,
+   "var_1d": 0.1,
+   "var_1m": 0.94,
+   "var_3m": -0.35,
+   "var_1a": -1.04,
+   "caida_max_52s": -2.2,
+   "mm200": 4.9,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.13,
+   "vol_1m": 3.57,
+   "nombre": "iShares Core Global Aggregate Bond UCITS ETF EUR Hedged (Acc)",
+   "isin": "IE00BDBRDM35",
+   "yahoo": "EUNA.DE",
+   "moneda": "EUR"
+  },
+  "XEON": {
+   "fecha": "2026-11-24",
+   "ultimo": 150.879,
+   "var_1d": 0.0,
+   "var_1m": 0.19,
+   "var_3m": 0.59,
+   "var_1a": 2.13,
+   "caida_max_52s": 0.0,
+   "mm200": 149.6,
+   "sobre_mm200": true,
+   "pendiente_mm200": 0.16,
+   "vol_1m": 0.15,
+   "nombre": "Xtrackers II EUR Overnight Rate Swap UCITS ETF (Acc)",
+   "isin": "LU0290358497",
+   "yahoo": "XEON.DE",
+   "moneda": "EUR"
+  },
+  "8PSG": {
+   "fecha": "2026-11-24",
+   "ultimo": 312.82,
+   "var_1d": -3.48,
+   "var_1m": -8.88,
+   "var_3m": -18.42,
+   "var_1a": -8.64,
+   "caida_max_52s": -28.19,
+   "mm200": 367.88,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.71,
+   "vol_1m": 33.06,
+   "nombre": "Invesco Physical Gold ETC",
+   "isin": "IE00B579F325",
+   "yahoo": "8PSG.DE",
+   "moneda": "EUR"
+  },
+  "4GLD": {
+   "fecha": "2026-11-24",
+   "ultimo": 104.61,
+   "var_1d": -3.47,
+   "var_1m": -8.88,
+   "var_3m": -18.4,
+   "var_1a": -8.51,
+   "caida_max_52s": -28.1,
+   "mm200": 122.95,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.7,
+   "vol_1m": 33.16,
+   "nombre": "Xetra-Gold",
+   "isin": "DE000A0S9GB0",
+   "yahoo": "4GLD.DE",
+   "moneda": "EUR"
+  },
+  "OOEA": {
+   "fecha": "2026-11-24",
+   "ultimo": 91.24,
+   "var_1d": 0.3,
+   "var_1m": -20.36,
+   "var_3m": 11.25,
+   "var_1a": 92.96,
+   "caida_max_52s": -21.55,
+   "mm200": 84.33,
+   "sobre_mm200": true,
+   "pendiente_mm200": 6.08,
+   "vol_1m": 42.47,
+   "nombre": "WisdomTree Brent Crude Oil (ETC)",
+   "isin": "JE00B78CGV99",
+   "yahoo": "BRNT.L",
+   "moneda": "USD"
+  },
+  "DFEN": {
+   "fecha": "2026-11-24",
+   "ultimo": 47.595,
+   "var_1d": 0.22,
+   "var_1m": -6.11,
+   "var_3m": -11.98,
+   "var_1a": -3.77,
+   "caida_max_52s": -25.74,
+   "mm200": 54.37,
+   "sobre_mm200": false,
+   "pendiente_mm200": -1.92,
+   "vol_1m": 31.96,
+   "nombre": "VanEck Defense UCITS ETF (Acc)",
+   "isin": "IE000YYE6WK5",
+   "yahoo": "DFEN.DE",
+   "moneda": "EUR"
+  },
+  "XDW0": {
+   "fecha": "2026-11-24",
+   "ultimo": 66.1,
+   "var_1d": -0.63,
+   "var_1m": -11.62,
+   "var_3m": 1.93,
+   "var_1a": 41.38,
+   "caida_max_52s": -12.29,
+   "mm200": 63.3,
+   "sobre_mm200": true,
+   "pendiente_mm200": 2.96,
+   "vol_1m": 24.94,
+   "nombre": "Xtrackers MSCI World Energy UCITS ETF (Acc)",
+   "isin": "IE00BM67HM91",
+   "yahoo": "XDW0.DE",
+   "moneda": "EUR"
+  },
+  "SP500": {
+   "fecha": "2026-11-25",
+   "ultimo": 7182.7798,
+   "var_1d": 0.0,
+   "var_1m": 0.0,
+   "var_3m": -6.55,
+   "var_1a": 4.87,
+   "caida_max_52s": -6.55,
+   "mm200": null,
+   "sobre_mm200": null,
+   "pendiente_mm200": null,
+   "vol_1m": 83.31,
+   "nombre": "S&P 500",
+   "isin": null,
+   "yahoo": "^GSPC",
+   "moneda": "USD"
+  },
+  "STOXX50": {
+   "fecha": "2026-11-25",
+   "ultimo": 5894.46,
+   "var_1d": -1.82,
+   "var_1m": -3.63,
+   "var_3m": -8.91,
+   "var_1a": 5.75,
+   "caida_max_52s": -10.03,
+   "mm200": 6128.73,
+   "sobre_mm200": false,
+   "pendiente_mm200": 0.36,
+   "vol_1m": 20.79,
+   "nombre": "Euro Stoxx 50",
+   "isin": null,
+   "yahoo": "^STOXX50E",
+   "moneda": "EUR"
+  },
+  "IBEX": {
+   "fecha": "2026-11-25",
+   "ultimo": 18635.8008,
+   "var_1d": -2.0,
+   "var_1m": -2.09,
+   "var_3m": -7.13,
+   "var_1a": 15.46,
+   "caida_max_52s": -7.81,
+   "mm200": 18821.49,
+   "sobre_mm200": false,
+   "pendiente_mm200": 0.82,
+   "vol_1m": 20.9,
+   "nombre": "IBEX 35",
+   "isin": null,
+   "yahoo": "^IBEX",
+   "moneda": "EUR"
+  },
+  "VIX": {
+   "fecha": "2026-11-25",
+   "ultimo": 28.29,
+   "var_1d": 0.0,
+   "var_1m": 45.67,
+   "var_3m": 89.61,
+   "var_1a": 73.03,
+   "caida_max_52s": 0.0,
+   "mm200": 18.59,
+   "sobre_mm200": true,
+   "pendiente_mm200": -7.3,
+   "vol_1m": 268.09,
+   "nombre": "VIX (volatilidad implícita S&P 500)",
+   "isin": null,
+   "yahoo": "^VIX",
+   "moneda": "USD"
+  },
+  "BRENT": {
+   "fecha": "2026-11-26",
+   "ultimo": 90.67,
+   "var_1d": -4.16,
+   "var_1m": -20.38,
+   "var_3m": 1.08,
+   "var_1a": 43.62,
+   "caida_max_52s": -23.39,
+   "mm200": 95.05,
+   "sobre_mm200": false,
+   "pendiente_mm200": 3.09,
+   "vol_1m": 60.36,
+   "nombre": "Petróleo Brent (USD)",
+   "isin": null,
+   "yahoo": "BZ=F",
+   "moneda": "USD"
+  },
+  "ORO": {
+   "fecha": "2026-11-26",
+   "ultimo": 3596.0,
+   "var_1d": 1.7,
+   "var_1m": -11.75,
+   "var_3m": -22.9,
+   "var_1a": -13.67,
+   "caida_max_52s": -32.39,
+   "mm200": 4415.46,
+   "sobre_mm200": false,
+   "pendiente_mm200": -2.38,
+   "vol_1m": 33.7,
+   "nombre": "Oro (USD/oz)",
+   "isin": null,
+   "yahoo": "GC=F",
+   "moneda": "USD"
+  },
+  "US10Y": {
+   "fecha": "2026-11-25",
+   "ultimo": 4.848,
+   "var_1d": -1.14,
+   "var_1m": -2.77,
+   "var_3m": 3.95,
+   "var_1a": 21.14,
+   "caida_max_52s": -8.72,
+   "mm200": 4.61,
+   "sobre_mm200": true,
+   "pendiente_mm200": 1.64,
+   "vol_1m": 18.96,
+   "nombre": "Bono EE. UU. 10 años (%)",
+   "isin": null,
+   "yahoo": "^TNX",
+   "moneda": "USD"
+  },
+  "EURUSD": {
+   "fecha": "2026-11-26",
+   "ultimo": 1.0979,
+   "var_1d": 0.16,
+   "var_1m": -1.74,
+   "var_3m": -5.81,
+   "var_1a": -5.06,
+   "caida_max_52s": -8.64,
+   "mm200": 1.15,
+   "sobre_mm200": false,
+   "pendiente_mm200": -0.67,
+   "vol_1m": 5.82,
+   "nombre": "EUR/USD",
+   "isin": null,
+   "yahoo": "EURUSD=X",
+   "moneda": "USD"
+  }
+ },
+ "titulares": [
+  {
+   "titulo": "FedEx plane overshoots Miami runway, causing brief suspension of flights at airport",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/ckm2mz3prq77o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T07:34:47+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The brief ground stop came on the eve of the US Thanksgiving holiday, one of the busiest travel days of the year.",
+   "id": "b8a25ea37621"
+  },
+  {
+   "titulo": "US announces new tariffs on host of countries including China",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T04:10:58+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The new levies would hit many of America's biggest trading partners, including China and the EU.",
+   "id": "f1ab9b65045d"
+  },
+  {
+   "titulo": "Macy's postpones Thanksgiving parade due to severe weather",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cwkgr38l2g9yo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T04:04:14+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The was the first time ever that the iconic celebration was delayed because of storms. New York expects damaging winds and heavy rainfall over the Thanksgiving holiday.",
+   "id": "f74bd89f8049"
+  },
+  {
+   "titulo": "As foreign troops withdraw from Somalia, could al-Shabab take over?",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/ck62y23z58yeo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T02:06:10+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Somalia relies heavily on foreign funding and military support for its very survival.",
+   "id": "d9924e2aa30a"
+  },
+  {
+   "titulo": "California warns of flooding as King Tides peak over Thanksgiving",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/ckn806qq760po?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T01:22:55+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Parts of the Canadian province of British Columbia may also be affected by the storms and flooding, which come as millions of people travel for the holiday.",
+   "id": "78d85ead02fd"
+  },
+  {
+   "titulo": "The US pastor who wants to see women's right to vote overturned",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cwe89jyz4012o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T00:24:25+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The movement to repeal women's right to vote has gained traction amongst some very conservative Christians.",
+   "id": "b79f3f61a38e"
+  },
+  {
+   "titulo": "Spanish elections: What you need to know and what's at stake",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/c6wy4ejnyvdyo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T00:23:49+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "After eight years of Socialist-led rule, snap elections are taking place on Sunday with conservative Alberto Núñez Feijóo vying to win office.",
+   "id": "9285fe98dc11"
+  },
+  {
+   "titulo": "France's political mainstream risks presidential vote debacle with no clear candidate",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cq772vedgepro?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T00:23:27+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Hard-right and hard-left candidates dominate the polls ahead of next year's presidential election.",
+   "id": "d02a6cf4033a"
+  },
+  {
+   "titulo": "US Army says controlled blast of explosives in Iowa was 'huge success'",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cwg7l5ve251ko?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T00:23:05+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Despite widespread concern from residents ahead of the blast, officials say that lead readings in the area so far have been promising.",
+   "id": "be737037d95d"
+  },
+  {
+   "titulo": "Has global jihadism failed, or is it simply changing shape?",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cmx2x4e0n5jro?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T00:22:18+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Jihadist groups appear to be focusing on local issues rather than global terror. Does it signify a real change?",
+   "id": "91283dc1bac6"
+  },
+  {
+   "titulo": "A renovation was meant to improve these Hong Kong homes - it ended in a blaze that killed 168",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cqx2wrkyrdn8o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T23:26:50+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "A year after one of Hong Kong's deadliest fires, families left behind are still waiting for justice.",
+   "id": "5a2a51d66ff1"
+  },
+  {
+   "titulo": "Angelina Jolie and Brad Pitt settle legal battle over French winery",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cmvg2989wv74o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T23:18:27+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The Hollywood A-listers' legal battle focused on the vineyard they bought in 2008 and where they wed six years later.",
+   "id": "bf0c83474a53"
+  },
+  {
+   "titulo": "Thirty-one killed in massive fire as fuel tanker crashes on Cairo highway",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cqy7rn30v314o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T22:18:06+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Another 21 are injured after the tanker reportedly overturns on a busy ring road in the Egyptian capital.",
+   "id": "de803d23ecc7"
+  },
+  {
+   "titulo": "North Korea expels Swiss diplomat in sanctions row",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cq0l34e4kkr5o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T21:51:17+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Swiss officials said relations would be kept through North Korea's embassy in Bern, and its own embassy in Beijing.",
+   "id": "993bf231e331"
+  },
+  {
+   "titulo": "US stocks fall further as fears over AI intensify",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cq0md8g14zryo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T21:43:18+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "All three main US indexes were down in early trading, with the tech-dominated Nasdaq down almost 4%.",
+   "id": "3222e3c47f60"
+  },
+  {
+   "titulo": "Moment Nasa spacecraft hit asteroid - and what happened next",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/videos/cwe9kxpgz2kpo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T20:11:46+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The crash was \"like something out of a disaster movie\", the BBC's science editor Rebecca Morelle says.",
+   "id": "67cd67dbe32b"
+  },
+  {
+   "titulo": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+   "fuente": "Reserva Federal",
+   "fuente_id": "fed",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125b.htm",
+   "fecha": "2026-11-25T20:00:00+00:00",
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+   "id": "0314d57249bf"
+  },
+  {
+   "titulo": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+   "fuente": "Reserva Federal",
+   "fuente_id": "fed",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
+   "fecha": "2026-11-25T20:00:00+00:00",
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+   "id": "1b72a5a47303"
+  },
+  {
+   "titulo": "Israeli judges recommend dropping most serious charges against Netanyahu",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cxj05mv723r2o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T19:47:39+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The Israeli PM says his trial should end after judges said there was little chance of conviction in one of three cases.",
+   "id": "3ed3fc79bf28"
+  },
+  {
+   "titulo": "What we know about Trump's Thanksgiving tariffs",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/videos/c3x29v11ed1xo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T19:38:05+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Donald Trump is targeting China, the European Union and 12 other jurisdictions in a new round of tariffs.",
+   "id": "1fb68dffd032"
+  },
+  {
+   "titulo": "Colombian police storm supermarket to free 76 held hostage for 17 hours",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/ckp80mjr9emyo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T18:41:33+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "One gunman was killed after what the country's president described as a robbery of a cash-laden armoured car gone wrong.",
+   "id": "5bfd674f9210"
+  },
+  {
+   "titulo": "Images of asteroid targeted to test Earth's defences reveal stadium-sized crater",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cw8dv112r5gmo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T17:30:16+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The asteroid's surface was transformed after a spacecraft was deliberately crashed into it four years ago",
+   "id": "c604e4f82699"
+  },
+  {
+   "titulo": "ECB and Sveriges Riksbank conclude agreement for Sweden to join T2",
+   "fuente": "Banco Central Europeo",
+   "fuente_id": "bce",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261125_1~6333a90f3a.en.html",
+   "fecha": "2026-11-25T17:30:00+00:00",
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "02f9e323bbde"
+  },
+  {
+   "titulo": "Trump's accounts traded Nvidia shares 44 times this year, records show",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cq772vk664yvo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T16:42:11+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "A review of the US president's financial disclosures shows Donald Trump's investment portfolios have regularly traded shares in the tech giant.",
+   "id": "3c55808f03cd"
+  },
+  {
+   "titulo": "Greatest catch ever? Man on motorbike takes incredible grab",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/sport/cricket/videos/cwx2e0g93l3eo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T16:23:03+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "A passenger on a motorbike pulled off a remarkable one-handed catch after the ball was hit out of the ground for six in the Swat Premier League in Pakistan.",
+   "id": "569d2c872b4a"
+  },
+  {
+   "titulo": "Five Russian military jets hit in airfield strike, says Ukraine",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/ck9q8xp5r5pgo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T14:46:41+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The Savasleyka airfield hosts aircraft used by Russia to launch hypersonic missiles and glide bombs at Ukraine.",
+   "id": "e07f3130349b"
+  },
+  {
+   "titulo": "Israeli strike kills senior Hamas security official and family in Gaza City",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cmd718zydz9qo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T14:06:13+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Mohammed Abu al-Ouf, head of Hamas's internal security service in northern Gaza, was killed with his wife and two teenage daughters, doctors say.",
+   "id": "0439f158f463"
+  },
+  {
+   "titulo": "Russia's own figures show it has lost nearly 500,000 people in Ukraine war",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cmx27g533zwyo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T12:21:49+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Leaked data reveal how the full-scale invasion of Ukraine has fundamentally changed mortality patterns in Russia.",
+   "id": "51520b52f78d"
+  },
+  {
+   "titulo": "Protesters call on Israel to free Palestinian student held without charge",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cw62p8z9edjlo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T10:03:42+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "Mahdi Tunsi, 26, was taken from his university dormitory earlier this month and has since been held without charge.",
+   "id": "33f90d80bcc4"
+  },
+  {
+   "titulo": "Card payments edge past cash in shops; euro area consumers want both",
+   "fuente": "Banco Central Europeo",
+   "fuente_id": "bce",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261125~26d1ade228.en.html",
+   "fecha": "2026-11-25T10:00:00+00:00",
+   "tipo": "banco_central",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "",
+   "id": "1f8bb6cd0a0e"
+  },
+  {
+   "titulo": "Moment Chinese space mission lifts off with first Pakistan astronaut aboard",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/videos/cmz74l0yzzvyo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T03:28:37+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "China launched its Shenzhou-24 space mission to bring three astronauts to its Tiangong space station.",
+   "id": "f7343281c58b"
+  },
+  {
+   "titulo": "My family were killed in Ukraine. My mum blamed Zelensky's troops - the truth is complicated",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/articles/cw24e17v9e51o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-25T00:54:13+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "BBC journalist Anastasiya Gribanova investigates who killed her father and grandparents in the war.",
+   "id": "5877b95bcd2c"
+  },
+  {
+   "titulo": "Watch: Flock of turkeys chases woman on Massachusetts pavement",
+   "fuente": "BBC World",
+   "fuente_id": "bbc_world",
+   "url": "https://www.bbc.co.uk/news/videos/cknv4mq93gd2o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-24T22:07:30+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 3,
+   "resumen": "The woman said she had to jump into a stranger's car to escape a flock of turkeys that chased her down the sidewalk.",
+   "id": "2b48a18a5fd8"
+  },
+  {
+   "titulo": "OPEC blames EU for breakdown of COP31 climate talks",
+   "fuente": "سانا",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBSX2xoenU4TTBkelRnbkZMQWFNb0RST0pBVnZOVEhxNlhOWF9yYnN0MWx1M21rY2R5Vk9HQ1ZUbkkyRDYzcm83anpXczhtM0N3S29r?oc=5",
+   "fecha": "2026-11-26T08:03:54+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "9cb0d824417a"
+  },
+  {
+   "titulo": "Las Bolsas europeas rebotan con fuerza sin la referencia de Wall Street por Acción de Gracias",
+   "fuente": "Cinco Días Mercados",
+   "fuente_id": "cincodias",
+   "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-26/la-bolsa-y-el-ibex-35.html",
+   "fecha": "2026-11-26T08:02:54+00:00",
+   "tipo": "mercados",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "El Ibex 35 sube un 1,7%. Los inversores retoman el interés por la inteligencia artificial y las tecnológicas lideran las subidas en Asia",
+   "id": "82b84716314c"
+  },
+  {
+   "titulo": "Los líderes europeos se reúnen hoy en Bruselas para desbloquear la llegada de De Cos al BCE",
+   "fuente": "El Periódico",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPd2JBdUdlc0xhSjMwaUZMQ3ZlaFl3RWR4YldwLWRpWGVvSmQxQVkwN0UzRU83RlFxaVZFWnVHbzJLNVRoLTF4VmZWaDdTWWVtLTZsTTBZdkVfMHVHWnZYSkpiTmRXNF9SY2I4V1JGa1JGRmpFZGhnSnBMSFk2dWFyd3M5bEw5S1c1ekpWSm1xb2E2ZFNacGpLOWZLZ9IBmwFBVV95cUxPYkdWajkxeklYMVJzRFhEcjhsWUlNSzNUbXZwZzEwSHFnTEpMVE9faU5IQW1HdnpyeGNfUlQ4c0pXY3BobWQwSW9JVl9aOWJ0RnpGTmp6YjN2YWtxdG80SEhlSFJ1SXlDd240WmdIZUFpeC1kQVc4SUpRb2VBV0c2NzVYUkl6RnExaERCX042dWdaNkotZnRyRjhTcw?oc=5",
+   "fecha": "2026-11-26T08:01:14+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "3842237460e9"
+  },
+  {
+   "titulo": "FedEx plane overshoots runway at Miami airport on Thanksgiving eve",
+   "fuente": "Deutsche Welle",
+   "fuente_id": "dw",
+   "url": "https://www.dw.com/en/fedex-plane-overshoots-runway-at-miami-airport-on-thanksgiving-eve/a-80056541?maca=en-rss-en-all-1573-rdf",
+   "fecha": "2026-11-26T08:01:00+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "A FedEx plane from Memphis ran past the end of a runway at Miami airport, shutting most runways and causing delays of several hours on the eve of the US holiday.",
+   "id": "fbb592abb1d7"
+  },
+  {
+   "titulo": "Arrow Exploration doubles Q3 profit as output continues to rise and oil prices remain high",
+   "fuente": "Proactive financial news",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxOOUVUQV9JNWJnTzhFTW04b0hCSzVkckVmS1BMWmNNZFJyMDlCTzBWbW1uOFdHTm1LNmJHdnY4SzU4Z2xORjdVdTRyUTVEMVJJeDZUREtxY0dNRENDQmd0RU1uU2xjVFJkejd1RE9vcnMtM3lsRFVpOGgxTy1XWllZUjRrSGNUN2ROdUZjclBGWEo3RWRLYm8wUjJ1bnZyWHFDUzNQZ01LSEZwYXZwZU42cTNuS0dJOXVuMlVTcVBnLXpoSUZ6YWRHaFduTlJkUnQtdlhjVzgxRjYzOUdUUFFPd2J1ZTNiaEtsNlBoY1c0SHpJYW8?oc=5",
+   "fecha": "2026-11-26T08:01:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "a1f6a615498e"
+  },
+  {
+   "titulo": "Ukraine War, Day 1,736: Trump Mega-Donor Acquires Overseas Assets of Russia's Largest Private Oil Company",
+   "fuente": "EA WorldView",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE52NUI2OExHNW9GUnZEeXlRbjNzTlUzOTM0SURXWkV0Vk5Vd1JwN19reE9MdDJKbkxPRy00bklDNDFSYUxJQkFILVZ0akJiUUNJQ010aUZ3NEFrWmp4eEp5c3hYaDZhVzY5azUybDJPR3AwTUpGVzZaOENiZGRPbzQ?oc=5",
+   "fecha": "2026-11-26T08:00:15+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "967650103c3a"
+  },
+  {
+   "titulo": "Sagunto abre la bolsa de voluntariado para la gestión de colonias felinas",
+   "fuente": "Ayuntamiento de Sagunto",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPalo1YVBXaHhlenlyOUduM2pVSmV1U2h3LWc1NnRXalQ1M244OVhuby1YbFFGMnRzY3JkbEgwVVZKMHk4ajNwcXFnemlxYm0zSnluVlY5ajZVSlFOdzZlMWRXRXRZY3NnNHpYNWg3dk51NW92QmZxR2FNOFNKbTEzNWNzaGFIQzUwVDlhUU5pcEtkRWloN1ZyQVpxSEcwYTVIVnYzZTBEUWkyaVhscVdtRFlvdllEY2QtWngtQVhHaw?oc=5",
+   "fecha": "2026-11-26T07:55:22+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "2709dd0bfee9"
+  },
+  {
+   "titulo": "Photos: Rallies around the world denounce violence against women",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://www.aljazeera.com/gallery/2026/11/26/photos-rallies-around-the-world-denounce-violence-against-women?traffic_source=rss",
+   "fecha": "2026-11-26T07:43:14+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "About 47,000 women and girls were intentionally killed by an intimate partner or family member last year, UN data shows.",
+   "id": "c60c005c6a1f"
+  },
+  {
+   "titulo": "Poundland collapses putting 11,000 jobs at risk",
+   "fuente": "BBC Business",
+   "fuente_id": "bbc_business",
+   "url": "https://www.bbc.co.uk/news/articles/cm3vgdn037z4o?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T07:41:56+00:00",
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "The discount chain has fallen into administration after its owners failed to find a buyer.",
+   "id": "542c12c5251d"
+  },
+  {
+   "titulo": "DR Congo Ebola cases surpass 12,000 as fighting disrupts response in east",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://www.aljazeera.com/news/2026/11/26/dr-congo-ebola-cases-surpass-12000-as-fighting-disrupts-response-in-east?traffic_source=rss",
+   "fecha": "2026-11-26T07:41:30+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Authorities struggle to contain country's worst Ebola outbreak, as fighting in east displaces health workers, civilians.",
+   "id": "80c9a0371269"
+  },
+  {
+   "titulo": "New UK-EU treaty has 10-year termination clause, BBC understands",
+   "fuente": "BBC Business",
+   "fuente_id": "bbc_business",
+   "url": "https://www.bbc.co.uk/news/articles/c98r7p65edvgo?at_medium=RSS&at_campaign=rss",
+   "fecha": "2026-11-26T07:40:04+00:00",
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Text of the treaties will be published this afternoon, alongside legislation designed to enact the bulk of the deal.",
+   "id": "449585889d61"
+  },
+  {
+   "titulo": "At least 13 dead in Indonesia gold mine flood as rescue efforts intensify",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://www.aljazeera.com/news/2026/11/26/at-least-13-dead-in-indonesia-gold-mine-flood-as-rescue-efforts-intensify?traffic_source=rss",
+   "fecha": "2026-11-26T07:38:00+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Rescue workers facing tough conditions, with narrow, deep and slippery excavation pits and minimal lighting.",
+   "id": "227a45685382"
+  },
+  {
+   "titulo": "Solo la sociedad civil rinde homenaje a las víctimas en el aniversario del gran incendio de Hong Kong",
+   "fuente": "El País Internacional",
+   "fuente_id": "elpais_int",
+   "url": "https://elpais.com/internacional/2026-11-26/solo-la-sociedad-civil-rinde-homenaje-a-las-victimas-en-el-aniversario-del-gran-incendio-de-hong-kong.html",
+   "fecha": "2026-11-26T07:36:45+00:00",
+   "tipo": "geopolitica",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "El Gobierno no convoca ningún acto oficial en recuerdo de las 168 personas que murieron en el complejo residencial Wang Fuk Court y pide evitar que “se secuestren” las conmemoraciones",
+   "id": "7ff063e60a45"
+  },
+  {
+   "titulo": "Tullow Oil lifts production guidance despite lower cash flow forecast",
+   "fuente": "Proactive financial news",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPUmFJNHBSVEdMbGRkMmFnRkE4NUdEbE14YmIySlNnbVNGMEpYWW00Q3preENiQnlvSjZaOU5uZGZvTjAyNl9nZHpSWnhNVGEzLWxqME95US1VNVVuU3Zyd1l1aHZGaGlyRGdZank3WElHODR1dFM1Nk5nOURJci1HcjMtWEtoYk1yODdKak9zQ1BadGFhWS1rZjVBamVXZmVlTnJvdlIxWE9MdjBiSTNSTUNJVlFhUXpmQzY1SG1wRDhSUC12b3RVNFVaSDB6UkZabVZNS3JONA?oc=5",
+   "fecha": "2026-11-26T07:34:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "e3930397d713"
+  },
+  {
+   "titulo": "EU leaders seek agreement on long-term budget and Ukraine at summit",
+   "fuente": "Deutsche Welle",
+   "fuente_id": "dw",
+   "url": "https://www.dw.com/en/eu-leaders-seek-agreement-on-long-term-budget-and-ukraine-at-summit/live-80056415?maca=en-rss-en-all-1573-rdf",
+   "fecha": "2026-11-26T07:31:00+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Leaders of the EU's 27 member states are expected to thrash out the EU's budget for 2028 to 2034. Ukraine and European Central Bank leadership are also up for discussion. DW has more.",
+   "id": "0b3b94fc75da"
+  },
+  {
+   "titulo": "Aid cuts to Taliban-ruled Afghanistan further curb women's access to healthcare, education and food",
+   "fuente": "France 24",
+   "fuente_id": "france24",
+   "url": "https://www.france24.com/en/aid-cuts-to-taliban-ruled-afghanistan-further-curb-women-s-access-to-healthcare-education-and-food",
+   "fecha": "2026-11-26T07:28:14+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "Having lived and worked in Afghanistan for seven years, photojournalist Élise Blanchard offers an intimate account of what daily life is like for Afghan women today. Joining Genie Godula on the International Day for the Elimination of Violence against Women, she explains how restrictions vary across",
+   "id": "10ad7265b178"
+  },
+  {
+   "titulo": "Nasdaq 100 and S&P 500 Rebound as Dip Buyers Return, Copper and Brent Oil Also Firm",
+   "fuente": "FXEmpire",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNaHRUcEZTRms2MndYSElwNTl2cnBCMTQyQ3JtamZJRi01X01ybU1Bc0JXWTZqRTZiRmpKLTM5YWZBNVRHMDJtYWM0cVppanZ3WW5jYURYZHJ1SnJaUXdiTjItZnl0SkhSbzNMUE9fTkVubE5YQURWMFpwWlhZZ0Ywa01DdEhjWE9UQ2k4OV9oRlJCVEY5NnlEU0gxR0I5TWY1QURnemhJOUJDWDZPV3NDS2lTN0VJWmNkN0FQRXFjakFTMWNRNEY2MGp6ZnQ?oc=5",
+   "fecha": "2026-11-26T07:22:26+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "68ec914885f6"
+  },
+  {
+   "titulo": "Bolsa e Ibex 35 hoy, en directo | El Ibex apunta a fuertes subidas en un día sin Wall Street por Acción de Gracias",
+   "fuente": "El Confidencial",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOSVM5OXBtR2ZqVmNxLXR3SklITS1mTXhUdUczVlFlbXM5cEpiazhTcjlpSVMyYVc2UEpuaGJpRWRrc2haRXRsYno5Slp3M2tpRzFUaGdMdVUzRkZuMFgzdnFWUDVWMjNkMDF6c181QWc0QlJYNTdKcmp5eU10VUxEOHptY19qX29XUEZ4b0ZnNG9qWDdz?oc=5",
+   "fecha": "2026-11-26T07:20:00+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "7c449cd1ba19"
+  },
+  {
+   "titulo": "'Unacceptable': China, EU among major economies against new US tariffs",
+   "fuente": "France 24",
+   "fuente_id": "france24",
+   "url": "https://www.france24.com/en/americas/20261126-unacceptable-major-economies-push-back-against-new-us-tariffs",
+   "fecha": "2026-11-26T07:16:41+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "China, the European Union and other major trading partners on Thursday criticised new US tariffs of up to 20 percent proposed by US President Donald Trump after a probe into alleged global overcapacity, raising the prospect of fresh trade tensions with allies and rivals alike.",
+   "id": "eee912dbc32b"
+  },
+  {
+   "titulo": "'Unacceptable': Major economies push back against new US tariffs",
+   "fuente": "France 24",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOSzlzNkVzNEdFVU9tanZOU0tVbWJxVW9oV2VueklTWlU5bDNSbFFLNkRzbEZlRGVJVnkzWjk5cGdLZzdmXy1PNmtHTHROU0VPY1ZSdk1QUmVZWVYzQ0xSWXhHUWxtVXd4M0xvSHRpNFNiNkdWMm9sRW16ZjktcEg5dnl6bWx1a0pKRlo2bXl4VE1yNTlqTVpnTFF6WVJhd2dWSlhXQVhMek55Nkk?oc=5",
+   "fecha": "2026-11-26T07:16:41+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "89f9b09027c6"
+  },
+  {
+   "titulo": "Is the stock market open for Thanksgiving? The answer might surprise you.",
+   "fuente": "MarketWatch",
+   "fuente_id": "marketwatch",
+   "url": "WP-MKTW-0005370809",
+   "fecha": "2026-11-26T07:16:00+00:00",
+   "tipo": "mercados",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "The answer to the question of whether the stock market is open on Thanksgiving isn’t a simple yes or no, as the major exchanges are closed, but trading of equity futures is open for part of the day.",
+   "id": "9e3665904045"
+  },
+  {
+   "titulo": "French navy intercepts suspected drug-smuggling semi-submersible",
+   "fuente": "Al Jazeera",
+   "fuente_id": "aljazeera",
+   "url": "https://www.aljazeera.com/video/newsfeed/2026/11/26/french-navy-intercepts-suspected-drug-smuggling-semi-submersible?traffic_source=rss",
+   "fecha": "2026-11-26T07:15:39+00:00",
+   "tipo": "geopolitica",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "French forces intercepted a semi-submersible suspected of drug trafficking in the Atlantic.",
+   "id": "9dd3ec2c8e8e"
+  },
+  {
+   "titulo": "Elite Growth Stocks To Own In November 2026",
+   "fuente": "Yahoo Finance",
+   "fuente_id": "gn_markets_en",
+   "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPa3NQaEUzSjh1WmdvSmkzbGVTZWZPMmpMUmNGZFJUQlRNTUljd2VoMTdNMXpnOEhRRlZFQ1ZhNzREdDdRTjcwRGJPTzI4UW0xWjVuN2RvaU8yT2RONWl2c2RlMlhTTHhtUFhfUzdFWG9DbWVueEZXSXVSTGE3ZzJCYjhfemZIM3JSc0pWekplRDQ1MWtxWE5iT0ttRk55Zw?oc=5",
+   "fecha": "2026-11-26T07:13:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "fb11d0083400"
+  },
+  {
+   "titulo": "Oil edges higher as Hormuz attacks threaten Persian Gulf supply recovery",
+   "fuente": "Investing.com",
+   "fuente_id": "gn_oil_en",
+   "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOVzlzQ3FKcGJDQUdiSjFfVHVfd3BFWWxDTTZ2cGxrRUNjTlVCTXo3TkdjZlVxN21wZ1BHeTlWdFR1cnVGMnF4bGhTdW5uX1haTmNiNElxOXY3eENmZkliaUVKZzk5cHJIdmVOeFRMc0RBVEIzTUNhOTBqUjhvNFhaaUs2MnJKcnZvRC01NUdIRGU1eTF5OGRmN19TWDdJQlF5Ykl5UnRRbVdpTFdRQlRZYUVkNjhSa2JPMjB1OTcycWp5bWE5TjVReTNmendUNTA?oc=5",
+   "fecha": "2026-11-26T07:12:31+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "935eceba984c"
+  },
+  {
+   "titulo": "Bolsa española: factores a seguir el 26 de noviembre",
+   "fuente": "MarketScreener España",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQUFyaHJDUHowSEZycndZXzJEWDNNcWphNGVuY2ZtMGZaT2hwYVdqT3RoT1hKSzByVEUyR1hDTFRWZDQwU195bThpZ193Y2t2SU5xRnhrb0pLak5CeGl3UXJBUE5CVzNBb0w5UDlKNG1VWlpnZjE3Z0MwaHpVRnlHMWZYYnpuUC1Dck5Dal80UnYwWkM1T2hmcnltUUphZ1lqRFZxdEsyekN1NDA?oc=5",
+   "fecha": "2026-11-26T07:05:18+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "6fc37d2ce0ae"
+  },
+  {
+   "titulo": "La UE negocia el relevo en el BCE con Pablo Hernández de Cos como favorito",
+   "fuente": "el boletin",
+   "fuente_id": "gn_mercados_es",
+   "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPOFQtT1JiSlVqRGdDZ2o2R0dmXzVpZDhJUFVJS2dMa0I0TXlHRzFyTXhBYlRxWllreFp4emlEOHNpQXdzczRBRm9ERW5TT0h0cWpRMjhOV0ZFNkItTUliZFpqdWZ0VGlmYTE3SWQwbC1PMVlwVkhZSFE4STZxVWpKUXJ6QldBNmdGbXBJU3RhXzV3R3I2R3plLWNmOUluR1JmWDVN?oc=5",
+   "fecha": "2026-11-26T07:03:10+00:00",
+   "tipo": "agregador",
+   "idioma": "es",
+   "peso": 2,
+   "resumen": "",
+   "id": "88c82efdde7e"
+  },
+  {
+   "titulo": "US Partners Respond to Tariffs With Anger, Protest and Diplomacy",
+   "fuente": "Bloomberg.com",
+   "fuente_id": "gn_geo_en",
+   "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPSkF3aC1sbjRDck0zelpqaHVfa29acDJvY3VITko0eWJjaFJaQndUREJXUmhZb3ZDZm14YmRVZDFOV2JZUF9YNW9xVF9lOHVSTFVQWVBQRGpSQy1STi1Pa1EtTW9vQVRmUmNPQm9wdDJLcmNSRlB5MEhLak5VaGpEWVhNVThvNUZIQnVYa2VDa0ZyMHBtLUx5REVTUmRySm9WU3BwMm5VWTRtRjdXRVZOYWk5NDc?oc=5",
+   "fecha": "2026-11-26T07:02:00+00:00",
+   "tipo": "agregador",
+   "idioma": "en",
+   "peso": 2,
+   "resumen": "",
+   "id": "00e2eec7d0d4"
+  }
+ ],
+ "num_titulares": 339,
+ "aviso_legal": "Herramienta personal de apoyo a la decisión. No es asesoramiento financiero. Las rentabilidades pasadas no garantizan rentabilidades futuras."
+}

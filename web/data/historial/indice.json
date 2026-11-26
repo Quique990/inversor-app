@@ -23,5 +23,16 @@
    "elecciones_politica",
    "shock_petroleo"
   ]
+ },
+ {
+  "fecha": "2026-11-26",
+  "postura": "escalonar",
+  "puntuacion": 29.1,
+  "regimen": "inflacion_alta",
+  "eventos": [
+   "aranceles_sanciones",
+   "conflicto_militar",
+   "elecciones_politica"
+  ]
  }
 ]
