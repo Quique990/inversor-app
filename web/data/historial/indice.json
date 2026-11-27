@@ -34,5 +34,18 @@
    "conflicto_militar",
    "elecciones_politica"
   ]
+ },
+ {
+  "fecha": "2026-11-27",
+  "postura": "escalonar",
+  "puntuacion": 31.6,
+  "regimen": "inflacion_alta",
+  "eventos": [
+   "conflicto_militar",
+   "aranceles_sanciones",
+   "elecciones_politica",
+   "shock_petroleo",
+   "banco_central_relaja"
+  ]
  }
 ]
